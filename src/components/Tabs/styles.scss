@@ -1,0 +1,25 @@
+@use "../../scss" as *;
+
+.tabRole{
+    width: 100%;
+    .roleContainerButton{
+        display: flex;
+        background-color: $white;
+        padding: 4rem 0;
+        border-radius: 8rem;
+        height: 36rem;
+        border: 1px solid $gray-200;
+
+        .buttonRole{
+            margin: 0 4rem;
+            background-color: $white;
+            width: 100%;
+            @include fnt(14, $color: $txt-color, $weight: 500, $height: 20)
+        }
+        .active{
+            background-color: #CCE7F5;
+            color: $gray-700;
+            font-weight: 500;
+        }
+    }
+}

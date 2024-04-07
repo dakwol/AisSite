@@ -1,0 +1,55 @@
+@use "../../scss/" as *;
+
+.headerAccount{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16rem;
+
+    .userName{
+        @include fnt(18, 20, $weight:600, $font: $fontText);
+    }
+
+    .logoutButton{
+        background-color: $blue-dark-25;
+        border: 1rem solid $blue-dark-300;
+        padding: 8rem 12rem;
+        width: fit-content;
+        @include fnt(16, 24, $color: $blue-dark-500, $font: $fontText);
+    }
+}
+
+.titlePageMini{
+    @include fnt(20, 32, $color: $gray-900, $font: $fontText, $weight:400);
+    padding-bottom: 8rem;
+    border-bottom: 1rem solid $gray-300;
+}
+
+.containerDataAct{
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    margin: 12rem 0;
+    .containerAct{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        padding: 8rem 12rem;
+        background-color: $gray-100;
+        border-radius: 8rem;
+
+        .numberAct{
+            @include fnt(16, 20, $weight:400, $font: $fontText, $color: $gray-900)
+        }
+        .userAct{
+            @include fnt(16, 20, $weight:400, $font: $fontText, $color: $gray-900)
+        }
+    }
+
+    .noActs{
+        text-align: center;
+        @include fnt(20, 32, $weight:400, $font: $fontText, $color: $gray-500)
+    }
+}
+

@@ -1,0 +1,85 @@
+@use "../../scss/" as *;
+
+.sectionTitle{
+    @include fnt(40, 48, $weight: 500, $font: $fontText, $color: $gray-900);
+    margin: 80rem 0 32rem;
+
+    @include tablet {
+        @include fnt(30, 38, $weight: 500, $font: $fontText, $color: $gray-900);
+        margin: 40rem 0 22rem;
+    }
+    @include mobile {
+        @include fnt(26, 28, $weight: 500, $font: $fontText, $color: $gray-900);
+    }
+}
+
+.modalVacancy{
+    @include mobile{
+        max-height: 600rem;
+    }
+}
+
+.sectionCardContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24rem;
+
+    @include laptop{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @include tablet{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.useFullResours{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8rem;
+
+    .whiteButton{
+        padding: 12rem 24rem;
+        background-color: $white;
+        @include fnt(16, 20, $weight: 500, $color: $gray-700, $font: $fontUI);
+        border: 1rem solid $gray-300;
+        border-radius: 8rem;
+
+        &:hover{
+            background-color: $gray-300;
+        }
+    }
+}
+
+.continueButton{
+    width: 100%;
+    background-color: inherit;
+    border: 1rem solid $orange-dark-200;
+    flex-direction: row-reverse;
+    gap: 8rem;
+    padding: 14rem 16rem;
+    border-radius: 12rem;
+    margin-top: 24rem;
+    @include fnt(16, 20, $weight: 500, $color: $orange-dark-500, $font: $fontUI);
+
+    object{
+        margin: 0;
+        transition: .1s ease-in-out;
+    }
+
+    &:hover{
+        background-color: inherit;
+
+        object{
+            transform: translateX(5rem);
+        }
+    }
+}
+
+.containerControl{
+    display: flex;
+    flex-direction: column;
+    gap: 12rem;
+}

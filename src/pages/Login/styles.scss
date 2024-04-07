@@ -1,0 +1,44 @@
+@use "../../scss/" as *;
+
+.logoContainer{
+    display: flex;
+    gap: 12rem;
+    align-items: center;
+    .belLogo{
+        width: 48rem;
+        height: 60rem;
+    }
+    
+    .titleLogo{
+        @include fnt(20, 24, $weight:600, $color: $blue-dark-500,$font: $fontText)
+    }
+}
+
+
+
+.containerLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 32rem;
+
+    .titleText{
+        @include fnt(20, 32, $weight:400, $color: $gray-900,$font: $fontText);
+        max-width: 95%;
+    }
+}
+
+.containerButton{
+    position: fixed;
+    bottom: 16rem;
+    width: calc(100% - 32rem);
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+
+    .whiteButton{
+        background-color: inherit;
+        @include fnt(16, 24, $weight:400, $color: $gray-500,$font: $fontText);
+        padding: 8rem;
+    }
+}

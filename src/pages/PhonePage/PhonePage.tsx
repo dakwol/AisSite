@@ -1,0 +1,75 @@
+import React, { FC, Fragment, useEffect, useState } from "react";
+import "./styles.scss";
+import { RouteNames } from "../../routes";
+import { useNavigate } from "react-router-dom";
+import { ISendModeration } from "../../models/ISendModeration";
+import { ISendLogin } from "../../models/ISendLogin";
+import { useTypeSelector } from "../../hooks/useTypedSelector";
+import { useDispatch } from "react-redux";
+import icons from "../../assets/icons/icons";
+import UserApiRequest from "../../api/User/Users";
+import Buttons from "../../components/Buttons/Buttons";
+import FormInput from "../../components/FormInput/FormInput";
+import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
+
+interface IPhonePage {
+  title: string;
+  type: string;
+}
+
+const PhonePage: FC<IPhonePage> = ({ title, type }) => {
+  const [isPhone, setIsPhone] = useState("");
+  const navigate = useNavigate();
+  const userApi = new UserApiRequest();
+
+  const dispatch = useDispatch();
+
+  const dataPress = useTypeSelector(
+    (state: any) => state.dataPressReducer.dataPress
+  );
+
+  const handleSmsPage = () => {
+    if (dataPress.phone !== "" && dataPress.phone.length === 10) {
+      navigate(RouteNames.SMSPAGE);
+    } else {
+      console.error("Неверно введён номер");
+    }
+  };
+
+  const handleChange = (fieldName: string, fieldValue: string | boolean) => {
+    dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
+  };
+
+  return (
+    <Fragment>
+      <section className="section">
+        <div className="containerPage">
+          <div className="logoContainer">
+            <h1 className="titlePage">
+              Введите номер телефона, указанный в акте
+            </h1>
+          </div>
+
+          <div className="containerLogin">
+            <FormInput
+              style={""}
+              value={dataPress.phone}
+              type="phone"
+              onChange={(e) => handleChange("phone", e)}
+              subInput={"Номер телефона"}
+              required={false}
+              error={""}
+              keyData={""}
+            />
+
+            <div className="containerButton">
+              <Buttons text={"Подтвердить по СМС"} onClick={handleSmsPage} />
+            </div>
+          </div>
+        </div>
+      </section>
+    </Fragment>
+  );
+};
+
+export default PhonePage;

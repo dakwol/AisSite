@@ -1,0 +1,101 @@
+@use "../../scss/" as *;
+
+.headerContainer{
+    padding: 16rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .containerLogo{
+        display: flex;
+        align-items: flex-end;
+        gap: 14rem;
+        cursor: pointer;
+
+        .bikLogoLogin{
+            height: 32rem;
+            object-fit: cover;
+        }
+
+        h1{
+            @include fnt(14, 14, $weight:400, $color: $text-gray, $font: $fontText);
+            width: 126rem;
+        }
+    }
+
+    .objectButton{
+        background-color: #00CCCC;
+        border-radius: 8rem;
+        height: 36rem;
+        padding: 8rem 16rem;
+        @include fnt(14, 20, $weight:500, $color: $white, $font:$PTRootUI);
+    }
+    .modalButton{
+        border-radius: 8rem;
+        height: 36rem;
+        padding: 8rem 16rem;
+        @include fnt(14, 20, $weight:500, $color: $white, $font:$PTRootUI);
+    }
+
+    .buttonsContainer{
+        display: flex;
+        align-items: center;
+        gap: 8rem;
+    }
+
+    .userContainer{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-end;
+        h4{
+            @include fnt(14, 20, $weight:600, $color: $txt-color, $font: $fontText);
+        }
+
+        .logoutButton{
+            background-color: inherit;
+            flex-direction: row-reverse;
+            @include fnt(12, 16, $weight:400, $color: $blue-500, $font: $fontText);
+            padding: 0;
+            gap: 4rem;
+
+            object{
+                width: 16rem;
+                height: 16rem;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.headerModal{
+    display: flex;
+    flex-direction: column;
+
+    gap: 4rem;
+    .titleModal{
+        @include fnt(24, 32, $weight:700, $color: $txt-color, $font: $PTRootUI);
+    }
+    .subTitleModal{
+        @include fnt(14, 20, $weight:400, $color: $text-gray, $font: $fontText);
+    }
+}
+
+.modalCreate{
+    max-width: 384rem !important;
+}
+
+.modalCreateUser{
+    display: flex;
+    flex-direction: column;
+    gap: 16rem;
+}
+
+.modalButtonContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8rem;
+    margin-top: 12rem;
+}
