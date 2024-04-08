@@ -14,5 +14,8 @@ export const API_ACTS_MODEL = {
         damageNames:{
             url: 'damage-names/'
         },
+        signing:{
+            url: 'signing/'
+        },
     },
 }

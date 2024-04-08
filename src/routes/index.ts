@@ -4,8 +4,14 @@ import HomePage from "../pages/HomePage/HomePage";
 import PhonePage from "../pages/PhonePage/PhonePage";
 import SmsPage from "../pages/SmsPage/SmsPage";
 import AccountPage from "../pages/AccountPage/AccountPage";
-import CreateActPage from "../pages/CreateActPage/CreateActPage";
 import AddDamagesPage from "../pages/AddDamagesPage/AddDamagesPage";
+import NewActAddress from "../pages/NewActAddressPage/NewActAddress";
+import NewActType from "../pages/NewActTypePage/NewActTypePage";
+import NewActVictim from "../pages/NewActVictimPage/NewActVictimPage";
+import NewActDamage from "../pages/NewActDamagePage/NewActDamagePage";
+import NewActSigningPage from "../pages/NewActSigning/NewActSigning";
+import NewActCompletePage from "../pages/NewActComplete/NewActComplete";
+import ActInsidePage from "../pages/ActInsidePage/ActInsidePage";
 
 const isAuthenticated = localStorage.getItem("account");
 const isAuthenticatedApplicant = localStorage.getItem("applicant");
@@ -23,8 +29,14 @@ export enum RouteNames {
     PHONEPAGE = '/login-phone',
     SMSPAGE = '/login-sms',
     ACCOUNTPAGE = '/account',
-    CREATEACTPAGE = '/newact',
     ADDDAMAGEPAGE = '/add-damages',
+    NEWACTADDRESS = '/new-act-address',
+    NEWACTTYPEPAGE = '/new-act-type',
+    NEWACTVICTIMPAGE = '/new-act-victim',
+    NEWACTDAMAGEPAGE = '/new-act-damage',
+    NEWACTSIGNINGPAGE = '/new-act-signing',
+    NEWACTCOMPLETEPAGE = '/new-act-complete',
+    ACTINSIDE = '/act-inside',
 }
 
 export const navDate = [
@@ -67,11 +79,16 @@ export const privateRoutes: IRoute[] = [
     element: SmsPage
   },
   {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
-    {path: RouteNames.HOMEPAGE, exact: true, element: HomePage},
-    {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
-    {path: RouteNames.CREATEACTPAGE, exact: true, element: CreateActPage},
-    {path: RouteNames.ADDDAMAGEPAGE, exact: true, element: AddDamagesPage},
-    // {path: RouteNames.CREATEOBJECT, exact: true, element: CreatePage},
+    {path: RouteNames.HOMEPAGE, exact: false, element: HomePage},
+    {path: RouteNames.ACCOUNTPAGE, exact: false, element: AccountPage},
+    {path: RouteNames.ADDDAMAGEPAGE, exact: false, element: AddDamagesPage},
+    {path: RouteNames.NEWACTADDRESS, exact: false, element: NewActAddress},
+    {path: RouteNames.NEWACTTYPEPAGE, exact: false, element: NewActType},
+    {path: RouteNames.NEWACTVICTIMPAGE, exact: false, element: NewActVictim},
+    {path: RouteNames.NEWACTDAMAGEPAGE, exact: false, element: NewActDamage},
+    {path:`${RouteNames.NEWACTSIGNINGPAGE}/:id`, exact: false, element: NewActSigningPage, params: { params: ':id' }},
+    {path:`${RouteNames.NEWACTCOMPLETEPAGE}/:id`, exact: false, element: NewActCompletePage, params: { params: ':id' }},
+    {path:`${RouteNames.ACTINSIDE}/:id`, exact: false, element: ActInsidePage, params: { params: ':id' }},
     // {path:`${RouteNames.CREATEREPORT}/:id`, exact: false, element: CreateReport, params: { params: ':id' }},
     // {path:`${RouteNames.OBJECTINFO}/:id`, exact: false, element: ObjectInfoPage, params: { params: ':id' }},
 ]

@@ -60,6 +60,7 @@ import calendarPlus from "./calendarPlus.svg";
 import save from "./save.svg";
 import Bellogo from "./Bellogo.svg";
 import photo from "./photo.svg";
+import search from "./search.svg";
 export default {
   geosIco,
   bikLogo,
@@ -123,4 +124,5 @@ export default {
   save,
   Bellogo,
   photo,
+  search,
 };

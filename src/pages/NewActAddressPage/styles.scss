@@ -1,0 +1,46 @@
+@use "../../scss/" as *;
+
+.containerPageSlide{
+    display: flex;
+    flex-direction: column;
+    gap: 32rem;
+    margin-bottom: 150rem;
+
+    .titleSlide{
+        @include fnt(24, 32, $weight:600, $font: $fontText, $color: $gray-900);
+    }
+
+    .formContainer{
+        display: flex;
+        flex-direction: column;
+        gap: 24rem;
+    }
+
+    .dateActs{
+        @include fnt(20, 32, $weight:400, $font: $fontText, $color: $gray-900);
+    }
+}
+
+.containerButtonSlider{
+    display: grid;
+    grid-template-columns: 48rem 1fr;
+    gap: 8rem;
+    position: fixed;
+    bottom: 16rem;
+    width: 90%;
+
+    .sliderButton{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        padding: 12rem;
+        border: 1rem solid $gray-300;
+        border-radius: 24rem;
+        background-color: $white;
+        @include fnt(16, 24, $weight:400, $font: $fontText, $color: $gray-900);
+
+        object{
+            margin: 0;
+        }
+    }
+}

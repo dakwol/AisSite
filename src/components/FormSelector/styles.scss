@@ -40,6 +40,7 @@
         border-radius: 12rem;
         padding: 20rem;
         height: 64rem;
+        @include fnt(20, 24, $gray-900, 400,);
 
         &.paddingIco{
             padding:8rem 30rem;
@@ -91,6 +92,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+  
 
             &:hover{
                 background: $gray-100;
@@ -107,6 +109,7 @@
                 font-weight: 400;
                 line-height: 24rem; /* 150% */
                 margin: 0;
+                @include fnt(20, 24, $gray-900, 400);
             }
         }
 

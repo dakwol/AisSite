@@ -11,6 +11,7 @@ import FilePickerModal from "../../components/UI/FilePickerModal/FilePickerModal
 import ActsApiRequest from "../../api/Acts/Acts";
 import apiConfig from "../../api/apiConfig";
 import "./styles.scss";
+import FormDamage from "../../components/FormDamage/FormDamage";
 
 const AddDamagesPage: FC = () => {
   const navigate = useNavigate();
@@ -20,9 +21,14 @@ const AddDamagesPage: FC = () => {
   );
   const actsApi = new ActsApiRequest();
 
-  const [isDamageType, setIsDamageType] = useState();
-  const [isNames, setIsNames] = useState();
-  const [isData, setIsData] = useState({});
+  const [isDamageType, setIsDamageType] = useState<any[]>([]);
+  const [isNames, setIsNames] = useState<any[]>([]);
+  const [isDamageArray, setIsDamageArray] = useState<any[]>([]);
+
+  const [damageArrayCount, setDamageArrayCount] = useState(1);
+  const [isTypeDamage, setIsTypeDamage] = useState<string | number>("");
+
+  console.log("da", dataPress);
 
   const inputDamage = [
     {
@@ -52,12 +58,6 @@ const AddDamagesPage: FC = () => {
       type: "string",
     },
   ];
-  const handleChange = (fieldName: string, fieldValue: string | boolean) => {
-    setIsData({
-      ...isData,
-      [fieldName]: fieldValue,
-    });
-  };
 
   useEffect(() => {
     actsApi.getDamageTypes().then((resp) => {
@@ -70,7 +70,7 @@ const AddDamagesPage: FC = () => {
                 display_name: item.name,
               }))
             : [];
-        return setIsDamageType(damages);
+        setIsDamageType(damages);
       }
     });
     actsApi.getNames().then((resp) => {
@@ -83,17 +83,48 @@ const AddDamagesPage: FC = () => {
                 display_name: item.name,
               }))
             : [];
-        return setIsNames(names);
+        setIsNames(names);
       }
     });
   }, []);
 
-  const onSaveDamages = () => {
-    if (!dataPress.damages) {
-      dataPress.damages = [];
+  const handleChange = (
+    index: number,
+    fieldName: string,
+    fieldValue: string | boolean
+  ) => {
+    console.log("index", isDamageType);
+    console.log("index", index);
+
+    if (index === isDamageArray.length) {
+      // Если индекс равен номеру объекта в массиве, добавляем новый объект
+      setIsDamageArray((prevArray) => [
+        ...prevArray,
+        {
+          [fieldName]: fieldValue,
+          damage_type: isTypeDamage || null,
+        },
+      ]);
+    } else {
+      // Если индекс не равен номеру объекта в массиве, обновляем существующий объект
+      setIsDamageArray((prevArray) =>
+        prevArray.map((item, idx) =>
+          idx === index
+            ? {
+                ...item,
+                [fieldName]: fieldValue,
+                damage_type: isTypeDamage || null,
+              }
+            : item
+        )
+      );
     }
-    const updatedDamages = [...dataPress.damages, isData];
-    console.log("updatedDamages", updatedDamages);
+  };
+
+  const onSaveDamages = () => {
+    const updatedDamages = dataPress.damages
+      ? [...dataPress.damages, ...isDamageArray]
+      : [...isDamageArray];
 
     dispatch(
       //@ts-ignore
@@ -102,44 +133,28 @@ const AddDamagesPage: FC = () => {
     navigate(-1);
   };
 
-  console.log("dataPress", dataPress);
+  const addDamageBlock = () => {
+    setDamageArrayCount(damageArrayCount + 1);
+  };
 
   return (
     <section className="section">
       <div className="containerPageSlide">
         <h1 className="titleSlide">Добавить повреждение</h1>
-        <div className="formContainer">
-          {inputDamage.map((item) => {
-            return (
-              <FormInput
-                style={""}
-                value={dataPress?.damages && dataPress?.damages[item.key]}
-                options={item.options}
-                onChange={(value) => handleChange(item.key, value)}
-                subInput={item.label}
-                required={false}
-                type={item.type}
-                error={""}
-                keyData={""}
-              />
-            );
-          })}
-          <div className="containerImagePicker">
-            <FilePickerModal
-              type="image"
-              setFiles={(e: any) => handleChange("damage_images", e)}
-            />
-            {dataPress?.damages?.damage_images?.length > 0 &&
-              dataPress?.damages?.damage_images?.map((item: any) => {
-                return (
-                  <img
-                    src={`${apiConfig.baseUrlMedia}${item.file}`}
-                    className="imageItem"
-                  ></img>
-                );
-              })}
-          </div>
-        </div>
+        {[...Array(damageArrayCount)].map((_, index) => (
+          <FormDamage
+            key={index}
+            index={index}
+            inputDamage={inputDamage}
+            dataPress={dataPress}
+            handleChange={(index, key, value) =>
+              handleChange(index, key, value)
+            }
+            handleType={(e) => setIsTypeDamage(e)}
+          />
+        ))}
+        <Buttons text={"Добавить блок"} onClick={addDamageBlock} />
+
         <div className="containerButtonSlider">
           <Buttons
             ico={icons.arrowLeft}

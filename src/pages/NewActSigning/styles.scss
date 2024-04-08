@@ -1,0 +1,40 @@
+
+@use "../../scss/" as *;
+
+.containerSigning{
+    display: flex;
+    flex-direction: column;
+    gap: 32rem;
+  
+}
+
+.labelVictim{
+    @include fnt(16, 24, $weight: 400, $font: $fontText, $color: $gray-700);
+    padding: 0 12rem;
+    margin-bottom: 4rem;
+}
+
+.containerVictim{
+    background-color: $gray-100;
+    border-radius: 8rem;
+    padding: 8rem 12rem;
+
+    
+
+    h1{
+        @include fnt(20, 32, $weight: 600, $font: $fontText, $color: $gray-900)
+    }
+    p{
+        @include fnt(20, 32, $weight: 400, $font: $fontText, $color: $gray-900)
+    }
+}
+
+.signingForm{
+    display: flex;
+    flex-direction: column;
+    gap: 16rem;
+
+    h4{
+        @include fnt(20, 28, $weight: 400, $font: $fontText, $color: $gray-900)
+    }
+}

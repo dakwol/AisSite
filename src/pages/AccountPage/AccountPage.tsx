@@ -12,14 +12,18 @@ import Buttons from "../../components/Buttons/Buttons";
 import FormInput from "../../components/FormInput/FormInput";
 import { AuthActionCreators } from "../../store/reducers/auth/action-creator";
 import { decryptData } from "../../components/UI/functions/functions";
+import ActsApiRequest from "../../api/Acts/Acts";
+import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
 
-interface IPhonePage {
-  title: string;
-  type: string;
+interface IActData {
+  id: string;
+  number: string;
+  victim: string;
 }
 
 const AccountPage: FC = () => {
-  const [isPhone, setIsPhone] = useState("");
+  const actsApi = new ActsApiRequest();
+  const [dataAct, setDataAct] = useState<IActData[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isTimer, setIsTimer] = useState<number>(0);
@@ -32,28 +36,37 @@ const AccountPage: FC = () => {
     isTimer > 0 && setTimeout(() => setIsTimer(isTimer - 1), 1000);
   }, [isTimer]);
 
-  const dataAct = [
-    {
-      id: 1,
-      number: "2004242Z12",
-      user: "Черников",
-    },
-    {
-      id: 2,
-      number: "2004242Z12",
-      user: "Черников",
-    },
-    {
-      id: 3,
-      number: "2004242Z12",
-      user: "Черников",
-    },
-    {
-      id: 4,
-      number: "2004242Z12",
-      user: "Черников",
-    },
-  ];
+  // const dataAct = [
+  //   {
+  //     id: 1,
+  //     number: "2004242Z12",
+  //     user: "Черников",
+  //   },
+  //   {
+  //     id: 2,
+  //     number: "2004242Z12",
+  //     user: "Черников",
+  //   },
+  //   {
+  //     id: 3,
+  //     number: "2004242Z12",
+  //     user: "Черников",
+  //   },
+  //   {
+  //     id: 4,
+  //     number: "2004242Z12",
+  //     user: "Черников",
+  //   },
+  // ];
+
+  useEffect(() => {
+    actsApi.list({ urlParams: `?employee=${userInfo.id}` }).then((resp) => {
+      if (resp.success) {
+        //@ts-ignore
+        setDataAct(resp.data.results);
+      }
+    });
+  }, []);
 
   const logOut = () => {
     dispatch(
@@ -81,8 +94,13 @@ const AccountPage: FC = () => {
             <div>
               <Buttons
                 text={"Создать акт осмотра"}
-                onClick={() => navigate(RouteNames.CREATEACTPAGE)}
+                onClick={() => {
+                  dispatch(DataPressActionCreators.clearDataPress());
+                  navigate(RouteNames.NEWACTADDRESS);
+                }}
+                className="buttonCreateAct"
               />
+
               <h2 className="titlePageMini">
                 Мои акты{" "}
                 <div className="searchActsContainer">
@@ -96,12 +114,14 @@ const AccountPage: FC = () => {
                       throw new Error("Function not implemented.");
                     }}
                     subInput={undefined}
+                    placeholder="Найти..."
                     required={false}
                     error={""}
                     keyData={""}
                   />
                   <Buttons
                     text={""}
+                    ico={icons.search}
                     onClick={function (): void {
                       throw new Error("Function not implemented.");
                     }}
@@ -115,11 +135,20 @@ const AccountPage: FC = () => {
 
           <div className="containerDataAct">
             {dataAct.length > 0 ? (
-              dataAct.map((item) => {
+              dataAct.map((item, index) => {
                 return (
-                  <div key={item.id} className="containerAct">
+                  <div
+                    key={item.id}
+                    className="containerAct"
+                    onClick={() =>
+                      navigate(`${RouteNames.ACTINSIDE}/${item.id}`, {
+                        //@ts-ignore
+                        id: item.id,
+                      })
+                    }
+                  >
                     <p className="numberAct">{item.number}</p>
-                    <p className="userAct">{item.user}</p>
+                    <p className="userAct">{item.victim}</p>
                   </div>
                 );
               })

@@ -1,0 +1,20 @@
+@use "../../scss/" as *;
+
+.containerComplete{
+    display: flex;
+    flex-direction: column;
+    gap: 16rem;
+
+    h4{
+        @include fnt(20,32, $weight:400, $font:$fontText, $color: $gray-500);
+    }
+    h3{
+        @include fnt(24,32, $weight:400, $font:$fontText, $color: $gray-900);
+    }
+    .numberActs{
+        @include fnt(32, 40, $weight:400, $font:$fontText, $color: $gray-900);
+    }
+    a{
+        @include fnt(24,32, $weight:600, $font:$fontText, $color: $gray-900);
+    }
+}
