@@ -17,6 +17,11 @@
         @content;
     }
 }
+@mixin minlaptop {
+    @media only screen and (min-width: $laptop-width) {
+        @content;
+    }
+}
 @mixin hd {
     @media only screen and (max-width: $hd-width) {
         @content;

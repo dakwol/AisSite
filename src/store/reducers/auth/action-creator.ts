@@ -5,7 +5,7 @@ import { IToken } from "../../../models/IToken";
 import TokenApiRequest from "../../../api/User/Token";
 import jwt from 'jwt-decode';
 import UserApiRequest from "../../../api/User/Users";
-import EmployersApiRequest from "../../../api/Employers/Employers";
+import EmployersApiRequest from "../../../api/Acts/Acts";
 import { DataPressActionCreators } from "../dataPressItem/action-creator";
 import { encryptData } from "../../../components/UI/functions/functions";
 
@@ -142,20 +142,20 @@ export const AuthActionCreators = {
                 return;
             }
             try {
-                employersApi.sendToModeration(body).then((resp:any)=>{
-                    if (resp.success) {
-                        console.log('res', resp.data);
-                        dispatch(AuthActionCreators.setIsLoading(false));
-                            dispatch(AuthActionCreators.setData(resp.data));
-                            dispatch(DataPressActionCreators.clearDataPress())
+                // employersApi.sendToModeration(body).then((resp:any)=>{
+                //     if (resp.success) {
+                //         console.log('res', resp.data);
+                //         dispatch(AuthActionCreators.setIsLoading(false));
+                //             dispatch(AuthActionCreators.setData(resp.data));
+                //             dispatch(DataPressActionCreators.clearDataPress())
 
-                        setTimeout(() => {
+                //         setTimeout(() => {
                             
-                            dispatch(AuthActionCreators.clearData()); // Предполагается, что у вас есть экшен для очистки данных
-                        }, 5000);
+                //             dispatch(AuthActionCreators.clearData()); // Предполагается, что у вас есть экшен для очистки данных
+                //         }, 5000);
                         
-                    }
-                });
+                //     }
+                // });
                
             } catch (e) {
                 dispatch(AuthActionCreators.setErr('Произошла ошибка при авторизации'));

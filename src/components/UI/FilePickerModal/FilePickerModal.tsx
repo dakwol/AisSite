@@ -39,21 +39,24 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
   });
 
   return (
-    <div className="file-picker-overlay">
+    <div className="file-picker">
       <div className={`file-picker-modal ${isDragActive ? "active" : ""}`}>
         <div
           {...getRootProps()}
           className={`file-picker-dropzone ${isDragActive ? "active" : ""}`}
         >
           <input {...getInputProps()} />
-
-          <div className="textUploadContainer">
+          <div className="buttonPicker">
+            <img src={icons.photo} alt="Иконка Фото" />
+            <p>Фото</p>
+          </div>
+          {/* <div className="textUploadContainer">
             <p className="textUpload">
               <b>Нажмите, чтобы загрузить</b>
               или перетащите файл
               {type === "image" ? ` PNG или JPG` : ` PDF, DOCS, XLSX или TXT`}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

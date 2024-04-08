@@ -1,0 +1,14 @@
+@use "../../scss/" as *;
+
+.containerImagePicker{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8rem;
+
+    .imageItem{
+        width: 76rem;
+        height: 76rem;
+        object-fit: cover;
+        border-radius: 8rem;
+    }
+}

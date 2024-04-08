@@ -12,6 +12,25 @@
     align-items: center;
 }
 
+.buttonPicker{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8rem;
+  background-color: $gray-100;
+  width: 76rem;
+  height: 76rem;
+
+  img{
+    width: 24rem;
+    height: 24rem;
+  }
+  p{
+    @include fnt(14, 20, $weight:500, $color: $gray-400, $font: $fontText)
+  }
+}
+
 .file-picker-container {
     display: flex;
     flex-direction: column;
@@ -19,14 +38,13 @@
 
 .file-picker-modal {
     width: fit-content;
-    height: 126rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: $white;
     border-radius: 10px;
-    padding: 16rem;
+  
     position: relative;
 
     &.active{

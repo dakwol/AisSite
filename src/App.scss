@@ -227,8 +227,12 @@
         .section {
         
             padding: 24rem 16rem 16rem;
-            height: 100vh;
             background-color: $white;
+
+            
+            @include minlaptop{
+                max-width: 500rem;
+            }
         }
         
         .section__header {
@@ -266,6 +270,7 @@
         .containerPage {
             width: 100%;
             height: 100%;
+
         }
 
         .gridFull{

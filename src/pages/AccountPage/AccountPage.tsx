@@ -81,34 +81,33 @@ const AccountPage: FC = () => {
             <div>
               <Buttons
                 text={"Создать акт осмотра"}
-                onClick={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
+                onClick={() => navigate(RouteNames.CREATEACTPAGE)}
               />
-              <h2 className="titlePageMini">Мои акты</h2>
-
-              <div>
-                <FormInput
-                  style={""}
-                  value={undefined}
-                  onChange={function (
-                    value: string,
-                    isChecked?: boolean | undefined
-                  ): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                  subInput={undefined}
-                  required={false}
-                  error={""}
-                  keyData={""}
-                />
-                <Buttons
-                  text={""}
-                  onClick={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                />
-              </div>
+              <h2 className="titlePageMini">
+                Мои акты{" "}
+                <div className="searchActsContainer">
+                  <FormInput
+                    style={""}
+                    value={undefined}
+                    onChange={function (
+                      value: string,
+                      isChecked?: boolean | undefined
+                    ): void {
+                      throw new Error("Function not implemented.");
+                    }}
+                    subInput={undefined}
+                    required={false}
+                    error={""}
+                    keyData={""}
+                  />
+                  <Buttons
+                    text={""}
+                    onClick={function (): void {
+                      throw new Error("Function not implemented.");
+                    }}
+                  />
+                </div>
+              </h2>
             </div>
           ) : (
             <h2 className="titlePageMini">Мои акты</h2>

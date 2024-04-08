@@ -4,6 +4,8 @@ import HomePage from "../pages/HomePage/HomePage";
 import PhonePage from "../pages/PhonePage/PhonePage";
 import SmsPage from "../pages/SmsPage/SmsPage";
 import AccountPage from "../pages/AccountPage/AccountPage";
+import CreateActPage from "../pages/CreateActPage/CreateActPage";
+import AddDamagesPage from "../pages/AddDamagesPage/AddDamagesPage";
 
 const isAuthenticated = localStorage.getItem("account");
 const isAuthenticatedApplicant = localStorage.getItem("applicant");
@@ -21,6 +23,8 @@ export enum RouteNames {
     PHONEPAGE = '/login-phone',
     SMSPAGE = '/login-sms',
     ACCOUNTPAGE = '/account',
+    CREATEACTPAGE = '/newact',
+    ADDDAMAGEPAGE = '/add-damages',
 }
 
 export const navDate = [
@@ -65,6 +69,8 @@ export const privateRoutes: IRoute[] = [
   {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
     {path: RouteNames.HOMEPAGE, exact: true, element: HomePage},
     {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
+    {path: RouteNames.CREATEACTPAGE, exact: true, element: CreateActPage},
+    {path: RouteNames.ADDDAMAGEPAGE, exact: true, element: AddDamagesPage},
     // {path: RouteNames.CREATEOBJECT, exact: true, element: CreatePage},
     // {path:`${RouteNames.CREATEREPORT}/:id`, exact: false, element: CreateReport, params: { params: ':id' }},
     // {path:`${RouteNames.OBJECTINFO}/:id`, exact: false, element: ObjectInfoPage, params: { params: ':id' }},

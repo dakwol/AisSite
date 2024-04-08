@@ -1,7 +1,6 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 import "./styles.scss";
 import Header from "../../components/Header/Header";
-import ConstructionApiRequest from "../../api/Construction/Construction";
 import { ICreateObject } from "../../models/IControl";
 import { IPaginationData } from "../../models/IPagination";
 

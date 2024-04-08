@@ -1,0 +1,15 @@
+@use "../../../scss/" as *;
+
+.typeContainer{
+    .typeItem{
+        @include fnt(20, 24, $weight:400, $color: $gray-900, $font: $fontText);
+        padding: 20rem 12rem;
+
+        background-color: $gray-100;
+        border: 1rem solid $gray-100;
+
+        &.active{
+            border: 1rem solid $blue-500;
+        }
+    }
+}

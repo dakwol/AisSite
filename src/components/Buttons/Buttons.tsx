@@ -35,6 +35,7 @@ const Buttons: React.FC<ButtonsProps> = ({
       {ico && <object type="image/svg+xml" data={ico}></object>}
       {image && <img src={image} className={stileImage}></img>}
       {text}
+      <div></div>
     </button>
   );
 };

@@ -401,6 +401,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .helpText{
         margin-left: 12rem;
-        text-wrap: nowrap;
-        @include fnt(12, 20, $color: $txt-color !important, $weight: 500 !important, $font: $PTRootUI !important);
+        // text-wrap: nowrap;
+        
+        @include fnt(16, 22, $color: $gray-400 !important, $weight: 400 !important, $font: $fontText !important);
     }
