@@ -15,6 +15,9 @@ export const API_USER_MODEL = {
         verifyCode:{
             url: 'verify-code/'
         },
+        verifyEmployeeCode:{
+            url: 'verify-employee-code/'
+        },
         authorize:{
             url: 'authorize'
         },

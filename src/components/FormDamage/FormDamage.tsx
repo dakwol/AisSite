@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import FormInput from "../FormInput/FormInput";
 import FilePickerModal from "../UI/FilePickerModal/FilePickerModal";
 import apiConfig from "../../api/apiConfig";
@@ -22,6 +22,10 @@ const FormDamage: FC<IProps> = ({
     handleType && value && handleType(value);
     handleChange(index, key, value);
   };
+
+  const [arrayImage, setArrayImage] = useState([]);
+
+  console.log("arrayImage", arrayImage);
 
   return (
     <div className="formContainer">
@@ -51,10 +55,14 @@ const FormDamage: FC<IProps> = ({
       <div className="containerImagePicker">
         <FilePickerModal
           type="image"
-          setFiles={(e: any) => handleChange(index, "damage_images", e)}
+          setFiles={(e: any) => {
+            setArrayImage(e);
+            handleChange(index, "damage_images", e);
+          }}
         />
-        {dataPress?.damages?.damage_images?.length > 0 &&
-          dataPress?.damages?.damage_images?.map((item: any) => {
+
+        {arrayImage?.length > 0 &&
+          arrayImage?.map((item: any) => {
             return (
               <img
                 src={`${apiConfig.baseUrlMedia}${item.file}`}

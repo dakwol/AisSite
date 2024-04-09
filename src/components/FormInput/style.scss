@@ -16,13 +16,13 @@
     //     border: 1rem solid rgba(0, 16, 61, 0.12);
     // }
 
-    &.error{
-        border: 1rem solid #FDA29B;
-        &:focus{
-            outline: none;
-            box-shadow: 0px 0px 0px 4px #FEE4E2, 0px 1px 2px 0px rgba(16, 24, 40, 0.05)
-        }
-    }
+    // &.error{
+    //     border: 1rem solid #FDA29B;
+    //     &:focus{
+    //         outline: none;
+    //         box-shadow: 0px 0px 0px 4px #FEE4E2, 0px 1px 2px 0px rgba(16, 24, 40, 0.05)
+    //     }
+    // }
     &:disabled {
         color: $gray-500;
         background-color: $gray-100;

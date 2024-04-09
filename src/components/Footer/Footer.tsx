@@ -12,9 +12,9 @@ const Footer: FC = () => {
       <div className="footerContainer">
         <div
           className="headerLogoText"
-          onClick={() => {
-            navigation(RouteNames.HOMEPAGE);
-          }}
+          // onClick={() => {
+          //   navigation(RouteNames.HOMEPAGE);
+          // }}
         >
           <img src={icons.LogoWhite} className="logo" />
           <h4 className="logoText">

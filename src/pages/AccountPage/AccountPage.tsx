@@ -14,6 +14,7 @@ import { AuthActionCreators } from "../../store/reducers/auth/action-creator";
 import { decryptData } from "../../components/UI/functions/functions";
 import ActsApiRequest from "../../api/Acts/Acts";
 import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
+import HtmlToPdf from "../../components/HtmlToPdf/HtmlToPdf";
 
 interface IActData {
   id: string;
@@ -27,6 +28,7 @@ const AccountPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isTimer, setIsTimer] = useState<number>(0);
+  const [isSearchText, setIsSearchText] = useState<string>("");
 
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
 
@@ -60,13 +62,34 @@ const AccountPage: FC = () => {
   // ];
 
   useEffect(() => {
-    actsApi.list({ urlParams: `?employee=${userInfo.id}` }).then((resp) => {
-      if (resp.success) {
-        //@ts-ignore
-        setDataAct(resp.data.results);
-      }
-    });
+    actsApi
+      .list({
+        urlParams: userInfo.is_employee
+          ? `?employee=${userInfo.id}`
+          : `?victim=${userInfo.id}`,
+      })
+      .then((resp) => {
+        if (resp.success) {
+          //@ts-ignore
+          setDataAct(resp.data.results);
+        }
+      });
   }, []);
+
+  const handleSearch = () => {
+    actsApi
+      .list({
+        urlParams: userInfo.is_employee
+          ? `?employee=${userInfo.id}&search=${isSearchText}`
+          : `?victim=${userInfo.id}&search=${isSearchText}`,
+      })
+      .then((resp) => {
+        if (resp.success) {
+          //@ts-ignore
+          setDataAct(resp.data.results);
+        }
+      });
+  };
 
   const logOut = () => {
     dispatch(
@@ -107,11 +130,8 @@ const AccountPage: FC = () => {
                   <FormInput
                     style={""}
                     value={undefined}
-                    onChange={function (
-                      value: string,
-                      isChecked?: boolean | undefined
-                    ): void {
-                      throw new Error("Function not implemented.");
+                    onChange={(e) => {
+                      setIsSearchText(e);
                     }}
                     subInput={undefined}
                     placeholder="Найти..."
@@ -122,9 +142,8 @@ const AccountPage: FC = () => {
                   <Buttons
                     text={""}
                     ico={icons.search}
-                    onClick={function (): void {
-                      throw new Error("Function not implemented.");
-                    }}
+                    onClick={handleSearch}
+                    className="searchButton"
                   />
                 </div>
               </h2>
@@ -139,7 +158,9 @@ const AccountPage: FC = () => {
                 return (
                   <div
                     key={item.id}
-                    className="containerAct"
+                    className={`containerAct ${
+                      !userInfo.is_employee && "center"
+                    }`}
                     onClick={() =>
                       navigate(`${RouteNames.ACTINSIDE}/${item.id}`, {
                         //@ts-ignore
@@ -148,7 +169,9 @@ const AccountPage: FC = () => {
                     }
                   >
                     <p className="numberAct">{item.number}</p>
-                    <p className="userAct">{item.victim}</p>
+                    {userInfo.is_employee && (
+                      <p className="userAct">{item.victim}</p>
+                    )}
                   </div>
                 );
               })

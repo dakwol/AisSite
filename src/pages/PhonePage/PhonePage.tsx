@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 import "./styles.scss";
 import { RouteNames } from "../../routes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ISendModeration } from "../../models/ISendModeration";
 import { ISendLogin } from "../../models/ISendLogin";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
@@ -14,13 +14,16 @@ import { DataPressActionCreators } from "../../store/reducers/dataPressItem/acti
 
 interface IPhonePage {
   title: string;
-  type: string;
 }
 
-const PhonePage: FC<IPhonePage> = ({ title, type }) => {
+const PhonePage: FC<IPhonePage> = ({ title }) => {
   const [isPhone, setIsPhone] = useState("");
   const navigate = useNavigate();
   const userApi = new UserApiRequest();
+  const params = useParams();
+  const { type } = params;
+
+  console.log("type", type);
 
   const dispatch = useDispatch();
 
@@ -30,7 +33,8 @@ const PhonePage: FC<IPhonePage> = ({ title, type }) => {
 
   const handleSmsPage = () => {
     if (dataPress.phone !== "" && dataPress.phone.length === 10) {
-      navigate(RouteNames.SMSPAGE);
+      //@ts-ignore
+      navigate(`${RouteNames.SMSPAGE}/${type}`, { type: type });
     } else {
       console.error("Неверно введён номер");
     }
@@ -46,7 +50,9 @@ const PhonePage: FC<IPhonePage> = ({ title, type }) => {
         <div className="containerPage">
           <div className="logoContainer">
             <h1 className="titlePage">
-              Введите номер телефона, указанный в акте
+              {type === "employee"
+                ? "Вход для сотрудников"
+                : "Введите номер телефона, указанный в акте"}
             </h1>
           </div>
 

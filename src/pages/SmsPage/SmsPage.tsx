@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 import "./styles.scss";
 import { RouteNames } from "../../routes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ISendModeration } from "../../models/ISendModeration";
 import { ISendLogin } from "../../models/ISendLogin";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
@@ -25,6 +25,9 @@ const SmsPage: FC = () => {
   const dispatch = useDispatch();
   const userApi = new UserApiRequest();
 
+  const params = useParams();
+  const { type } = params;
+
   const dataPress = useTypeSelector(
     (state: any) => state.dataPressReducer.dataPress
   );
@@ -33,13 +36,17 @@ const SmsPage: FC = () => {
     (state) => state.authReducer
   );
 
-  useEffect(() => {
+  const getCode = () => {
     setIsTimer(60);
     userApi.authCode({ phone_number: dataPress.phone }).then((resp) => {
       if (resp.success) {
         setIsCode(resp.data && resp.data.code);
       }
     });
+  };
+
+  useEffect(() => {
+    getCode();
   }, []);
 
   useEffect(() => {
@@ -86,7 +93,12 @@ const SmsPage: FC = () => {
             />
 
             {isTimer === 0 ? (
-              <p className="buttonRepeat getCodeText" onClick={() => {}}>
+              <p
+                className="buttonRepeat getCodeText"
+                onClick={() => {
+                  getCode();
+                }}
+              >
                 Запросить повторно
               </p>
             ) : (

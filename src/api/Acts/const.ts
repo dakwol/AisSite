@@ -17,5 +17,8 @@ export const API_ACTS_MODEL = {
         signing:{
             url: 'signing/'
         },
+        pdf:{
+            url: 'pdf/'
+        },
     },
 }

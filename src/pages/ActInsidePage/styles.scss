@@ -1,0 +1,40 @@
+@use "../../scss/" as *;
+
+.containerPageInside{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24rem;
+
+    .contaiinerInfoAct{
+        margin-bottom: 8rem;
+    }
+
+    .titleSlide{
+        @include fnt(24, 32, $weight:600, $font:$fontText, $color: $gray-900);
+    }
+    .dateActs{
+        @include fnt(20, 32, $weight:400, $font:$fontText, $color: $gray-500);
+    }
+}
+
+.userDataContainer{
+    h1{
+        @include fnt(20, 32, $weight:400, $font:$fontText, $color: $gray-900);
+    }
+    p{
+        @include fnt(20, 32, $weight:400, $font:$fontText, $color: $gray-900);
+    }
+}
+
+.containerButton{
+    .sliderButton{
+        background-color: $white;
+        border: 1rem solid $gray-300;
+        border-radius: 24rem;
+        @include fnt(16, 24, $weight: 400, $font: $fontText, $color: $gray-900);
+        justify-content: space-between;
+        align-items: center;
+    }
+}

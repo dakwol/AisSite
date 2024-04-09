@@ -15,6 +15,9 @@ class UserApiRequest extends BaseModelAPI {
     async verifyCode<T>(body?: any) {
         return this.makeRequest<T>(axiosClient.post, {method: API_USER_MODEL.methods.verifyCode.url, body});
     }
+    async verifyEmployeeCode<T>(body?: any) {
+        return this.makeRequest<T>(axiosClient.post, {method: API_USER_MODEL.methods.verifyEmployeeCode.url, body});
+    }
     async login<T>(body?: any) {
         return this.makeRequest<T>(axiosClient.post, {method: API_USER_MODEL.methods.authorize.url, body});
     }

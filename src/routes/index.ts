@@ -25,10 +25,10 @@ export interface IRoute {
 
 export enum RouteNames {
     LOGIN = '/login',
-    HOMEPAGE = '/',
+  
     PHONEPAGE = '/login-phone',
     SMSPAGE = '/login-sms',
-    ACCOUNTPAGE = '/account',
+    ACCOUNTPAGE = '/',
     ADDDAMAGEPAGE = '/add-damages',
     NEWACTADDRESS = '/new-act-address',
     NEWACTTYPEPAGE = '/new-act-type',
@@ -54,14 +54,16 @@ export const publicRoutes: IRoute[] = [
     element: Login,
   },
   {
-    path: RouteNames.PHONEPAGE,
+    path: `${RouteNames.PHONEPAGE}/:type`,
     exact: false,
-    element: PhonePage
+    element: PhonePage,
+    params:{params: ':type'}
   },
   {
-    path: RouteNames.SMSPAGE,
+    path: `${RouteNames.SMSPAGE}/:type`,
     exact: false,
-    element: SmsPage
+    element: SmsPage,
+     params:{params: ':type'}
   },
   {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
 ]
@@ -69,18 +71,19 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
   {path: RouteNames.LOGIN, exact: true, element: Login},
   {
-    path: RouteNames.PHONEPAGE,
+    path: `${RouteNames.PHONEPAGE}/:type`,
     exact: false,
-    element: PhonePage
+    element: PhonePage,
+    params:{params: ':type'}
   },
   {
-    path: RouteNames.SMSPAGE,
+    path: `${RouteNames.SMSPAGE}/:type`,
     exact: false,
-    element: SmsPage
+    element: SmsPage,
+     params:{params: ':type'}
   },
-  {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
-    {path: RouteNames.HOMEPAGE, exact: false, element: HomePage},
-    {path: RouteNames.ACCOUNTPAGE, exact: false, element: AccountPage},
+    {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
+
     {path: RouteNames.ADDDAMAGEPAGE, exact: false, element: AddDamagesPage},
     {path: RouteNames.NEWACTADDRESS, exact: false, element: NewActAddress},
     {path: RouteNames.NEWACTTYPEPAGE, exact: false, element: NewActType},

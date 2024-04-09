@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16rem;
+    gap: 4rem;
 
     .userName{
         @include fnt(18, 20, $weight:600, $font: $fontText);
@@ -39,6 +40,10 @@
         background-color: $gray-100;
         border-radius: 8rem;
 
+        &.center{
+            justify-content: center;
+        }
+
         .numberAct{
             @include fnt(16, 20, $weight:400, $font: $fontText, $color: $gray-900)
         }
@@ -62,4 +67,15 @@
 .buttonCreateAct{
     margin-bottom: 24rem;
     margin-top: 32rem;
+}
+
+.searchButton{
+    padding: 20rem !important;
+    
+
+    object{
+        margin: 0;
+        width: 24rem;
+        height: 24rem;
+    }
 }
