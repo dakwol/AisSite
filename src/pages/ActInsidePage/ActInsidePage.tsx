@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ActsApiRequest from "../../api/Acts/Acts";
 import {
@@ -34,7 +34,9 @@ const ActInsidePage: FC = () => {
   const [dataAct, setDataAct] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<any>({});
+  const [pdfClicked, setPdfClicked] = useState(false); // State for tracking button click
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
+  const pdfLinkRef = useRef<any>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -74,8 +76,9 @@ const ActInsidePage: FC = () => {
     return groupedData;
   };
 
-  console.log("userData", userData);
-
+  const handlePdfButtonClick = () => {
+    setPdfClicked(true); // Set the state to true when the button is clicked
+  };
   return (
     <section className="section">
       <div className="containerPageInside">
@@ -101,16 +104,12 @@ const ActInsidePage: FC = () => {
         </div>
 
         <PDFDownloadLink
+          ref={pdfLinkRef}
           document={<MyDocument id={dataAct.id} />}
-          fileName="example.pdf"
+          fileName="act.pdf"
+          download={true}
         >
-          {({ blob, url, loading, error }) => (
-            <Buttons
-              text={loading ? "Загрузка документа..." : "Скачать акт в PDF"}
-              disabled={loading}
-              onClick={() => {}}
-            />
-          )}
+          <Buttons text="Скачать акт в PDF" onClick={() => {}} />
         </PDFDownloadLink>
 
         <h2 className="titlePageMini">Типы повреждений</h2>
