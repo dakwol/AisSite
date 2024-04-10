@@ -6,7 +6,6 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const AppRouter = () => {
   const { isAuth } = useTypeSelector((state) => state.authReducer);
-  // const isAuthenticated = false;
   const isAuthenticated = !!localStorage.getItem("access");
   const navigate = useNavigate();
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
@@ -36,8 +35,6 @@ const AppRouter = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate(RouteNames.LOGIN); // Перенаправляем на страницу входа
-    } else {
-      navigate(RouteNames.ACCOUNTPAGE);
     }
   }, [isAuthenticated, navigate]);
   return (

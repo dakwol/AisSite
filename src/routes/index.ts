@@ -65,7 +65,7 @@ export const publicRoutes: IRoute[] = [
     element: SmsPage,
      params:{params: ':type'}
   },
-  {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
+  // {path: RouteNames.ACCOUNTPAGE, exact: true, element: AccountPage},
 ]
 
 export const privateRoutes: IRoute[] = [

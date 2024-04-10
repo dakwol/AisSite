@@ -172,6 +172,7 @@ export const AuthActionCreators = {
         localStorage.removeItem('account');
         localStorage.removeItem('access');
         localStorage.removeItem('accountEmployers');
+        localStorage.removeItem('currentRoute');
         localStorage.removeItem('refresh');
         localStorage.removeItem('userVK');
         dispatch(AuthActionCreators.setIsAuth(false));
