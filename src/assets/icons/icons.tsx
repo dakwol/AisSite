@@ -61,6 +61,7 @@ import save from "./save.svg";
 import Bellogo from "./Bellogo.svg";
 import photo from "./photo.svg";
 import search from "./search.svg";
+import ripples from "./ripples.svg";
 export default {
   geosIco,
   bikLogo,
@@ -125,4 +126,5 @@ export default {
   Bellogo,
   photo,
   search,
+  ripples,
 };

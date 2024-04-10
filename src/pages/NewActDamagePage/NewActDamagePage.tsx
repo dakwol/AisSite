@@ -10,6 +10,7 @@ import { decryptData } from "../../components/UI/functions/functions";
 import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
 import { useDispatch } from "react-redux";
 import UserApiRequest from "../../api/User/Users";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 interface DamageType {
   id: number;
@@ -36,6 +37,7 @@ const NewActDamage: FC = () => {
   const [damageTypes, setDamageTypes] = useState<DamageType[]>([]);
   const [names, setNames] = useState<Name[]>([]);
   const [userId, setUserId] = useState<number>(0);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,12 +107,42 @@ const NewActDamage: FC = () => {
               //@ts-ignore
               id: resp.data.number,
             });
+      } else {
+        setIsError(true);
       }
     });
   };
 
+  const handleDeleteDamage = (damageType: DamageType, damageItems: any[]) => {
+    // Создаем новый массив повреждений, исключая удаляемые объекты
+    const updatedDamages = dataPress.damages.filter((item: any) => {
+      return !damageItems.some(
+        (damageItem: any) =>
+          item.damage_type === damageType.value && item.name === damageItem.name
+      );
+    });
+
+    // Обновляем состояние dataPress, заменяя старый массив обновленным
+    dispatch(DataPressActionCreators.setDataPress("damages", updatedDamages));
+  };
+
+  //   const movingOn = () => {
+  //     if (dataPress.municipality && dataPress.address != "") {
+  //       navigate(RouteNames.NEWACTTYPEPAGE);
+  //     } else {
+  //       setIsError(true);
+  //     }
+  //   };
+
   return (
     <section className="section">
+      {isError && (
+        <ErrorMessage
+          type={"error"}
+          message={"Произошла ошибка"}
+          onClose={() => setIsError(false)}
+        />
+      )}
       <div className="containerPageSlide">
         <h1 className="titleSlide">Повреждения</h1>
         <Buttons
@@ -156,7 +188,12 @@ const NewActDamage: FC = () => {
                     </div>
                   );
                 })}
-                <p className="deleteButton">Удалить</p>
+                <p
+                  className="deleteButton"
+                  onClick={() => handleDeleteDamage(damageType, damageItems)}
+                >
+                  Удалить
+                </p>
               </div>
             ))}
         </div>

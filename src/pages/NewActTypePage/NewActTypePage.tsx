@@ -9,6 +9,7 @@ import Buttons from "../../components/Buttons/Buttons";
 import { RouteNames } from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { decryptData } from "../../components/UI/functions/functions";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 type iBuildTypes = {
   id: string;
@@ -21,6 +22,7 @@ const NewActType: FC = () => {
   const [typeArray, setTypeArray] = useState<iBuildTypes[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
   const dataPress = useTypeSelector(
     (state: any) => state.dataPressReducer.dataPress
@@ -40,8 +42,33 @@ const NewActType: FC = () => {
     dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
   };
 
+  const movingOn = () => {
+    dispatch(DataPressActionCreators.setDataPress("employee", userInfo.id));
+
+    if (dataPress.building_type) {
+      const selectedType = typeArray.find(
+        (item) => item.id === dataPress.building_type
+      );
+
+      if (selectedType && selectedType.is_victim) {
+        navigate(RouteNames.NEWACTVICTIMPAGE);
+      } else {
+        navigate(RouteNames.NEWACTDAMAGEPAGE);
+      }
+    } else {
+      setIsError(true);
+    }
+  };
+
   return (
     <section className="section">
+      {isError && (
+        <ErrorMessage
+          type={"error"}
+          message={"не все поля заполнены"}
+          onClose={() => setIsError(false)}
+        />
+      )}
       <div className="containerPageSlide">
         <h1 className="titleSlide">Выберите один из типов постройки</h1>
 
@@ -74,18 +101,7 @@ const NewActType: FC = () => {
             text={"Далее"}
             className="sliderButton"
             onClick={() => {
-              dispatch(
-                DataPressActionCreators.setDataPress("employee", userInfo.id)
-              );
-              const selectedType = typeArray.find(
-                (item) => item.id === dataPress.building_type
-              );
-
-              if (selectedType && selectedType.is_victim) {
-                navigate(RouteNames.NEWACTVICTIMPAGE);
-              } else {
-                navigate(RouteNames.NEWACTDAMAGEPAGE);
-              }
+              movingOn();
             }}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import Buttons from "../../components/Buttons/Buttons";
 import icons from "../../assets/icons/icons";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import ActsApiRequest from "../../api/Acts/Acts";
 import apiConfig from "../../api/apiConfig";
 import "./styles.scss";
 import FormDamage from "../../components/FormDamage/FormDamage";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 const AddDamagesPage: FC = () => {
   const navigate = useNavigate();
@@ -27,8 +28,7 @@ const AddDamagesPage: FC = () => {
 
   const [damageArrayCount, setDamageArrayCount] = useState(1);
   const [isTypeDamage, setIsTypeDamage] = useState<string | number>("");
-
-  console.log("da", dataPress);
+  const [isError, setIsError] = useState(false);
 
   const inputDamage = [
     {
@@ -126,6 +126,20 @@ const AddDamagesPage: FC = () => {
       ? [...dataPress.damages, ...isDamageArray]
       : [...isDamageArray];
 
+    // const isValid = updatedDamages.every((damage) => {
+    //   console.log("damage2", damage);
+
+    //   return damage.count && damage.damage_type && damage.name;
+    // });
+
+    // console.log("isValid", isValid);
+
+    // // Если не все поля заполнены, выдаем ошибку
+    // if (!isValid) {
+    //   setIsError(true);
+    //   return;
+    // }
+
     dispatch(
       //@ts-ignore
       DataPressActionCreators.setDataPress("damages", updatedDamages)
@@ -138,43 +152,52 @@ const AddDamagesPage: FC = () => {
   };
 
   return (
-    <section className="section">
-      <div className="containerPageSlide">
-        <h1 className="titleSlide">Добавить повреждение</h1>
-        {[...Array(damageArrayCount)].map((_, index) => (
-          <FormDamage
-            key={index}
-            index={index}
-            inputDamage={inputDamage}
-            dataPress={dataPress}
-            handleChange={(index, key, value) =>
-              handleChange(index, key, value)
-            }
-            handleType={(e) => setIsTypeDamage(e)}
-          />
-        ))}
-        <Buttons text={"Добавить блок"} onClick={addDamageBlock} />
+    <Fragment>
+      {isError && (
+        <ErrorMessage
+          type={"error"}
+          message={"не все поля заполнены"}
+          onClose={() => setIsError(false)}
+        />
+      )}
+      <section className="section">
+        <div className="containerPageSlide">
+          <h1 className="titleSlide">Добавить повреждение</h1>
+          {[...Array(damageArrayCount)].map((_, index) => (
+            <FormDamage
+              key={index}
+              index={index}
+              inputDamage={inputDamage}
+              dataPress={dataPress}
+              handleChange={(index, key, value) =>
+                handleChange(index, key, value)
+              }
+              handleType={(e) => setIsTypeDamage(e)}
+            />
+          ))}
+          <Buttons text={"Добавить блок"} onClick={addDamageBlock} />
 
-        <div className="containerButtonSlider">
-          <Buttons
-            ico={icons.arrowLeft}
-            text={""}
-            className="sliderButton"
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-          <Buttons
-            ico={icons.checkBlack}
-            text={"Сохранить"}
-            className="sliderButton"
-            onClick={() => {
-              onSaveDamages();
-            }}
-          />
+          <div className="containerButtonSlider">
+            <Buttons
+              ico={icons.arrowLeft}
+              text={""}
+              className="sliderButton"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+            <Buttons
+              ico={icons.checkBlack}
+              text={"Сохранить"}
+              className="sliderButton"
+              onClick={() => {
+                onSaveDamages();
+              }}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Fragment>
   );
 };
 

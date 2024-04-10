@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import FormInput from "../FormInput/FormInput";
 import FilePickerModal from "../UI/FilePickerModal/FilePickerModal";
 import apiConfig from "../../api/apiConfig";
@@ -25,7 +25,14 @@ const FormDamage: FC<IProps> = ({
 
   const [arrayImage, setArrayImage] = useState([]);
 
-  console.log("arrayImage", arrayImage);
+  useEffect(() => {
+    if (arrayImage) {
+      //@ts-ignore
+      handleChange(index, "damage_images", arrayImage);
+    }
+  }, [arrayImage]);
+
+  console.log("dataPress", dataPress);
 
   return (
     <div className="formContainer">
@@ -44,7 +51,7 @@ const FormDamage: FC<IProps> = ({
                   : handleChange(index, item.key, value)
               }
               subInput={item.label}
-              required={false}
+              required={item.key != "note" && true}
               type={item.type}
               error={""}
               keyData={""}
@@ -56,8 +63,8 @@ const FormDamage: FC<IProps> = ({
         <FilePickerModal
           type="image"
           setFiles={(e: any) => {
-            setArrayImage(e);
-            handleChange(index, "damage_images", e);
+            //@ts-ignore
+            setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
           }}
         />
 
@@ -67,7 +74,7 @@ const FormDamage: FC<IProps> = ({
               <img
                 src={`${apiConfig.baseUrlMedia}${item.file}`}
                 className="imageItem"
-                key={item.file} // Добавьте ключ для избежания предупреждения React
+                key={item.file}
                 alt="Damage Image"
               />
             );

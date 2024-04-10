@@ -61,7 +61,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         </span>
         {!success && message}
       </p>
-      {error ? (
+      {/* {error ? (
         <p onClick={onClick} className="errButton">
           Повторить
         </p>
@@ -69,7 +69,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         <p onClick={onClose} className="errButton">
           Закрыть
         </p>
-      )}
+      )} */}
     </div>
   );
 };

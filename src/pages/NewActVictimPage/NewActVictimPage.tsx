@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import FormInput from "../../components/FormInput/FormInput";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
@@ -8,6 +8,7 @@ import Buttons from "../../components/Buttons/Buttons";
 import { RouteNames } from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { decryptData } from "../../components/UI/functions/functions";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 const NewActVictim: FC = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const NewActVictim: FC = () => {
   const dataPress = useTypeSelector(
     (state: any) => state.dataPressReducer.dataPress
   );
+  const [isError, setIsError] = useState(false);
   const inputVictim = [
     {
       id: 1,
@@ -50,8 +52,31 @@ const NewActVictim: FC = () => {
       })
     );
   };
+
+  const movingOn = () => {
+    if (
+      dataPress.victim.first_name != "" &&
+      dataPress.victim.last_name != "" &&
+      dataPress.victim.patronymic != "" &&
+      dataPress.victim.phone_number != ""
+    ) {
+      navigate(RouteNames.NEWACTDAMAGEPAGE);
+    } else {
+      setIsError(true);
+    }
+  };
+
+  console.log("2222222", dataPress);
+
   return (
     <section className="section">
+      {isError && (
+        <ErrorMessage
+          type={"error"}
+          message={"не все поля заполнены"}
+          onClose={() => setIsError(false)}
+        />
+      )}
       <div className="containerPageSlide">
         <h1 className="titleSlide">Данные пострадавшего/представителя</h1>
 
@@ -90,7 +115,7 @@ const NewActVictim: FC = () => {
             text={"Далее"}
             className="sliderButton"
             onClick={() => {
-              navigate(RouteNames.NEWACTDAMAGEPAGE);
+              movingOn();
             }}
           />
         </div>

@@ -12,6 +12,8 @@ import Buttons from "../../components/Buttons/Buttons";
 import icons from "../../assets/icons/icons";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routes";
+import Skeleton from "react-loading-skeleton";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 type IMunicipaliti = {
   id: string | number;
@@ -22,6 +24,8 @@ const NewActAddress: FC = () => {
   const dateAct = new Date();
   const actsApi = new ActsApiRequest();
   const [municipalitiesArray, setMunicipalitiesArray] = useState<string[]>();
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dataPress = useTypeSelector(
@@ -44,6 +48,7 @@ const NewActAddress: FC = () => {
   ];
 
   useEffect(() => {
+    setLoading(true);
     actsApi.getMunicipalities().then((resp) => {
       if (resp.success) {
         const municipalities =
@@ -55,6 +60,7 @@ const NewActAddress: FC = () => {
               }))
             : [];
         setMunicipalitiesArray(municipalities);
+        setLoading(false);
       }
     });
   }, []);
@@ -63,56 +69,79 @@ const NewActAddress: FC = () => {
     dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
   };
 
-  console.log("dataPress", dataPress);
+  const movingOn = () => {
+    if (dataPress.municipality && dataPress.address != "") {
+      navigate(RouteNames.NEWACTTYPEPAGE);
+    } else {
+      setIsError(true);
+    }
+  };
+
+  console.log("dataPress", isError);
 
   return (
-    <section className="section">
-      <div className="containerPageSlide">
-        <h1 className="titleSlide">МО и адрес происшествия</h1>
-
-        <h4 className="dateActs">
-          {dateAct && formatDateIntlTimeDate(dateAct || "")}
-        </h4>
-
-        <div className="formContainer">
-          {inputAddress.map((item) => {
-            return (
-              <FormInput
-                style={""}
-                value={dataPress[item.key]}
-                options={
-                  item.key === "municipality" ? municipalitiesArray : undefined
-                }
-                onChange={(value) => handleChange(item.key, value)}
-                subInput={item.label}
-                required={false}
-                type={item.type}
-                error={""}
-                keyData={item.key}
-              />
-            );
-          })}
-        </div>
-        <div className="containerButtonSlider">
-          <Buttons
-            ico={icons.arrowLeft}
-            text={""}
-            className="sliderButton"
-            onClick={() => {
-              navigate(-1);
-            }}
+    <>
+      <section className="section">
+        {isError && (
+          <ErrorMessage
+            type={"error"}
+            message={"не все поля заполнены"}
+            onClose={() => setIsError(false)}
           />
-          <Buttons
-            ico={icons.arrowRightOrange}
-            text={"Тип постройки"}
-            className="sliderButton"
-            onClick={() => {
-              navigate(RouteNames.NEWACTTYPEPAGE);
-            }}
-          />
+        )}
+        <div className="containerPageSlide">
+          <h1 className="titleSlide">МО и адрес происшествия</h1>
+
+          <h4 className="dateActs">
+            {dateAct ? (
+              formatDateIntlTimeDate(dateAct || "")
+            ) : (
+              <Skeleton borderRadius={8} height={40} />
+            )}
+          </h4>
+
+          <div className="formContainer">
+            {inputAddress.map((item) => {
+              return (
+                <FormInput
+                  style={""}
+                  value={dataPress[item.key]}
+                  options={
+                    item.key === "municipality"
+                      ? municipalitiesArray
+                      : undefined
+                  }
+                  onChange={(value) => handleChange(item.key, value)}
+                  subInput={item.label}
+                  required={false}
+                  type={item.type}
+                  error={""}
+                  keyData={item.key}
+                />
+              );
+            })}
+          </div>
+          <div className="containerButtonSlider">
+            <Buttons
+              ico={icons.arrowLeft}
+              text={""}
+              className="sliderButton"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+            <Buttons
+              ico={icons.arrowRightOrange}
+              text={"Тип постройки"}
+              className="sliderButton"
+              onClick={() => {
+                movingOn();
+              }}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

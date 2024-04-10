@@ -11,6 +11,7 @@ import "./styles.scss";
 import icons from "../../assets/icons/icons";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "../../components/HtmlToPdf/HtmlToPdf";
+import Skeleton from "react-loading-skeleton";
 
 interface DamageType {
   id: number;
@@ -31,10 +32,12 @@ const ActInsidePage: FC = () => {
   const actApi = new ActsApiRequest();
   const userApi = new UserApiRequest();
   const [dataAct, setDataAct] = useState<any>({});
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<any>({});
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
 
   useEffect(() => {
+    setLoading(true);
     actApi.getById({ id: id }).then((resp) => {
       if (resp.success) {
         //@ts-ignore
@@ -42,15 +45,17 @@ const ActInsidePage: FC = () => {
         //@ts-ignore
         setDataAct({ ...resp.data, damages: groupedData });
         console.log("rrrr", resp.data);
-
+        setLoading(false);
         //@ts-ignore
         if (resp.data.victim) {
+          setLoading(true);
           //@ts-ignore
           userApi.getById({ id: resp.data.victim.id }).then((user) => {
             console.log("userData", user);
             if (user.success) {
               //@ts-ignore
               setUserData(user.data);
+              setLoading(false);
             }
           });
         }
@@ -82,11 +87,16 @@ const ActInsidePage: FC = () => {
                 formatDateIntlTimeDate(dataAct.signed_at || "")}
             </h4>
           </div>
-          {userInfo.is_employee && userData && (
-            <div className="userDataContainer">
-              <h1>{`${userData.last_name} ${userData.first_name} ${userData.patronymic}`}</h1>
-              <p>{`+7${userData.phone_number}`}</p>
-            </div>
+          {loading ? (
+            <Skeleton borderRadius={8} height={90} />
+          ) : (
+            userInfo.is_employee &&
+            userData.last_name && (
+              <div className="userDataContainer">
+                <h1>{`${userData.last_name} ${userData.first_name} ${userData.patronymic}`}</h1>
+                <p>{`+7${userData.phone_number}`}</p>
+              </div>
+            )
           )}
         </div>
 

@@ -113,6 +113,8 @@ const SmsPage: FC = () => {
                 onClick={() => {
                   authUser();
                 }}
+                disabled={isLoading}
+                ico={isLoading ? icons.ripples : ""}
               />
             </div>
           </div>

@@ -15,6 +15,7 @@ import { decryptData } from "../../components/UI/functions/functions";
 import ActsApiRequest from "../../api/Acts/Acts";
 import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
 import HtmlToPdf from "../../components/HtmlToPdf/HtmlToPdf";
+import Skeleton from "react-loading-skeleton";
 
 interface IActData {
   id: string;
@@ -29,6 +30,7 @@ const AccountPage: FC = () => {
   const dispatch = useDispatch();
   const [isTimer, setIsTimer] = useState<number>(0);
   const [isSearchText, setIsSearchText] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
 
@@ -62,6 +64,7 @@ const AccountPage: FC = () => {
   // ];
 
   useEffect(() => {
+    setLoading(true);
     actsApi
       .list({
         urlParams: userInfo.is_employee
@@ -72,6 +75,7 @@ const AccountPage: FC = () => {
         if (resp.success) {
           //@ts-ignore
           setDataAct(resp.data.results);
+          setLoading(false);
         }
       });
   }, []);
@@ -153,7 +157,15 @@ const AccountPage: FC = () => {
           )}
 
           <div className="containerDataAct">
-            {dataAct.length > 0 ? (
+            {loading ? (
+              <>
+                <Skeleton borderRadius={8} height={40} />
+                <Skeleton borderRadius={8} height={40} />
+                <Skeleton borderRadius={8} height={40} />
+                <Skeleton borderRadius={8} height={40} />
+                <Skeleton borderRadius={8} height={40} />
+              </>
+            ) : dataAct.length > 0 ? (
               dataAct.map((item, index) => {
                 return (
                   <div
