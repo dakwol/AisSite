@@ -12,6 +12,7 @@ import Buttons from "../../components/Buttons/Buttons";
 import FormInput from "../../components/FormInput/FormInput";
 import { AuthActionCreators } from "../../store/reducers/auth/action-creator";
 import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
+import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
 
 interface IPhonePage {
   title: string;
@@ -24,6 +25,7 @@ const SmsPage: FC = () => {
   const [isTimer, setIsTimer] = useState<number>(0);
   const dispatch = useDispatch();
   const userApi = new UserApiRequest();
+  const [isError, setIsError] = useState(false);
 
   const params = useParams();
   const { type } = params;
@@ -40,7 +42,8 @@ const SmsPage: FC = () => {
     setIsTimer(60);
     userApi.authCode({ phone_number: dataPress.phone }).then((resp) => {
       if (resp.success) {
-        setIsCode(resp.data && resp.data.code);
+        setIsCode(resp.data && resp.data.message);
+        setIsError(true);
       }
     });
   };
@@ -73,6 +76,13 @@ const SmsPage: FC = () => {
   return (
     <Fragment>
       <section className="section">
+        {isError && (
+          <ErrorMessage
+            type={"success"}
+            message={`Временное отображение кода: ${isCode}`}
+            onClose={() => setIsError(false)}
+          />
+        )}
         <div className="containerPage">
           <div className="logoContainer">
             <h1 className="titlePage">
