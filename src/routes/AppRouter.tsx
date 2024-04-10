@@ -17,7 +17,7 @@ const AppRouter = () => {
     if (storedRoute) {
       setInitialRoute(storedRoute);
     } else {
-      setInitialRoute(RouteNames.ACCOUNTPAGE);
+      setInitialRoute(RouteNames.LOGIN);
     }
   }, [isAuth]);
 
@@ -32,6 +32,14 @@ const AppRouter = () => {
       window.removeEventListener("popstate", handleRouteChange);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate(RouteNames.LOGIN); // Перенаправляем на страницу входа
+    } else {
+      navigate(RouteNames.ACCOUNTPAGE);
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <Routes>
       {isAuthenticated
