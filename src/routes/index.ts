@@ -24,7 +24,7 @@ export interface IRoute {
 }
 
 export enum RouteNames {
-    LOGIN = '/login',
+    LOGIN = '/',
   
     PHONEPAGE = '/login-phone',
     SMSPAGE = '/login-sms',
@@ -69,7 +69,7 @@ export const publicRoutes: IRoute[] = [
 ]
 
 export const privateRoutes: IRoute[] = [
-  {path: RouteNames.LOGIN, exact: true, element: Login},
+  // {path: RouteNames.LOGIN, exact: true, element: Login},
   {
     path: `${RouteNames.PHONEPAGE}/:type`,
     exact: false,

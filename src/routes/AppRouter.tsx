@@ -18,7 +18,7 @@ const AppRouter = () => {
     } else {
       setInitialRoute(RouteNames.LOGIN);
     }
-  }, [isAuth]);
+  }, []);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -32,11 +32,15 @@ const AppRouter = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate(RouteNames.LOGIN); // Перенаправляем на страницу входа
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate(RouteNames.LOGIN); // Перенаправляем на страницу входа
+  //   } else {
+  //     navigate(RouteNames.ACCOUNTPAGE);
+  //   }
+  // }, [isAuthenticated, navigate]);
+  console.log("isAuthenticated", isAuthenticated);
+
   return (
     <Routes>
       {isAuthenticated

@@ -32,7 +32,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
       onClose();
     };
 
-    const timeout = setTimeout(hideMessage, 3000); // Скрыть сообщение через 5 секунд
+    const timeout = setTimeout(hideMessage, 2000); // Скрыть сообщение через 5 секунд
 
     return () => {
       clearTimeout(timeout); // Очистить таймаут при размонтировании компонента
