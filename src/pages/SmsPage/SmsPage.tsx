@@ -126,6 +126,13 @@ const SmsPage: FC = () => {
                 disabled={isLoading}
                 ico={isLoading ? icons.ripples : ""}
               />
+              <Buttons
+                text={"Назад"}
+                onClick={() => {
+                  navigate(-1);
+                }}
+                disabled={isLoading}
+              />
             </div>
           </div>
         </div>
