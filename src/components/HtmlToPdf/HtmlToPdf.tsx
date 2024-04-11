@@ -7,17 +7,19 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import ActsApiRequest from "../../api/Acts/Acts";
 import {
   formatDateIntlDate,
   formatDateIntlTimeDate,
 } from "../UI/functions/functions";
+import apiConfig from "../../api/apiConfig";
 
 // Подключаем кириллический шрифт
 Font.register({
   family: "Roboto",
-  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf",
 });
 
 // Создаем стили для нашего PDF-документа
@@ -31,6 +33,10 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     flexGrow: 1,
+    paddingHorizontal: 44,
+    paddingVertical: 40,
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });
 
@@ -55,74 +61,244 @@ const MyDocument: FC<IProps> = ({ id }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text>{`Акт осмотра ${pdfData?.building_type}, поврежденного в результате чрезвычайной ситуации`}</Text>
-          <Text style={{ color: "#2970FF", marginTop: 24 }}>{`№${
-            pdfData?.number
-          } от ${
-            pdfData.signed_at && formatDateIntlTimeDate(pdfData.signed_at || "")
-          }`}</Text>
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 44,
-            }}
-          >
-            <View>
-              <Text style={{ color: "#667085", fontSize: 12 }}>
-                Муниципальное образование
-              </Text>
-              <Text>{`город ${pdfData.municipality}`}</Text>
-            </View>
-            <View>
-              <Text style={{ color: "#667085", fontSize: 12 }}>тип</Text>
-              <Text>{`${pdfData?.building_type}`}</Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 44,
-            }}
-          >
-            <View>
-              <Text style={{ color: "#667085", fontSize: 12 }}>
-                ФИО собственника помещения/представителя
-              </Text>
-              <Text>{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}`}</Text>
-            </View>
-            <View>
-              <Text style={{ color: "#667085", fontSize: 12 }}>
-                Контактный телефон
-              </Text>
-              <Text>{`+7${pdfData?.victim?.phone_number}`}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 44,
-            }}
-          >
-            <View>
-              <Text style={{ color: "#667085", fontSize: 12 }}>
-                Адрес объекта
-              </Text>
-              <Text>{`${pdfData?.address}`}</Text>
-            </View>
-          </View>
-          <View style={{ marginTop: 48 }}>
-            <Text>{`Настоящий акт составлен о том, что по состоянию на  ${
+          <View>
+            <Text
+              style={{ fontSize: 22 }}
+            >{`Акт осмотра ${pdfData?.building_type}, поврежденного в результате чрезвычайной ситуации`}</Text>
+            <Text
+              style={{
+                color: "#2970FF",
+                marginTop: 12,
+                fontSize: 22,
+              }}
+            >{`№${pdfData?.number} от ${
               pdfData.signed_at &&
               formatDateIntlTimeDate(pdfData.signed_at || "")
-            }, выявлены следующие повреждения: `}</Text>
+            }`}</Text>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 22,
+              }}
+            >
+              <View>
+                <Text
+                  style={{
+                    color: "#667085",
+                    fontSize: 12,
+                    fontWeight: 400,
+                  }}
+                >
+                  Муниципальное образование
+                </Text>
+                <Text
+                  style={{ fontSize: 12, fontWeight: 400 }}
+                >{`город ${pdfData.municipality}`}</Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: "#667085",
+                    fontSize: 12,
+                    fontWeight: 400,
+                  }}
+                >
+                  тип
+                </Text>
+                <Text
+                  style={{ fontSize: 12, fontWeight: 400 }}
+                >{`${pdfData?.building_type}`}</Text>
+              </View>
+            </View>
+
+            {pdfData?.victim && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 22,
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      color: "#667085",
+                      fontSize: 12,
+                      fontWeight: 400,
+                    }}
+                  >
+                    ФИО собственника помещения/представителя
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12, fontWeight: 400 }}
+                  >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}`}</Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      color: "#667085",
+                      fontSize: 12,
+                      fontWeight: 400,
+                    }}
+                  >
+                    Контактный телефон
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12, fontWeight: 400 }}
+                  >{`+7${pdfData?.victim?.phone_number}`}</Text>
+                </View>
+              </View>
+            )}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 22,
+              }}
+            >
+              <View>
+                <Text style={{ color: "#667085", fontSize: 12 }}>
+                  Адрес объекта
+                </Text>
+                <Text
+                  style={{ fontSize: 12, fontWeight: 200 }}
+                >{`${pdfData?.address}`}</Text>
+              </View>
+            </View>
+            <View style={{ marginTop: 24 }}>
+              <Text
+                style={{ fontSize: 16 }}
+              >{`Настоящий акт составлен о том, что по состоянию на  ${
+                pdfData.signed_at &&
+                formatDateIntlTimeDate(pdfData.signed_at || "")
+              }, выявлены следующие повреждения: `}</Text>
+            </View>
+
+            <View style={{ marginTop: 12 }}>
+              {pdfData?.damages?.map((item: any, index: number) => {
+                return (
+                  <Text style={{ fontSize: 12 }} key={index}>{`${index + 1}. ${
+                    item?.damage_type
+                  }, ${item?.name}, ${item?.count}шт (${
+                    item?.note
+                  }), фото (приложение №${index + 1})`}</Text>
+                );
+              })}
+            </View>
+            <View
+              style={{
+                width: "100%",
+                backgroundColor: "#D0D5DD",
+                height: 2,
+                marginVertical: 20,
+              }}
+            ></View>
+
+            <View style={{ marginBottom: 24 }}>
+              <Text style={{ fontSize: 12, marginBottom: 8 }}>
+                Подписи лиц, проводивших осмотр помещения
+              </Text>
+              <Text
+                style={{ fontSize: 16, marginBottom: 4 }}
+              >{`${pdfData?.employee?.last_name} ${pdfData?.employee?.first_name} ${pdfData?.employee?.patronymic}`}</Text>
+              <Text style={{ fontSize: 12, color: "#667085" }}>
+                Подписано через систему АИС «Контроль повреждений»
+              </Text>
+            </View>
+            {pdfData?.victim && (
+              <View style={{ marginBottom: 24 }}>
+                <Text
+                  style={{ fontSize: 12, fontWeight: "light", marginBottom: 8 }}
+                >
+                  Подпись лица, присутствующего при осмотре жилого помещения
+                  (собственник/представитель)
+                </Text>
+                <Text
+                  style={{ fontSize: 16, marginBottom: 4 }}
+                >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}, +7${pdfData?.victim?.phone_number}`}</Text>
+                <Text
+                  style={{ fontSize: 12, color: "#667085" }}
+                >{`Подписано СМС-сообщением через систему АИС «Контроль повреждений» ${
+                  pdfData.signed_at &&
+                  formatDateIntlTimeDate(pdfData.signed_at || "")
+                }`}</Text>
+              </View>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 12 }}>
+              Акт создан в АИС «Контроль повреждений»
+            </Text>
+            <Text
+              style={{ fontSize: 12 }}
+              render={({ pageNumber, totalPages }) =>
+                `Страница ${pageNumber} из ${totalPages}`
+              }
+            />
           </View>
         </View>
       </Page>
+      {pdfData?.damages?.map((item: any, index: number) => {
+        return (
+          <>
+            {item?.damage_images?.map((image: any, imageIndex: number) => {
+              console.log("ddd", `${apiConfig.baseUrlMedia}${image.file}`);
+
+              return (
+                <Page
+                  size="A4"
+                  style={styles.page}
+                  key={`${index}-${imageIndex}`}
+                >
+                  <View style={styles.section}>
+                    <View>
+                      <Text style={{ fontSize: 12 }}>{`Приложение №${
+                        index + 1
+                      } к акту ${pdfData.number} от ${
+                        pdfData.signed_at &&
+                        formatDateIntlTimeDate(pdfData.signed_at || "")
+                      }`}</Text>
+                      <Image
+                        style={{
+                          width: "100%",
+                          height: "49%",
+                          objectFit: "cover",
+                        }}
+                        src={`${apiConfig.baseUrlMedia}${image.file}`}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={{ fontSize: 12 }}>
+                        Акт создан в АИС «Контроль повреждений»
+                      </Text>
+                      <Text
+                        style={{ fontSize: 12 }}
+                        render={({ pageNumber, totalPages }) =>
+                          `Страница ${pageNumber} из ${totalPages}`
+                        }
+                      />
+                    </View>
+                  </View>
+                </Page>
+              );
+            })}
+          </>
+        );
+      })}
     </Document>
   );
 };

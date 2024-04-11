@@ -83,10 +83,6 @@ const transformDate = (inputDate: string): string => {
   if (typeof inputDate === "string") {
     const parts = inputDate.split("-");
 
-    console.log("====================================");
-    console.log("inputDate", inputDate);
-    console.log("====================================");
-
     if (parts.length === 3) {
       const day = parts[0];
       const month = parts[1];

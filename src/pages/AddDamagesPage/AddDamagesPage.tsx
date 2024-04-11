@@ -93,16 +93,13 @@ const AddDamagesPage: FC = () => {
     fieldName: string,
     fieldValue: string | boolean
   ) => {
-    console.log("index", isDamageType);
-    console.log("index", index);
-
-    if (index === isDamageArray.length) {
+    if (index === isDamageArray.length && isTypeDamage !== "") {
       // Если индекс равен номеру объекта в массиве, добавляем новый объект
       setIsDamageArray((prevArray) => [
         ...prevArray,
         {
           [fieldName]: fieldValue,
-          damage_type: isTypeDamage || null,
+          damage_type: isTypeDamage,
         },
       ]);
     } else {
@@ -113,7 +110,7 @@ const AddDamagesPage: FC = () => {
             ? {
                 ...item,
                 [fieldName]: fieldValue,
-                damage_type: isTypeDamage || null,
+                damage_type: isTypeDamage,
               }
             : item
         )
@@ -175,7 +172,7 @@ const AddDamagesPage: FC = () => {
               handleType={(e) => setIsTypeDamage(e)}
             />
           ))}
-          <Buttons text={"Добавить блок"} onClick={addDamageBlock} />
+          <Buttons text={"Добавить блок"} onClick={() => addDamageBlock()} />
 
           <div className="containerButtonSlider">
             <Buttons

@@ -26,7 +26,7 @@ const FormDamage: FC<IProps> = ({
   const [arrayImage, setArrayImage] = useState([]);
 
   useEffect(() => {
-    if (arrayImage) {
+    if (arrayImage.length > 0) {
       //@ts-ignore
       handleChange(index, "damage_images", arrayImage);
     }
