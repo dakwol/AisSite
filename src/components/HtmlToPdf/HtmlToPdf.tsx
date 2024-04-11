@@ -247,56 +247,64 @@ const MyDocument: FC<IProps> = ({ id }) => {
         </View>
       </Page>
       {pdfData?.damages?.map((item: any, index: number) => {
-        return (
-          <>
-            {item?.damage_images?.map((image: any, imageIndex: number) => {
-              console.log("ddd", `${apiConfig.baseUrlMedia}${image.file}`);
+        const images = item?.damage_images || [];
+        const pagesCount = Math.ceil(images.length / 2); // Calculate the number of pages needed
 
-              return (
-                <Page
-                  size="A4"
-                  style={styles.page}
-                  key={`${index}-${imageIndex}`}
+        // Iterate over the pages
+        return Array.from({ length: pagesCount }, (_, pageIndex) => {
+          const startIndex = pageIndex * 2;
+          const endIndex = Math.min(startIndex + 2, images.length);
+
+          // Render the Page component with two images
+          return (
+            <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
+              <View style={styles.section}>
+                <View>
+                  <Text style={{ fontSize: 12 }}>{`Приложение №${
+                    index + 1
+                  } к акту ${pdfData.number} от ${
+                    pdfData.signed_at &&
+                    formatDateIntlTimeDate(pdfData.signed_at || "")
+                  }`}</Text>
+                  {/* Render two images per page */}
+                  {images
+                    .slice(startIndex, endIndex)
+                    .map((image: any, imageIndex: number) => {
+                      return (
+                        <Image
+                          key={`${index}-${pageIndex}-${imageIndex}`}
+                          style={{
+                            width: "100%",
+                            height: "49%",
+                            objectFit: "cover",
+                            marginBottom: 10, // Adjust as needed
+                          }}
+                          src={`${apiConfig.baseUrlMedia}${image.file}`}
+                        />
+                      );
+                    })}
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  <View style={styles.section}>
-                    <View>
-                      <Text style={{ fontSize: 12 }}>{`Приложение №${
-                        index + 1
-                      } к акту ${pdfData.number} от ${
-                        pdfData.signed_at &&
-                        formatDateIntlTimeDate(pdfData.signed_at || "")
-                      }`}</Text>
-                      <Image
-                        style={{
-                          width: "100%",
-                          objectFit: "cover",
-                        }}
-                        src={`${apiConfig.baseUrlMedia}${image.file}`}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text style={{ fontSize: 12 }}>
-                        Акт создан в АИС «Контроль повреждений»
-                      </Text>
-                      <Text
-                        style={{ fontSize: 12 }}
-                        render={({ pageNumber, totalPages }) =>
-                          `Страница ${pageNumber} из ${totalPages}`
-                        }
-                      />
-                    </View>
-                  </View>
-                </Page>
-              );
-            })}
-          </>
-        );
+                  <Text style={{ fontSize: 12 }}>
+                    Акт создан в АИС «Контроль повреждений»
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12 }}
+                    render={({ pageNumber, totalPages }) =>
+                      `Страница ${pageNumber} из ${totalPages}`
+                    }
+                  />
+                </View>
+              </View>
+            </Page>
+          );
+        });
       })}
     </Document>
   );
