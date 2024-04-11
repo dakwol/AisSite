@@ -260,9 +260,9 @@ const MyDocument: FC<IProps> = ({ id }) => {
             <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
               <View style={styles.section}>
                 <View>
-                  <Text style={{ fontSize: 12 }}>{`Приложение №${
-                    index + 1
-                  } к акту ${pdfData.number} от ${
+                  <Text
+                    style={{ fontSize: 12, marginBottom: 8 }}
+                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
@@ -275,9 +275,8 @@ const MyDocument: FC<IProps> = ({ id }) => {
                           key={`${index}-${pageIndex}-${imageIndex}`}
                           style={{
                             width: "100%",
-                            height: "49%",
                             objectFit: "cover",
-                            marginBottom: 10, // Adjust as needed
+                            marginBottom: 8, // Adjust as needed
                           }}
                           src={`${apiConfig.baseUrlMedia}${image.file}`}
                         />
