@@ -27,6 +27,9 @@ class ActsApiRequest extends BaseModelAPI {
     async actsSigning(id: string,body?: any) {
         return this.makeRequest(axiosClient.post, {id:id, method: API_ACTS_MODEL.methods.signing.url, body:body});
     }
+    async getAddress(urlParams: string) {
+        return this.makeRequest(axiosClient.get, {method: API_ACTS_MODEL.methods.getAddress.url, urlParams: `?query=${urlParams}`});
+    }
 }
 
 export default ActsApiRequest

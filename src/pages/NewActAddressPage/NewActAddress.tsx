@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import "./styles.scss";
 
 import ActsApiRequest from "../../api/Acts/Acts";
@@ -24,10 +24,14 @@ const NewActAddress: FC = () => {
   const dateAct = new Date();
   const actsApi = new ActsApiRequest();
   const [municipalitiesArray, setMunicipalitiesArray] = useState<string[]>();
+  const [addressArray, setAddressArray] = useState([]);
+  const [isOpenAddress, setIsOpenAddress] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  let timer: NodeJS.Timeout; // Переменная для хранения идентификатора таймера
   const dataPress = useTypeSelector(
     (state: any) => state.dataPressReducer.dataPress
   );
@@ -66,6 +70,30 @@ const NewActAddress: FC = () => {
   }, []);
 
   const handleChange = (fieldName: string, fieldValue: string | boolean) => {
+    if (fieldName === "address") {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        actsApi.getAddress(fieldValue as string).then((resp) => {
+          if (resp.success) {
+            const address = resp.data
+              ? resp.data.map((item: any) => ({
+                  id: item.id,
+                  value: item.value,
+                  display_name: item.value,
+                }))
+              : [];
+            resp.data && setAddressArray(address);
+            setIsOpenAddress(true);
+          }
+        });
+      }, 500);
+    } else {
+      dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
+    }
+  };
+
+  const changeAddress = (fieldName: string, fieldValue: string | boolean) => {
+    setIsOpenAddress(false);
     dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
   };
 
@@ -76,8 +104,6 @@ const NewActAddress: FC = () => {
       setIsError(true);
     }
   };
-
-  console.log("dataPress", isError);
 
   return (
     <>
@@ -103,21 +129,40 @@ const NewActAddress: FC = () => {
           <div className="formContainer">
             {inputAddress.map((item) => {
               return (
-                <FormInput
-                  style={""}
-                  value={dataPress[item.key]}
-                  options={
-                    item.key === "municipality"
-                      ? municipalitiesArray
-                      : undefined
-                  }
-                  onChange={(value) => handleChange(item.key, value)}
-                  subInput={item.label}
-                  required={false}
-                  type={item.type}
-                  error={""}
-                  keyData={item.key}
-                />
+                <div className={item.key === "address" ? "formAddress" : ""}>
+                  <FormInput
+                    style={""}
+                    value={dataPress[item.key]}
+                    options={
+                      item.key === "municipality"
+                        ? municipalitiesArray
+                        : undefined
+                    }
+                    onChange={(value) => handleChange(item.key, value)}
+                    subInput={item.label}
+                    required={false}
+                    type={item.type}
+                    error={""}
+                    keyData={item.key}
+                  />
+
+                  {item.key === "address" && isOpenAddress && (
+                    <div className="addressContainer">
+                      {addressArray.map((address: any) => {
+                        return (
+                          <div
+                            className="optionsItem"
+                            onClick={() =>
+                              changeAddress(item.key, address.value)
+                            }
+                          >
+                            {address?.display_name}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>

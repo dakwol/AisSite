@@ -20,5 +20,8 @@ export const API_ACTS_MODEL = {
         pdf:{
             url: 'pdf/'
         },
+        getAddress:{
+            url: 'get-address/'
+        },
     },
 }

@@ -226,17 +226,15 @@ const NewActDamage: FC = () => {
               }}
             />
           )}
-        </div>
-        {/* <div className="containerButtonSlider">
           <Buttons
-            ico={icons.checkBlack}
+            ico={icons.arrowRightOrange}
             text={"Подписание без СМС"}
-            className="sliderButton"
+            className="sliderButtonAll"
             onClick={() => {
               // handleSigningActs();
             }}
           />
-        </div> */}
+        </div>
       </div>
     </section>
   );
