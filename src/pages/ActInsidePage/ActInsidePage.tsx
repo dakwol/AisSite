@@ -123,6 +123,11 @@ const ActInsidePage: FC = () => {
             ico={isLoading ? icons.ripples : ""}
             onClick={handlePdfButtonClick}
           />
+          <Buttons
+            text="Скачать акт в PDF"
+            ico={isLoading ? icons.ripples : ""}
+            onClick={handlePdfButtonClick}
+          />
         </PDFDownloadLink>
 
         <h2 className="titlePageMini">Типы повреждений</h2>
