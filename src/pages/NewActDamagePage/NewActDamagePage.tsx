@@ -69,8 +69,8 @@ const NewActDamage: FC = () => {
 
     fetchData();
   }, []);
-  const handleCreateActs = () => {
-    if (dataPress?.victim?.phone_number) {
+  const handleCreateActs = (isSms: boolean, isPhoto: boolean) => {
+    if (dataPress?.victim?.phone_number && isSms) {
       userApi
         .list({ urlParams: `?phone_number=${dataPress.victim.phone_number}` })
         .then((resp) => {
@@ -83,25 +83,36 @@ const NewActDamage: FC = () => {
                 ["id"]: resp.data.results[0].id, // Fix this line
               })
             );
-            createAct();
+            createAct(isSms, isPhoto);
           } else {
-            createAct();
+            createAct(isSms, isPhoto);
           }
         });
+    } else if (isPhoto) {
+      createAct(isSms, isPhoto);
     } else {
-      createAct();
+      createAct(isSms, isPhoto);
     }
   };
 
-  const createAct = () => {
+  const createAct = (isSms: boolean, isPhoto: boolean) => {
     actsApi.create({ body: dataPress }).then((resp) => {
       if (resp.success) {
-        dataPress.victim
+        dataPress.victim && isSms
           ? //@ts-ignore
             navigate(`${RouteNames.NEWACTSIGNINGPAGE}/${resp.data.id}`, {
               //@ts-ignore
               id: resp.data.id,
             })
+          : isPhoto
+          ? navigate(
+              //@ts-ignore
+              `${RouteNames.NEWACTSIGNINPHOTOGPAGE}/${resp.data.id}`,
+              {
+                //@ts-ignore
+                id: resp.data.id,
+              }
+            )
           : //@ts-ignore
             navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${resp.data.number}`, {
               //@ts-ignore
@@ -125,14 +136,6 @@ const NewActDamage: FC = () => {
     // Обновляем состояние dataPress, заменяя старый массив обновленным
     dispatch(DataPressActionCreators.setDataPress("damages", updatedDamages));
   };
-
-  //   const movingOn = () => {
-  //     if (dataPress.municipality && dataPress.address != "") {
-  //       navigate(RouteNames.NEWACTTYPEPAGE);
-  //     } else {
-  //       setIsError(true);
-  //     }
-  //   };
 
   return (
     <section className="section">
@@ -213,7 +216,7 @@ const NewActDamage: FC = () => {
               text={"Подписание"}
               className="sliderButton"
               onClick={() => {
-                handleCreateActs();
+                handleCreateActs(true, false);
               }}
             />
           ) : (
@@ -222,18 +225,20 @@ const NewActDamage: FC = () => {
               text={"Подписать"}
               className="sliderButton"
               onClick={() => {
-                handleCreateActs();
+                handleCreateActs(false, false);
               }}
             />
           )}
-          <Buttons
-            ico={icons.arrowRightOrange}
-            text={"Подписание без СМС"}
-            className="sliderButtonAll"
-            onClick={() => {
-              // handleSigningActs();
-            }}
-          />
+          {dataPress.victim && (
+            <Buttons
+              ico={icons.arrowRightOrange}
+              text={"Подписание без СМС"}
+              className="sliderButtonAll"
+              onClick={() => {
+                handleCreateActs(false, true);
+              }}
+            />
+          )}
         </div>
       </div>
     </section>

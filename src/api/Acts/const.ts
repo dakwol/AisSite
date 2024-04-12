@@ -23,5 +23,8 @@ export const API_ACTS_MODEL = {
         getAddress:{
             url: 'get-address/'
         },
+        sendSign:{
+            url: 'send-sign/'
+        },
     },
 }

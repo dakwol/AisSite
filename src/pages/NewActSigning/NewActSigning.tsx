@@ -32,7 +32,7 @@ const NewActSigningPage: FC = () => {
   const handleSigningActs = () => {
     actsApi
       //@ts-ignore
-      .actsSigning(`${id}/`, { code: isSms })
+      .actsSigning(`${id}/`, { code: isSms }, `?code=${isSms}`)
       .then((resp) => {
         if (resp.success) {
           //@ts-ignore
@@ -51,6 +51,17 @@ const NewActSigningPage: FC = () => {
         if (resp.success) {
           //@ts-ignore
           setDataUser(resp.data.results[0]);
+        }
+      });
+    actsApi
+      .sendSign(
+        `${id}/` as string,
+        dataPress.victim.phone_number ? { is_code: true } : { is_code: false }
+      )
+      .then((resp) => {
+        if (resp.success) {
+          console.log("res", resp);
+          console.log("res", resp);
         }
       });
   }, []);

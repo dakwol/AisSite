@@ -12,6 +12,7 @@ import NewActDamage from "../pages/NewActDamagePage/NewActDamagePage";
 import NewActSigningPage from "../pages/NewActSigning/NewActSigning";
 import NewActCompletePage from "../pages/NewActComplete/NewActComplete";
 import ActInsidePage from "../pages/ActInsidePage/ActInsidePage";
+import NewActSigningPhotoPage from "../pages/NewActSignPhoto/NewActSignPhoto";
 
 const isAuthenticated = localStorage.getItem("account");
 const isAuthenticatedApplicant = localStorage.getItem("applicant");
@@ -35,6 +36,7 @@ export enum RouteNames {
     NEWACTVICTIMPAGE = '/new-act-victim',
     NEWACTDAMAGEPAGE = '/new-act-damage',
     NEWACTSIGNINGPAGE = '/new-act-signing',
+    NEWACTSIGNINPHOTOGPAGE = '/new-act-sign-photo',
     NEWACTCOMPLETEPAGE = '/new-act-complete',
     ACTINSIDE = '/act-inside',
 }
@@ -90,6 +92,7 @@ export const privateRoutes: IRoute[] = [
     {path: RouteNames.NEWACTVICTIMPAGE, exact: false, element: NewActVictim},
     {path: RouteNames.NEWACTDAMAGEPAGE, exact: false, element: NewActDamage},
     {path:`${RouteNames.NEWACTSIGNINGPAGE}/:id`, exact: false, element: NewActSigningPage, params: { params: ':id' }},
+    {path:`${RouteNames.NEWACTSIGNINPHOTOGPAGE}/:id`, exact: false, element: NewActSigningPhotoPage, params: { params: ':id' }},
     {path:`${RouteNames.NEWACTCOMPLETEPAGE}/:id`, exact: false, element: NewActCompletePage, params: { params: ':id' }},
     {path:`${RouteNames.ACTINSIDE}/:id`, exact: false, element: ActInsidePage, params: { params: ':id' }},
     // {path:`${RouteNames.CREATEREPORT}/:id`, exact: false, element: CreateReport, params: { params: ':id' }},

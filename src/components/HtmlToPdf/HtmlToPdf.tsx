@@ -179,11 +179,11 @@ const MyDocument: FC<IProps> = ({ id }) => {
             <View style={{ marginTop: 12 }}>
               {pdfData?.damages?.map((item: any, index: number) => {
                 return (
-                  <Text style={{ fontSize: 12 }} key={index}>{`${index + 1}. ${
+                  <Text style={{ fontSize: 12 }} key={index}>{`${index + 2}. ${
                     item?.damage_type
                   }, ${item?.name}, ${item?.count}шт (${
                     item?.note
-                  }), фото (приложение №${index + 1})`}</Text>
+                  }), фото (приложение №${index + 2})`}</Text>
                 );
               })}
             </View>
@@ -218,12 +218,21 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 <Text
                   style={{ fontSize: 16, marginBottom: 4 }}
                 >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}, +7${pdfData?.victim?.phone_number}`}</Text>
-                <Text
-                  style={{ fontSize: 12, color: "#667085" }}
-                >{`Подписано СМС-сообщением через систему АИС «Контроль повреждений» ${
-                  pdfData.signed_at &&
-                  formatDateIntlTimeDate(pdfData.signed_at || "")
-                }`}</Text>
+                {pdfData.act_images !== 0 ? (
+                  <Text
+                    style={{ fontSize: 12, color: "#667085" }}
+                  >{`Подписано актом через систему АИС «Контроль повреждений» ${
+                    pdfData.signed_at &&
+                    formatDateIntlTimeDate(pdfData.signed_at || "")
+                  } Приложение №1`}</Text>
+                ) : (
+                  <Text
+                    style={{ fontSize: 12, color: "#667085" }}
+                  >{`Подписано СМС-сообщением через систему АИС «Контроль повреждений» ${
+                    pdfData.signed_at &&
+                    formatDateIntlTimeDate(pdfData.signed_at || "")
+                  }`}</Text>
+                )}
               </View>
             )}
           </View>
@@ -246,6 +255,67 @@ const MyDocument: FC<IProps> = ({ id }) => {
           </View>
         </View>
       </Page>
+
+      {pdfData?.act_images?.map((item: any, index: number) => {
+        const pagesCount = Math.ceil(pdfData?.act_images.length / 2); // Calculate the number of pages needed
+
+        // Iterate over the pages
+        return Array.from({ length: pagesCount }, (_, pageIndex) => {
+          const startIndex = pageIndex * 2;
+          const endIndex = Math.min(startIndex + 2, pdfData?.act_images.length);
+
+          // Render the Page component with two images
+          return (
+            <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
+              <View style={styles.section}>
+                <View>
+                  <Text
+                    style={{ fontSize: 12, marginBottom: 8 }}
+                  >{`Приложение №1 к акту ${pdfData.number} от ${
+                    pdfData.signed_at &&
+                    formatDateIntlTimeDate(pdfData.signed_at || "")
+                  }`}</Text>
+                  {/* Render two images per page */}
+                  {pdfData?.act_images
+                    .slice(startIndex, endIndex)
+                    .map((image: any, imageIndex: number) => {
+                      return (
+                        <Image
+                          key={`${index}-${pageIndex}-${imageIndex}`}
+                          style={{
+                            width: "100%",
+                            objectFit: "cover",
+                            height: "50%",
+                            marginBottom: 8, // Adjust as needed
+                          }}
+                          src={`${apiConfig.baseUrlMedia}${image.file}`}
+                        />
+                      );
+                    })}
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontSize: 12 }}>
+                    Акт создан в АИС «Контроль повреждений»
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12 }}
+                    render={({ pageNumber, totalPages }) =>
+                      `Страница ${pageNumber} из ${totalPages}`
+                    }
+                  />
+                </View>
+              </View>
+            </Page>
+          );
+        });
+      })}
+
       {pdfData?.damages?.map((item: any, index: number) => {
         const images = item?.damage_images || [];
         const pagesCount = Math.ceil(images.length / 2); // Calculate the number of pages needed
@@ -262,7 +332,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 <View>
                   <Text
                     style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
+                  >{`Приложение №${index + 2} к акту ${pdfData.number} от ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
