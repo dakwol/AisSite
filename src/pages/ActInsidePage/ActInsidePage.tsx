@@ -9,7 +9,7 @@ import UserApiRequest from "../../api/User/Users";
 import Buttons from "../../components/Buttons/Buttons";
 import "./styles.scss";
 import icons from "../../assets/icons/icons";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "../../components/HtmlToPdf/HtmlToPdf";
 import Skeleton from "react-loading-skeleton";
 
@@ -36,7 +36,7 @@ const ActInsidePage: FC = () => {
   const [userData, setUserData] = useState<any>({});
   const [pdfClicked, setPdfClicked] = useState(false); // State for tracking button click
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
-  const pdfLinkRef = useRef<any>(null);
+  const pdfViewerRef = useRef<any>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -77,8 +77,9 @@ const ActInsidePage: FC = () => {
   };
 
   const handlePdfButtonClick = () => {
-    setPdfClicked(true); // Set the state to true when the button is clicked
+    pdfViewerRef.current?.open(); // Open PDF in the PDFViewer component when the button is clicked
   };
+
   return (
     <section className="section">
       <div className="containerPageInside">
@@ -103,14 +104,15 @@ const ActInsidePage: FC = () => {
           )}
         </div>
 
-        <PDFDownloadLink
-          ref={pdfLinkRef}
-          document={<MyDocument id={dataAct.id} />}
-          fileName="act.pdf"
-          download={true}
-        >
-          <Buttons text="Скачать акт в PDF" onClick={() => {}} />
-        </PDFDownloadLink>
+        <PDFViewer ref={pdfViewerRef} width="100%" height={600}>
+          <MyDocument id={dataAct.id} />
+        </PDFViewer>
+
+        <Buttons
+          text="Скачать акт в PDF"
+          onClick={handlePdfButtonClick}
+          // Add additional styles or className if needed
+        />
 
         <h2 className="titlePageMini">Типы повреждений</h2>
 
