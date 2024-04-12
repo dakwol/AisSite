@@ -116,11 +116,12 @@ const ActInsidePage: FC = () => {
           document={<MyDocument id={dataAct.id} />}
           fileName="act.pdf"
           download={true}
+          onClick={handlePdfButtonClick}
         >
           <Buttons
             text="Скачать акт в PDF"
             ico={isLoading ? icons.ripples : ""}
-            onClick={handlePdfButtonClick} // Call handlePdfButtonClick when the button is clicked
+            onClick={handlePdfButtonClick}
           />
         </PDFDownloadLink>
 
