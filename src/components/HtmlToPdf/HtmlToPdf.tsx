@@ -322,18 +322,23 @@ const MyDocument: FC<IProps> = ({ id }) => {
 
         return Array.from({ length: pagesCount }, (_, pageIndex) => {
           const startIndex = pageIndex * 2;
-          const endIndex = Math.min(startIndex + 1, images.length);
+          const endIndex = Math.min(startIndex + 2, images.length); // Изменил endIndex на startIndex + 2
 
           return (
             <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
               <View style={styles.section}>
-                <View>
-                  <Text
-                    style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
-                    pdfData.signed_at &&
-                    formatDateIntlTimeDate(pdfData.signed_at || "")
-                  }`}</Text>
+                <Text style={{ fontSize: 12, marginBottom: 8 }}>{`Приложение №${
+                  index + 1
+                } к акту ${pdfData.number} от ${
+                  pdfData.signed_at &&
+                  formatDateIntlTimeDate(pdfData.signed_at || "")
+                }`}</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
                   {images
                     .slice(startIndex, endIndex)
                     .map((image: any, imageIndex: number) => {
@@ -341,8 +346,8 @@ const MyDocument: FC<IProps> = ({ id }) => {
                         <Image
                           key={`${index}-${pageIndex}-${imageIndex}`}
                           style={{
-                            width: "100%",
-                            objectFit: "cover",
+                            width: "48%", // Изменил ширину изображения на 48%, чтобы поместить по два изображения на одной строке
+                            height: 200, // Вы можете настроить высоту по своему усмотрению
                             marginBottom: 8,
                           }}
                           src={`${apiConfig.baseUrlMedia}${image.file}`}
