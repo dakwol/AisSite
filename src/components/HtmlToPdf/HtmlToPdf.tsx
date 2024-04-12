@@ -335,7 +335,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 }`}</Text>
                 <View
                   style={{
-                    flexDirection: "row",
+                    flexDirection: "column",
                     justifyContent: "space-between",
                   }}
                 >
@@ -349,6 +349,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                             width: "48%", // Изменил ширину изображения на 48%, чтобы поместить по два изображения на одной строке
                             height: 200, // Вы можете настроить высоту по своему усмотрению
                             marginBottom: 8,
+                            objectFit: "cover",
                           }}
                           src={`${apiConfig.baseUrlMedia}${image.file}`}
                         />
