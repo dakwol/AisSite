@@ -33,6 +33,7 @@ const ActInsidePage: FC = () => {
   const userApi = new UserApiRequest();
   const [dataAct, setDataAct] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState<any>({});
   const [pdfClicked, setPdfClicked] = useState(false); // State for tracking button click
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
@@ -78,7 +79,9 @@ const ActInsidePage: FC = () => {
 
   const handlePdfButtonClick = () => {
     setPdfClicked(true); // Set the state to true when the button is clicked
+
     if (pdfLinkRef.current) {
+      setIsLoading(true);
       pdfLinkRef.current.click(); // Trigger the click event on the PDFDownloadLink
     }
   };
@@ -114,6 +117,7 @@ const ActInsidePage: FC = () => {
         >
           <Buttons
             text="Скачать акт в PDF"
+            ico={isLoading ? icons.ripples : ""}
             onClick={handlePdfButtonClick} // Call handlePdfButtonClick when the button is clicked
           />
         </PDFDownloadLink>
