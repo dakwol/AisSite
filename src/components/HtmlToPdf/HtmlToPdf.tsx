@@ -179,11 +179,11 @@ const MyDocument: FC<IProps> = ({ id }) => {
             <View style={{ marginTop: 12 }}>
               {pdfData?.damages?.map((item: any, index: number) => {
                 return (
-                  <Text style={{ fontSize: 12 }} key={index}>{`${index + 2}. ${
+                  <Text style={{ fontSize: 12 }} key={index}>{`${index + 1}. ${
                     item?.damage_type
                   }, ${item?.name}, ${item?.count}шт (${
                     item?.note
-                  }), фото (приложение №${index + 2})`}</Text>
+                  }), фото (приложение №${index + 1})`}</Text>
                 );
               })}
             </View>
@@ -262,7 +262,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
         // Iterate over the pages
         return Array.from({ length: pagesCount }, (_, pageIndex) => {
           const startIndex = pageIndex * 2;
-          const endIndex = Math.min(startIndex + 2, pdfData?.act_images.length);
+          const endIndex = Math.min(startIndex + 1, pdfData?.act_images.length);
 
           // Render the Page component with two images
           return (
@@ -271,7 +271,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 <View>
                   <Text
                     style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №1 к акту ${pdfData.number} от ${
+                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
@@ -323,7 +323,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
         // Iterate over the pages
         return Array.from({ length: pagesCount }, (_, pageIndex) => {
           const startIndex = pageIndex * 2;
-          const endIndex = Math.min(startIndex + 2, images.length);
+          const endIndex = Math.min(startIndex + 1, images.length);
 
           // Render the Page component with two images
           return (
@@ -332,7 +332,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 <View>
                   <Text
                     style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №${index + 2} к акту ${pdfData.number} от ${
+                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
