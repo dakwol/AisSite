@@ -318,14 +318,12 @@ const MyDocument: FC<IProps> = ({ id }) => {
 
       {pdfData?.damages?.map((item: any, index: number) => {
         const images = item?.damage_images || [];
-        const pagesCount = Math.ceil(images.length / 2); // Calculate the number of pages needed
+        const pagesCount = Math.ceil(images.length / 2);
 
-        // Iterate over the pages
         return Array.from({ length: pagesCount }, (_, pageIndex) => {
           const startIndex = pageIndex * 2;
           const endIndex = Math.min(startIndex + 1, images.length);
 
-          // Render the Page component with two images
           return (
             <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
               <View style={styles.section}>
@@ -336,7 +334,6 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
-                  {/* Render two images per page */}
                   {images
                     .slice(startIndex, endIndex)
                     .map((image: any, imageIndex: number) => {
@@ -346,8 +343,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                           style={{
                             width: "100%",
                             objectFit: "cover",
-                            height: "50%",
-                            marginBottom: 8, // Adjust as needed
+                            marginBottom: 8,
                           }}
                           src={`${apiConfig.baseUrlMedia}${image.file}`}
                         />
