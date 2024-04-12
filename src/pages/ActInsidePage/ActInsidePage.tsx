@@ -81,6 +81,8 @@ const ActInsidePage: FC = () => {
     setPdfClicked(true); // Set the state to true when the button is clicked
 
     if (pdfLinkRef.current) {
+      console.log("Загрузка");
+
       setIsLoading(true);
       pdfLinkRef.current.click(); // Trigger the click event on the PDFDownloadLink
     }
