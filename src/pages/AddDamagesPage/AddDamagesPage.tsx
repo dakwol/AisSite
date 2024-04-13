@@ -49,7 +49,7 @@ const AddDamagesPage: FC = () => {
       id: 3,
       label: "Количество",
       key: "count",
-      type: "string",
+      type: "number",
     },
     {
       id: 4,
