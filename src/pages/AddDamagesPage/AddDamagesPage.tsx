@@ -38,13 +38,13 @@ const AddDamagesPage: FC = () => {
       type: "field",
       options: isDamageType || [],
     },
-    {
-      id: 2,
-      label: "Наименование",
-      key: "name",
-      type: "field",
-      options: isNames || [],
-    },
+    // {
+    //   id: 2,
+    //   label: "Наименование",
+    //   key: "name",
+    //   type: "field",
+    //   options: isNames || [],
+    // },
     {
       id: 3,
       label: "Количество",
@@ -73,19 +73,19 @@ const AddDamagesPage: FC = () => {
         setIsDamageType(damages);
       }
     });
-    actsApi.getNames().then((resp) => {
-      if (resp.success) {
-        const names =
-          resp.data && resp.data.results
-            ? resp.data.results.map((item: any) => ({
-                id: item.id,
-                value: item.id,
-                display_name: item.name,
-              }))
-            : [];
-        setIsNames(names);
-      }
-    });
+    // actsApi.getNames().then((resp) => {
+    //   if (resp.success) {
+    //     const names =
+    //       resp.data && resp.data.results
+    //         ? resp.data.results.map((item: any) => ({
+    //             id: item.id,
+    //             value: item.id,
+    //             display_name: item.name,
+    //           }))
+    //         : [];
+    //     setIsNames(names);
+    //   }
+    // });
   }, []);
 
   const handleChange = (
@@ -172,7 +172,7 @@ const AddDamagesPage: FC = () => {
               handleType={(e) => setIsTypeDamage(e)}
             />
           ))}
-          <Buttons text={"Добавить блок"} onClick={() => addDamageBlock()} />
+          {/* <Buttons text={"Добавить блок"} onClick={() => addDamageBlock()} /> */}
 
           <div className="containerButtonSlider">
             <Buttons

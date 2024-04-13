@@ -131,15 +131,15 @@ const ActInsidePage: FC = () => {
           {dataAct.damages &&
             Object.keys(dataAct.damages).map((damageType, index) => (
               <div key={index} className="damageItem">
-                <h1 className="damageTitle">{damageType}</h1>
-                {dataAct.damages[damageType].map(
-                  (damage: any, damageIndex: number) => (
-                    <div key={damageIndex} className="containerDamageData">
-                      <p>{damage.name}</p>
+                <div className="containerDamageData">
+                  <h1 className="damageTitle">{damageType}</h1>
+
+                  {dataAct.damages[damageType].map(
+                    (damage: any, damageIndex: number) => (
                       <p>{damage.count}</p>
-                    </div>
-                  )
-                )}
+                    )
+                  )}
+                </div>
               </div>
             ))}
         </div>

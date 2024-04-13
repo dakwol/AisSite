@@ -42,9 +42,9 @@ const NewActDamage: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const damageTypesResp = await actsApi.getDamageTypes();
-      const namesResp = await actsApi.getNames();
+      // const namesResp = await actsApi.getNames();
 
-      if (damageTypesResp.success && namesResp.success) {
+      if (damageTypesResp.success) {
         const damageTypesData =
           damageTypesResp.data && damageTypesResp.data.results
             ? damageTypesResp.data.results.map((item: any) => ({
@@ -55,15 +55,15 @@ const NewActDamage: FC = () => {
             : [];
         setDamageTypes(damageTypesData);
 
-        const namesData =
-          namesResp.data && namesResp.data.results
-            ? namesResp.data.results.map((item: any) => ({
-                id: item.id,
-                value: item.id,
-                display_name: item.name,
-              }))
-            : [];
-        setNames(namesData);
+        // const namesData =
+        //   namesResp.data && namesResp.data.results
+        //     ? namesResp.data.results.map((item: any) => ({
+        //         id: item.id,
+        //         value: item.id,
+        //         display_name: item.name,
+        //       }))
+        //     : [];
+        // setNames(namesData);
       }
     };
 
@@ -123,14 +123,23 @@ const NewActDamage: FC = () => {
       }
     });
   };
+  const handleDeleteDamage = (
+    damageType: DamageType,
+    damageItemToDelete: any
+  ) => {
+    let deleted = false;
 
-  const handleDeleteDamage = (damageType: DamageType, damageItems: any[]) => {
-    // Создаем новый массив повреждений, исключая удаляемые объекты
+    // Создаем новый массив повреждений, исключая удаляемый объект
     const updatedDamages = dataPress.damages.filter((item: any) => {
-      return !damageItems.some(
-        (damageItem: any) =>
-          item.damage_type === damageType.value && item.name === damageItem.name
-      );
+      if (
+        !deleted &&
+        item.damage_type === damageType.value &&
+        item.name === damageItemToDelete.name
+      ) {
+        deleted = true; // Устанавливаем флаг, что элемент был удален
+        return false; // Удаляем только первый найденный элемент с совпадающим именем
+      }
+      return true; // Оставляем все остальные элементы без изменений
     });
 
     // Обновляем состояние dataPress, заменяя старый массив обновленным
@@ -156,49 +165,28 @@ const NewActDamage: FC = () => {
 
         <div className="damageContainer">
           {dataPress.damages &&
-            Object.values(
-              dataPress.damages.reduce((acc: any, item: any) => {
-                const damageType = damageTypes.find(
-                  (type: DamageType) => type.value === item.damage_type
-                );
-                if (!damageType) {
-                  return acc;
-                }
-                const key = damageType.id;
-                if (!acc[key]) {
-                  acc[key] = {
-                    damageType,
-                    damageItems: [],
-                  };
-                }
-                acc[key].damageItems.push(item);
-                return acc;
-              }, {})
-            ).map(({ damageType, damageItems }: any) => (
-              <div key={damageType.id} className="damageItem">
-                <h1 className="damageTitle">{damageType.display_name}</h1>
-                {damageItems.map((damageItem: any) => {
-                  const damageName = names.find(
-                    (nameItem: Name) => nameItem.value === damageItem.name
-                  );
-                  return (
-                    <div
-                      key={damageName && damageName.id}
-                      className="containerDamageData"
-                    >
-                      <p>{damageName && damageName.display_name}</p>
-                      <p>{damageItem.count}</p>
-                    </div>
-                  );
-                })}
-                <p
-                  className="deleteButton"
-                  onClick={() => handleDeleteDamage(damageType, damageItems)}
-                >
-                  Удалить
-                </p>
-              </div>
-            ))}
+            dataPress.damages.map((item: any) => {
+              const damageType = damageTypes.find(
+                (type: DamageType) => type.value === item.damage_type
+              );
+              if (!damageType) {
+                return null;
+              }
+              return (
+                <div key={item.id} className="damageItem">
+                  <div className="containerDamageData">
+                    <h1 className="damageTitle">{damageType.display_name}</h1>
+                    <p>{item.count}</p>
+                  </div>
+                  <p
+                    className="deleteButton"
+                    onClick={() => handleDeleteDamage(damageType, item)}
+                  >
+                    Удалить
+                  </p>
+                </div>
+              );
+            })}
         </div>
 
         <div className="containerButtonSlider">

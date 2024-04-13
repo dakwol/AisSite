@@ -181,9 +181,9 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 return (
                   <Text style={{ fontSize: 12 }} key={index}>{`${index + 1}. ${
                     item?.damage_type
-                  }, ${item?.name}, ${item?.count}шт (${
-                    item?.note
-                  }), фото (приложение №${index + 1})`}</Text>
+                  }, ${item?.count}шт (${item?.note}), фото (приложение №${
+                    index + 1
+                  })`}</Text>
                 );
               })}
             </View>
@@ -224,7 +224,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   >{`Подписано актом через систему АИС «Контроль повреждений» ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
-                  } Приложение №1`}</Text>
+                  } Подписание`}</Text>
                 ) : (
                   <Text
                     style={{ fontSize: 12, color: "#667085" }}
@@ -271,7 +271,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 <View>
                   <Text
                     style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
+                  >{`Подписание к акту ${pdfData.number} от ${
                     pdfData.signed_at &&
                     formatDateIntlTimeDate(pdfData.signed_at || "")
                   }`}</Text>
