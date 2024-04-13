@@ -285,7 +285,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                           style={{
                             width: "100%",
                             objectFit: "cover",
-                            height: "50%",
+                            height: "100%",
                             marginBottom: 8, // Adjust as needed
                           }}
                           src={`${apiConfig.baseUrlMedia}${image.file}`}

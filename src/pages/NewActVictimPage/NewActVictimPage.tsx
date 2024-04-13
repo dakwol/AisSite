@@ -66,8 +66,6 @@ const NewActVictim: FC = () => {
     }
   };
 
-  console.log("2222222", dataPress);
-
   return (
     <section className="section">
       {isError && (

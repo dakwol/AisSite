@@ -69,8 +69,9 @@ const NewActDamage: FC = () => {
 
     fetchData();
   }, []);
-  const handleCreateActs = (isSms: boolean, isPhoto: boolean) => {
-    if (dataPress?.victim?.phone_number && isSms) {
+
+  useEffect(() => {
+    if (dataPress?.victim?.phone_number) {
       userApi
         .list({ urlParams: `?phone_number=${dataPress.victim.phone_number}` })
         .then((resp) => {
@@ -83,16 +84,13 @@ const NewActDamage: FC = () => {
                 ["id"]: resp.data.results[0].id, // Fix this line
               })
             );
-            createAct(isSms, isPhoto);
-          } else {
-            createAct(isSms, isPhoto);
           }
         });
-    } else if (isPhoto) {
-      createAct(isSms, isPhoto);
-    } else {
-      createAct(isSms, isPhoto);
     }
+  }, []);
+
+  const handleCreateActs = (isSms: boolean, isPhoto: boolean) => {
+    createAct(isSms, isPhoto);
   };
 
   const createAct = (isSms: boolean, isPhoto: boolean) => {
