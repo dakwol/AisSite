@@ -77,7 +77,7 @@ const NewActAddress: FC = () => {
           if (resp.success) {
             const address = resp.data
               ? resp.data.map((item: any) => ({
-                  id: item.id,
+                  id: item.data.fias_id,
                   value: item.value,
                   display_name: item.value,
                 }))
@@ -92,9 +92,18 @@ const NewActAddress: FC = () => {
     }
   };
 
-  const changeAddress = (fieldName: string, fieldValue: string | boolean) => {
+  const changeAddress = (fieldName: string, fieldValue: any) => {
     setIsOpenAddress(false);
-    dispatch(DataPressActionCreators.setDataPress(fieldName, fieldValue));
+    console.log("fieldValue", fieldValue);
+
+    const addressData = {
+      //@ts-ignore
+      name: fieldValue.value,
+      //@ts-ignore
+      fias_id: fieldValue.id,
+    };
+    //@ts-ignore
+    dispatch(DataPressActionCreators.setDataPress(fieldName, addressData));
   };
 
   const movingOn = () => {
@@ -104,6 +113,8 @@ const NewActAddress: FC = () => {
       setIsError(true);
     }
   };
+
+  console.log(dataPress);
 
   return (
     <>
@@ -132,7 +143,11 @@ const NewActAddress: FC = () => {
                 <div className={item.key === "address" ? "formAddress" : ""}>
                   <FormInput
                     style={""}
-                    value={dataPress[item.key]}
+                    value={
+                      item.key === "address"
+                        ? dataPress[item.key]?.name
+                        : dataPress[item.key]
+                    }
                     options={
                       item.key === "municipality"
                         ? municipalitiesArray
@@ -149,12 +164,12 @@ const NewActAddress: FC = () => {
                   {item.key === "address" && isOpenAddress && (
                     <div className="addressContainer">
                       {addressArray.map((address: any) => {
+                        console.log("address", address);
+
                         return (
                           <div
                             className="optionsItem"
-                            onClick={() =>
-                              changeAddress(item.key, address.value)
-                            }
+                            onClick={() => changeAddress(item.key, address)}
                           >
                             {address?.display_name}
                           </div>
