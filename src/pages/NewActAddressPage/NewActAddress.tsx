@@ -107,7 +107,11 @@ const NewActAddress: FC = () => {
   };
 
   const movingOn = () => {
-    if (dataPress.municipality && dataPress.address != "") {
+    if (
+      dataPress.municipality &&
+      dataPress.address != "" &&
+      dataPress?.address?.fias_id
+    ) {
       navigate(RouteNames.NEWACTTYPEPAGE);
     } else {
       setIsError(true);

@@ -76,13 +76,13 @@ const SmsPage: FC = () => {
   return (
     <Fragment>
       <section className="section">
-        {isError && (
+        {/* {isError && (
           <ErrorMessage
             type={"success"}
             message={`Временное отображение кода: ${isCode}`}
             onClose={() => setIsError(false)}
           />
-        )}
+        )} */}
         <div className="containerPage">
           <div className="logoContainer">
             <h1 className="titlePage">
