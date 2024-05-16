@@ -111,19 +111,21 @@ const ActInsidePage: FC = () => {
           )}
         </div>
 
-        <PDFDownloadLink
-          ref={pdfLinkRef}
-          document={<MyDocument id={dataAct.id} />}
-          fileName="act.pdf"
-          download={true}
-          target="_blank"
-        >
-          <Buttons
-            text="Скачать акт в PDF"
-            ico={isLoading ? icons.ripples : ""}
-            onClick={handlePdfButtonClick}
-          />
-        </PDFDownloadLink>
+        {dataAct.id && (
+          <PDFDownloadLink
+            ref={pdfLinkRef}
+            document={<MyDocument id={dataAct.id} />}
+            fileName="act.pdf"
+            download={true}
+            target="_blank"
+          >
+            <Buttons
+              text="Скачать акт в PDF"
+              ico={isLoading ? icons.ripples : ""}
+              onClick={handlePdfButtonClick}
+            />
+          </PDFDownloadLink>
+        )}
 
         <h2 className="titlePageMini">Типы повреждений</h2>
 
