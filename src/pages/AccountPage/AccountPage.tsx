@@ -67,7 +67,7 @@ const AccountPage: FC = () => {
     setLoading(true);
     actsApi
       .list({
-        urlParams: userInfo.is_employee
+        urlParams: userInfo.is_staff
           ? `?employee=${userInfo.id}`
           : `?victim=${userInfo.id}`,
       })
@@ -83,7 +83,7 @@ const AccountPage: FC = () => {
   const handleSearch = () => {
     actsApi
       .list({
-        urlParams: userInfo.is_employee
+        urlParams: userInfo.is_staff
           ? `?employee=${userInfo.id}&search=${isSearchText}`
           : `?victim=${userInfo.id}&search=${isSearchText}`,
       })
@@ -117,7 +117,7 @@ const AccountPage: FC = () => {
               }}
             />
           </header>
-          {userInfo.is_employee ? (
+          {userInfo.is_staff ? (
             <div>
               <Buttons
                 text={"Создать акт осмотра"}
@@ -170,9 +170,7 @@ const AccountPage: FC = () => {
                 return (
                   <div
                     key={item.id}
-                    className={`containerAct ${
-                      !userInfo.is_employee && "center"
-                    }`}
+                    className={`containerAct ${!userInfo.is_staff && "center"}`}
                     onClick={() =>
                       navigate(`${RouteNames.ACTINSIDE}/${item.id}`, {
                         //@ts-ignore
@@ -181,7 +179,7 @@ const AccountPage: FC = () => {
                     }
                   >
                     <p className="numberAct">{item.number}</p>
-                    {userInfo.is_employee && (
+                    {userInfo.is_staff && (
                       <p className="userAct">{item.victim}</p>
                     )}
                   </div>

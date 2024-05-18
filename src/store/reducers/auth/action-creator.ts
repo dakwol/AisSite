@@ -60,7 +60,6 @@ export const AuthActionCreators = {
                                             groups: [];
                                             id: number;
                                             is_active: boolean;
-                                            is_employee: boolean;
                                             is_staff: boolean;
                                             is_superuser: boolean;
                                             last_login: string | string;
@@ -82,7 +81,6 @@ export const AuthActionCreators = {
                                             last_name: dataUser.last_name,
                                             date_joined: dataUser.date_joined,
                                             is_active: dataUser.is_active,
-                                            is_employee: dataUser.is_employee,
                                             is_staff: dataUser.is_staff,
                                             is_superuser: dataUser.is_superuser,
                                             last_login: dataUser.last_login,

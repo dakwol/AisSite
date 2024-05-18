@@ -101,7 +101,7 @@ const ActInsidePage: FC = () => {
           {loading ? (
             <Skeleton borderRadius={8} height={90} />
           ) : (
-            userInfo.is_employee &&
+            userInfo.is_staff &&
             userData.last_name && (
               <div className="userDataContainer">
                 <h1>{`${userData.last_name} ${userData.first_name} ${userData.patronymic}`}</h1>
