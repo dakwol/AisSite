@@ -84,7 +84,7 @@ const NewActSigningPage: FC = () => {
             if (item.success) {
               setDataIdDocs("");
               //@ts-ignore
-              navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${rdataNumber}`, {
+              navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${dataNumber}`, {
                 //@ts-ignore
                 id: dataNumber,
               });
