@@ -1,0 +1,136 @@
+<svg width="1296" height="288" viewBox="0 0 1296 288" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_597_2047)">
+        <path d="M878.423 104.398L808.823 173.998L878.423 243.598L948.023 173.998L878.423 104.398Z" fill="#EAECF0">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.1s" />
+        </path>
+        <path d="M843.63 139.201L808.83 174.001L843.63 208.801L878.43 174.001L843.63 139.201Z" fill="#F2F4F7">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.2s" />
+        </path>
+        <path d="M821.878 139.198L787.078 173.998L821.878 208.798L856.678 173.998L821.878 139.198Z" fill="#F9FAFB">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.3s" />
+        </path>
+        <path d="M1296.02 243.597L1365.62 173.997L1296.02 104.397L1226.42 173.997L1296.02 243.597Z" fill="#F2F4F7">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.4s" />
+        </path>
+        <path d="M1122.02 348L1296.02 174L1122.02 3.29265e-05L948.018 174L1122.02 348Z" fill="#F9FAFB">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.5s" />
+        </path>
+        <path d="M1052.42 348L1226.42 174L1052.42 0.000154997L878.419 174L1052.42 348Z" fill="#EAECF0">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.6s" />
+        </path>
+        <path d="M982.818 278.4L1087.22 174L982.818 69.6003L878.418 174L982.818 278.4Z" fill="#F2F4F7">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.7s" />
+        </path>
+        <path d="M1017.63 243.597L1087.23 173.997L1017.63 104.398L948.025 173.998L1017.63 243.597Z" fill="#D0D5DD">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.8s" />
+        </path>
+        <path d="M1122.02 278.4L1226.42 174L1122.02 69.6L1017.62 174L1122.02 278.4Z" fill="#D0D5DD">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="0.9s" />
+        </path>
+        <path d="M1087.22 243.597L1156.82 173.997L1087.22 104.397L1017.63 173.997L1087.22 243.597Z" fill="#FCFCFD">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="1s" />
+        </path>
+        <path d="M1122.02 208.8L1156.82 174L1122.02 139.2L1087.22 174L1122.02 208.8Z" fill="#EAECF0">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="1.1s" />
+        </path>
+        <path d="M808.818 202.751L739.219 272.351L808.818 341.951L878.418 272.351L808.818 202.751Z" fill="#FFD6AE">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="1.2s" />
+        </path>
+        <path d="M774.025 237.554L739.225 272.354L774.025 307.154L808.825 272.354L774.025 237.554Z" fill="#FFE6D5">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="1.3s" />
+        </path>
+        <path d="M752.273 237.55L717.473 272.35L752.273 307.15L787.073 272.35L752.273 237.55Z" fill="#FFF4ED">
+            <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                begin="1.4s" />
+        </path>
+        <g opacity="0.8">
+            <path d="M495.514 -0.00378861L425.914 69.5962L495.514 139.196L565.114 69.5962L495.514 -0.00378861Z"
+                fill="#FFD6AE">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="1.5s" />
+            </path>
+            <path d="M460.721 34.7988L425.921 69.5988L460.721 104.399L495.521 69.5988L460.721 34.7988Z" fill="#FFE6D5">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="1.6s" />
+            </path>
+            <path d="M438.968 34.7957L404.168 69.5956L438.968 104.396L473.768 69.5957L438.968 34.7957Z" fill="#FFF4ED">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="1.7s" />
+            </path>
+            <path d="M913.115 139.195L982.715 69.5948L913.115 -0.0051152L843.515 69.5949L913.115 139.195Z"
+                fill="#FFE6D5">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="1.8s" />
+            </path>
+            <path d="M1204.65 139.195L1274.25 69.5948L1204.65 -0.0051152L1135.05 69.5949L1204.65 139.195Z"
+                fill="#FFE6D5">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="1.9s" />
+            </path>
+            <path d="M739.109 243.598L913.109 69.5981L739.109 -104.402L565.109 69.5981L739.109 243.598Z" fill="#FFF4ED">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2s" />
+            </path>
+            <path d="M669.509 243.598L843.509 69.5982L669.509 -104.402L495.509 69.5982L669.509 243.598Z" fill="#FFD6AE">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.1s" />
+            </path>
+            <path d="M599.909 173.998L704.309 69.5984L599.909 -34.8016L495.509 69.5984L599.909 173.998Z" fill="#FFE6D5">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.2s" />
+            </path>
+            <path d="M634.716 139.196L704.316 69.5956L634.716 -0.00438278L565.116 69.5956L634.716 139.196Z"
+                fill="#FF9C66">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.3s" />
+            </path>
+            <path d="M739.109 173.998L843.509 69.5981L739.109 -34.8019L634.709 69.5981L739.109 173.998Z" fill="#FF9C66">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.4s" />
+            </path>
+            <path d="M704.315 139.195L773.915 69.5953L704.315 -0.00462692L634.715 69.5954L704.315 139.195Z"
+                fill="#FFF9F5">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.5s" />
+            </path>
+            <path d="M947.909 104.398L982.708 69.5975L947.909 34.7975L913.109 69.5975L947.909 104.398Z" fill="#FFF4ED">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.6s" />
+            </path>
+            <path d="M969.662 104.394L1004.46 69.5944L969.662 34.7944L934.862 69.5944L969.662 104.394Z" fill="#FF9C66">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.7s" />
+            </path>
+            <path d="M739.109 104.398L773.909 69.5981L739.109 34.7981L704.309 69.5981L739.109 104.398Z" fill="#FFD6AE">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.8s" />
+            </path>
+            <path d="M1239.45 104.398L1274.25 69.5975L1239.45 34.7975L1204.65 69.5975L1239.45 104.398Z" fill="#FFF4ED">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="2.9s" />
+            </path>
+            <path d="M1261.2 104.394L1296 69.5944L1261.2 34.7944L1226.4 69.5944L1261.2 104.394Z" fill="#FF9C66">
+                <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;0" keyTimes="0;0.5;1"
+                    begin="3s" />
+            </path>
+        </g>
+    </g>
+    <defs>
+        <clipPath id="clip0_597_2047">
+            <rect width="1296" height="288" fill="white" />
+        </clipPath>
+    </defs>
+</svg>
