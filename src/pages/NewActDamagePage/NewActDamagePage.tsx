@@ -46,6 +46,7 @@ const NewActDamage: FC = () => {
   const [isSms, setIsSms] = useState<boolean>(false);
   const [isPhoto, setIsPhoto] = useState<boolean>(false);
   const [userId, setUserId] = useState<number>(0);
+  const [actNumber, setActNumber] = useState<string>("");
   const [blobDocument, setBlob] = useState<Blob>();
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
@@ -100,6 +101,7 @@ const NewActDamage: FC = () => {
       if (resp.success && resp.data) {
         setDataIdDocs(resp.data.id);
         setDataIdDocsFix(resp.data.id);
+        setActNumber(resp.data.number);
       }
     } catch (error) {
       console.error("Error creating act", error);
@@ -131,12 +133,9 @@ const NewActDamage: FC = () => {
                   }
                 );
               } else {
-                navigate(
-                  `${RouteNames.NEWACTCOMPLETEPAGE}/${item.data.number}`,
-                  {
-                    state: { id: item.data.number },
-                  }
-                );
+                navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${actNumber}`, {
+                  state: { id: actNumber },
+                });
               }
             }
           });
