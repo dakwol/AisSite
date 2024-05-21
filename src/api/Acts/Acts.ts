@@ -24,9 +24,10 @@ class ActsApiRequest extends BaseModelAPI {
     async getPdf(id:string) {
         return this.makeRequest(axiosClient.get, {id:id, method: API_ACTS_MODEL.methods.pdf.url});
     }
+    async getDownloadPdf(id:string) {
+        return this.makeRequest(axiosClient.get, {id:id, method: API_ACTS_MODEL.methods.getDownloadPdf.url});
+    }
     async uploadPdf(id:string, body: any) {
-        console.log('id',id);
-        
         return this.makeRequest(axiosClient.put, {id:`${id}/`, method: API_ACTS_MODEL.methods.uploadPdf.url, body:body});
     }
     async actsSigning(id: string,body?: any, urlParams?: string) {

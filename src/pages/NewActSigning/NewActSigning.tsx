@@ -11,6 +11,9 @@ import ActsApiRequest from "../../api/Acts/Acts";
 import UserApiRequest from "../../api/User/Users";
 import { formatDateIntlTimeDate } from "../../components/UI/functions/functions";
 import "./styles.scss";
+import { BlobProvider } from "@react-pdf/renderer";
+import MyDocument from "../../components/HtmlToPdf/HtmlToPdf";
+import UploadImageApiRequest from "../../api/UploadImage/UploadImage";
 
 const NewActSigningPage: FC = () => {
   const params = useParams();
@@ -25,7 +28,12 @@ const NewActSigningPage: FC = () => {
   );
 
   const [isSms, setIsSms] = useState<string>("");
+  const [dataNumber, setDataNumber] = useState<string>("");
   const [dataUser, setDataUser] = useState<any>("");
+
+  const [blobDocument, setBlob] = useState<Blob>();
+  const [dataIdDocs, setDataIdDocs] = useState("");
+  const [dataIdDocsFix, setDataIdDocsFix] = useState("");
 
   console.log("dataUser", dataUser);
 
@@ -34,12 +42,10 @@ const NewActSigningPage: FC = () => {
       //@ts-ignore
       .actsSigning(`${id}/`, { code: isSms }, `?code=${isSms}`)
       .then((resp) => {
-        if (resp.success) {
-          //@ts-ignore
-          navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${resp.data.number}`, {
-            //@ts-ignore
-            id: resp.data.number,
-          });
+        if (resp.success && resp.data) {
+          setDataIdDocs(id || "");
+          setDataIdDocsFix(id || "");
+          setDataNumber(resp.data.number);
         }
       });
   };
@@ -55,7 +61,7 @@ const NewActSigningPage: FC = () => {
       });
     actsApi
       .sendSign(
-        `${id}/` as string,
+        `${id}/`,
         dataPress.victim.phone_number ? { is_code: true } : { is_code: false }
       )
       .then((resp) => {
@@ -66,58 +72,96 @@ const NewActSigningPage: FC = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (blobDocument) {
+      const formData = new FormData();
+      formData.append("id", dataIdDocsFix);
+      formData.append("files", blobDocument, "act.pdf");
+
+      new UploadImageApiRequest().uploadImage(formData).then((resp) => {
+        if (resp.success && resp.data) {
+          actsApi.uploadPdf(dataIdDocsFix, resp.data[0]).then((item) => {
+            if (item.success) {
+              setDataIdDocs("");
+              //@ts-ignore
+              navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${rdataNumber}`, {
+                //@ts-ignore
+                id: dataNumber,
+              });
+            }
+          });
+        }
+      });
+    }
+  }, [blobDocument]);
+
   return (
-    <section className="section">
-      <div className="containerPageSlide">
-        <h1 className="titleSlide">Подписание</h1>
-        <h4 className="dateActs">
-          {dateAct && formatDateIntlTimeDate(dateAct || "")}
-        </h4>
-        <div className="containerSigning">
-          <div>
-            <label className="labelVictim">Пострадавший/представитель</label>
-            <div className="containerVictim">
-              <h1>{`${dataUser.last_name} ${dataUser.first_name} ${dataUser.patronymic}`}</h1>
-              <p>{`+7${dataUser.phone_number}`}</p>
+    <>
+      {dataIdDocs !== "" && (
+        <BlobProvider document={<MyDocument id={dataIdDocs}></MyDocument>}>
+          {({ url, loading, blob }) => {
+            console.log("url", url);
+            if (!loading && blob) {
+              setBlob(blob); // Set blob after the document is generated
+              setDataIdDocs("");
+            }
+            return loading ? <></> : <></>;
+          }}
+        </BlobProvider>
+      )}
+
+      <section className="section">
+        <div className="containerPageSlide">
+          <h1 className="titleSlide">Подписание</h1>
+          <h4 className="dateActs">
+            {dateAct && formatDateIntlTimeDate(dateAct || "")}
+          </h4>
+          <div className="containerSigning">
+            <div>
+              <label className="labelVictim">Пострадавший/представитель</label>
+              <div className="containerVictim">
+                <h1>{`${dataUser.last_name} ${dataUser.first_name} ${dataUser.patronymic}`}</h1>
+                <p>{`+7${dataUser.phone_number}`}</p>
+              </div>
+            </div>
+            <div className="signingForm">
+              <h4>
+                Подпишите кодом из СМС, отправленный на телефон
+                пострадавшему/представителю
+              </h4>
+              <FormInput
+                style={""}
+                value={isSms}
+                onChange={(value) => setIsSms(value)}
+                subInput={"Код из СМС"}
+                required={false}
+                error={""}
+                keyData={""}
+              />
             </div>
           </div>
-          <div className="signingForm">
-            <h4>
-              Подпишите кодом из СМС, отправленный на телефон
-              пострадавшему/представителю
-            </h4>
-            <FormInput
-              style={""}
-              value={isSms}
-              onChange={(value) => setIsSms(value)}
-              subInput={"Код из СМС"}
-              required={false}
-              error={""}
-              keyData={""}
+
+          <div className="containerButtonSlider">
+            <Buttons
+              ico={icons.arrowLeft}
+              text={""}
+              className="sliderButton"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+            <Buttons
+              ico={icons.checkBlack}
+              text={"Подписать"}
+              className="sliderButton"
+              onClick={() => {
+                handleSigningActs();
+              }}
             />
           </div>
         </div>
-
-        <div className="containerButtonSlider">
-          <Buttons
-            ico={icons.arrowLeft}
-            text={""}
-            className="sliderButton"
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-          <Buttons
-            ico={icons.checkBlack}
-            text={"Подписать"}
-            className="sliderButton"
-            onClick={() => {
-              handleSigningActs();
-            }}
-          />
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

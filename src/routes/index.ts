@@ -8,11 +8,11 @@ import AddDamagesPage from "../pages/AddDamagesPage/AddDamagesPage";
 import NewActAddress from "../pages/NewActAddressPage/NewActAddress";
 import NewActType from "../pages/NewActTypePage/NewActTypePage";
 import NewActVictim from "../pages/NewActVictimPage/NewActVictimPage";
-import NewActDamage from "../pages/NewActDamagePage/NewActDamagePage";
 import NewActSigningPage from "../pages/NewActSigning/NewActSigning";
 import NewActCompletePage from "../pages/NewActComplete/NewActComplete";
 import ActInsidePage from "../pages/ActInsidePage/ActInsidePage";
 import NewActSigningPhotoPage from "../pages/NewActSignPhoto/NewActSignPhoto";
+import NewActDamage from "../pages/NewActDamagePage/NewActDamagePage";
 
 const isAuthenticated = localStorage.getItem("account");
 const isAuthenticatedApplicant = localStorage.getItem("applicant");

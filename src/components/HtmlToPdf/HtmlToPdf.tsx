@@ -57,6 +57,10 @@ const MyDocument: FC<IProps> = ({ id }) => {
     });
   }, [id]);
 
+  if (!pdfData || Object.keys(pdfData).length === 0) {
+    return null; // or a loading spinner
+  }
+
   return (
     pdfData &&
     Object.keys(pdfData).length > 0 && (

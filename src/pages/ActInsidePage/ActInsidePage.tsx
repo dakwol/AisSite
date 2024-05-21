@@ -77,15 +77,31 @@ const ActInsidePage: FC = () => {
     return groupedData;
   };
 
-  const handlePdfButtonClick = () => {
-    setPdfClicked(true); // Set the state to true when the button is clicked
+  // const handlePdfButtonClick = () => {
+  //   setPdfClicked(true); // Set the state to true when the button is clicked
 
-    if (pdfLinkRef.current) {
-      console.log("Загрузка");
+  //   if (pdfLinkRef.current) {
+  //     console.log("Загрузка");
 
-      setIsLoading(true);
-      pdfLinkRef.current.click(); // Trigger the click event on the PDFDownloadLink
-    }
+  //     setIsLoading(true);
+  //     pdfLinkRef.current.click(); // Trigger the click event on the PDFDownloadLink
+  //   }
+  // };
+
+  const getDownloadPdf = () => {
+    actApi.getDownloadPdf(`${id}/`).then((resp) => {
+      if (resp.success) {
+        // Create a download link and click it to trigger the download
+        const link = document.createElement("a");
+        //@ts-ignore
+        link.href = resp.data.url;
+        link.download = "act.pdf";
+        link.target = "_blank";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
   };
   return (
     <section className="section">
@@ -110,7 +126,7 @@ const ActInsidePage: FC = () => {
             )
           )}
         </div>
-
+        {/* 
         {dataAct.id && (
           <PDFDownloadLink
             ref={pdfLinkRef}
@@ -119,14 +135,16 @@ const ActInsidePage: FC = () => {
             download={true}
             target="_blank"
           >
-            <Buttons
-              text="Скачать акт в PDF"
-              ico={isLoading ? icons.ripples : ""}
-              onClick={handlePdfButtonClick}
-            />
+         
           </PDFDownloadLink>
-        )}
-
+        )} */}
+        <Buttons
+          text="Скачать акт в PDF"
+          ico={isLoading ? icons.ripples : ""}
+          onClick={() => {
+            getDownloadPdf();
+          }}
+        />
         <h2 className="titlePageMini">Типы повреждений</h2>
 
         <div className="damageContainer">
