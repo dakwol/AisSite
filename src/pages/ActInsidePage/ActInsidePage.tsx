@@ -35,6 +35,7 @@ const ActInsidePage: FC = () => {
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState<any>({});
+  const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [pdfClicked, setPdfClicked] = useState(false); // State for tracking button click
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
   const pdfLinkRef = useRef<any>(null);
@@ -52,6 +53,7 @@ const ActInsidePage: FC = () => {
         //@ts-ignore
         if (resp.data.victim) {
           setLoading(true);
+
           //@ts-ignore
           userApi.getById({ id: resp.data.victim.id }).then((user) => {
             console.log("userData", user);
@@ -64,6 +66,7 @@ const ActInsidePage: FC = () => {
         }
       }
     });
+    getDownloadPdf();
   }, []);
 
   const groupDataByDamageType = (damages: any[]) => {
@@ -92,41 +95,7 @@ const ActInsidePage: FC = () => {
     actApi.getDownloadPdf(`${id}/`).then((resp) => {
       if (resp.success) {
         //@ts-ignore
-        const downloadUrl = resp.data.url;
-        const filename = "act.pdf";
-
-        // Create a temporary anchor element to trigger the download
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.download = filename;
-
-        // Check if the device is mobile
-        const isMobile =
-          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          );
-
-        if (isMobile) {
-          // For mobile devices, force download by simulating a click on the anchor element
-          link.target = "_self"; // Ensure it opens in the same tab
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } else {
-          // For desktop devices, attempt to open in a new window first
-          const downloadWindow = window.open(downloadUrl, "_blank");
-          if (
-            !downloadWindow ||
-            downloadWindow.closed ||
-            typeof downloadWindow.closed == "undefined"
-          ) {
-            // If the popup was blocked, force download by simulating a click on the anchor element
-            link.target = "_blank"; // Ensure it opens in a new tab
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          }
-        }
+        setDownloadUrl(resp.data.url);
       }
     });
   };
@@ -166,13 +135,14 @@ const ActInsidePage: FC = () => {
          
           </PDFDownloadLink>
         )} */}
-        <Buttons
-          text="Скачать акт в PDF"
-          ico={isLoading ? icons.ripples : ""}
-          onClick={() => {
-            getDownloadPdf();
-          }}
-        />
+        <a href={downloadUrl} download>
+          <Buttons
+            text="Скачать акт в PDF"
+            ico={isLoading ? icons.ripples : ""}
+            onClick={() => {}}
+          />
+        </a>
+
         <h2 className="titlePageMini">Типы повреждений</h2>
 
         <div className="damageContainer">
