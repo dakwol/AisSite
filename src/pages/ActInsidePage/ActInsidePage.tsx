@@ -137,7 +137,7 @@ const ActInsidePage: FC = () => {
         )} */}
         <a href={downloadUrl} download>
           <Buttons
-            text="Скачать акт в PDF"
+            text={downloadUrl}
             ico={isLoading ? icons.ripples : ""}
             onClick={() => {}}
           />
