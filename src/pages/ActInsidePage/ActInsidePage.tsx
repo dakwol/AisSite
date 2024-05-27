@@ -35,7 +35,6 @@ const ActInsidePage: FC = () => {
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState<any>({});
-  const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [pdfClicked, setPdfClicked] = useState(false); // State for tracking button click
   const userInfo = decryptData(localStorage.getItem("account") || "") || "{}";
   const pdfLinkRef = useRef<any>(null);
@@ -53,7 +52,6 @@ const ActInsidePage: FC = () => {
         //@ts-ignore
         if (resp.data.victim) {
           setLoading(true);
-
           //@ts-ignore
           userApi.getById({ id: resp.data.victim.id }).then((user) => {
             console.log("userData", user);
@@ -66,7 +64,6 @@ const ActInsidePage: FC = () => {
         }
       }
     });
-    getDownloadPdf();
   }, []);
 
   const groupDataByDamageType = (damages: any[]) => {
@@ -92,10 +89,23 @@ const ActInsidePage: FC = () => {
   // };
 
   const getDownloadPdf = () => {
+    // Запрос на подтверждение скачивания файла
+    const confirmed = window.confirm("Вы уверены, что хотите скачать файл?");
+    if (!confirmed) {
+      return; // Если пользователь отказывается, прерываем процесс скачивания
+    }
+
     actApi.getDownloadPdf(`${id}/`).then((resp) => {
       if (resp.success) {
+        // Создаем ссылку для загрузки файла и кликаем по ней для начала загрузки
+        const link = document.createElement("a");
         //@ts-ignore
-        setDownloadUrl(resp.data.url);
+        link.href = resp.data.url;
+        link.download = "act.pdf";
+        link.target = "_blank";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     });
   };
@@ -135,14 +145,13 @@ const ActInsidePage: FC = () => {
          
           </PDFDownloadLink>
         )} */}
-        <a href={downloadUrl} download>
-          <Buttons
-            text={"Скачать акт в PDF"}
-            ico={isLoading ? icons.ripples : ""}
-            onClick={() => {}}
-          />
-        </a>
-
+        <Buttons
+          text="Скачать акт в PDF"
+          ico={isLoading ? icons.ripples : ""}
+          onClick={() => {
+            getDownloadPdf();
+          }}
+        />
         <h2 className="titlePageMini">Типы повреждений</h2>
 
         <div className="damageContainer">
