@@ -91,28 +91,32 @@ const ActInsidePage: FC = () => {
   const getDownloadPdf = () => {
     actApi.getDownloadPdf(`${id}/`).then((resp) => {
       if (resp.success) {
-        // For mobile devices, use anchor element for download
-        if (
+        //@ts-ignore
+        const downloadUrl = resp.data.url;
+        const isMobile =
           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
             navigator.userAgent
-          )
-        ) {
-          // Create an invisible iframe and change its src to trigger download
+          );
+
+        if (isMobile) {
+          // For mobile devices, create an invisible iframe to trigger the download
           const iframe = document.createElement("iframe");
           iframe.style.display = "none";
-          //@ts-ignore
-          iframe.src = resp.data.url;
+          iframe.src = downloadUrl;
           document.body.appendChild(iframe);
+          setTimeout(() => document.body.removeChild(iframe), 1000); // Clean up the iframe after download
         } else {
-          // For desktop, open in new window
-          //@ts-ignore
-          const downloadWindow = window.open(resp.data.url, "_blank");
-          if (!downloadWindow) {
-            // If window failed to open (likely due to popup blocker), fallback to download link
+          // For desktop, try to open in a new window
+          const downloadWindow = window.open(downloadUrl, "_blank");
+          if (
+            !downloadWindow ||
+            downloadWindow.closed ||
+            typeof downloadWindow.closed == "undefined"
+          ) {
+            // If the popup was blocked, create a temporary download link
             const link = document.createElement("a");
-            //@ts-ignore
-            link.href = resp.data.url;
-            link.download = "act.pdf";
+            link.href = downloadUrl;
+            link.download = "act.pdf"; // Set the download attribute for the link
             link.target = "_blank";
             document.body.appendChild(link);
             link.click();
