@@ -87,7 +87,6 @@ const ActInsidePage: FC = () => {
   //     pdfLinkRef.current.click(); // Trigger the click event on the PDFDownloadLink
   //   }
   // };
-
   const getDownloadPdf = () => {
     // Запрос на подтверждение скачивания файла
     const confirmed = window.confirm("Вы уверены, что хотите скачать файл?");
@@ -95,19 +94,47 @@ const ActInsidePage: FC = () => {
       return; // Если пользователь отказывается, прерываем процесс скачивания
     }
 
-    actApi.getDownloadPdf(`${id}/`).then((resp) => {
-      if (resp.success) {
-        // Создаем ссылку для загрузки файла и кликаем по ней для начала загрузки
-        const link = document.createElement("a");
-        //@ts-ignore
-        link.href = resp.data.url;
-        link.download = "act.pdf";
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    });
+    actApi
+      .getDownloadPdf(`${id}/`)
+      .then((resp) => {
+        if (resp.success) {
+          //@ts-ignore
+          const fileUrl = resp.data.url;
+
+          // Загружаем файл как Blob
+          fetch(fileUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Ошибка загрузки файла");
+              }
+              return response.blob(); // Получаем содержимое файла в виде Blob
+            })
+            .then((blob) => {
+              // Создаем ссылку для скачивания файла
+              const url = window.URL.createObjectURL(blob);
+
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "act.pdf"; // Указываем имя файла для скачивания
+              link.style.display = "none"; // Делаем ссылку невидимой
+              document.body.appendChild(link);
+
+              link.click(); // Имитируем клик по ссылке для начала скачивания
+              document.body.removeChild(link); // Удаляем ссылку из DOM
+
+              window.URL.revokeObjectURL(url); // Освобождаем объект URL после использования
+            })
+            .catch((error) => {
+              console.error("Произошла ошибка при загрузке файла:", error);
+            });
+        } else {
+          //@ts-ignore
+          console.error("Ошибка при получении URL:", resp.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Произошла ошибка при запросе:", error);
+      });
   };
 
   return (
