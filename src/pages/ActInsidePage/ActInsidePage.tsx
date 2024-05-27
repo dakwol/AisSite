@@ -89,37 +89,32 @@ const ActInsidePage: FC = () => {
   // };
 
   const getDownloadPdf = () => {
-    actApi.getDownloadPdf(`${id}/`).then((resp) => {
-      if (resp.success) {
-        // Create a blob from the response data
-        //@ts-ignore
-        fetch(resp.data.url)
-          .then((response) => response.blob())
-          .then((blob) => {
-            const downloadUrl = URL.createObjectURL(blob);
-            const filename = "act.pdf";
-
-            // Create a temporary anchor element to trigger the download
-            const link = document.createElement("a");
-            link.href = downloadUrl;
-            link.download = filename;
-            link.style.display = "none";
-
-            // Append the link to the body
-            document.body.appendChild(link);
-
-            // Simulate a click on the anchor element to trigger the download
-            link.click();
-
-            // Remove the link from the document
-            document.body.removeChild(link);
-
-            // Revoke the object URL after the download
-            URL.revokeObjectURL(downloadUrl);
-          })
-          .catch((error) => console.error("Error downloading the PDF:", error));
-      }
-    });
+    // actApi.getDownloadPdf(`${id}/`).then((resp) => {
+    //   if (resp.success) {
+    //     // Create a blob from the response data
+    //     //@ts-ignore
+    //     fetch(resp.data.url)
+    //       .then((response) => response.blob())
+    //       .then((blob) => {
+    //         const downloadUrl = URL.createObjectURL(blob);
+    //         const filename = "act.pdf";
+    //         // Create a temporary anchor element to trigger the download
+    //         const link = document.createElement("a");
+    //         link.href = downloadUrl;
+    //         link.download = filename;
+    //         link.style.display = "none";
+    //         // Append the link to the body
+    //         document.body.appendChild(link);
+    //         // Simulate a click on the anchor element to trigger the download
+    //         link.click();
+    //         // Remove the link from the document
+    //         document.body.removeChild(link);
+    //         // Revoke the object URL after the download
+    //         URL.revokeObjectURL(downloadUrl);
+    //       })
+    //       .catch((error) => console.error("Error downloading the PDF:", error));
+    //   }
+    // });
   };
 
   return (
