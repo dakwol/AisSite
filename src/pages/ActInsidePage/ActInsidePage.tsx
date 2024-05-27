@@ -91,18 +91,23 @@ const ActInsidePage: FC = () => {
   const getDownloadPdf = () => {
     actApi.getDownloadPdf(`${id}/`).then((resp) => {
       if (resp.success) {
-        // Create a download link and click it to trigger the download
-        const link = document.createElement("a");
-        //@ts-ignore
-        link.href = resp.data.url;
-        link.download = "act.pdf";
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        //@ts-ignore"
+        const downloadWindow = window.open(resp.data.url, "_blank");
+        if (!downloadWindow) {
+          // If window failed to open (likely due to popup blocker), fallback to download link
+          const link = document.createElement("a");
+          //@ts-ignore"
+          link.href = resp.data.url;
+          link.download = "act.pdf";
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
       }
     });
   };
+
   return (
     <section className="section">
       <div className="containerPageInside">
