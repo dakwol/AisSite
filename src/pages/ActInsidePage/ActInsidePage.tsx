@@ -91,18 +91,35 @@ const ActInsidePage: FC = () => {
   const getDownloadPdf = () => {
     actApi.getDownloadPdf(`${id}/`).then((resp) => {
       if (resp.success) {
-        //@ts-ignore"
-        const downloadWindow = window.open(resp.data.url, "_blank");
-        if (!downloadWindow) {
-          // If window failed to open (likely due to popup blocker), fallback to download link
+        // For mobile devices, use anchor element for download
+        if (
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+          )
+        ) {
           const link = document.createElement("a");
-          //@ts-ignore"
+          //@ts-ignore
           link.href = resp.data.url;
           link.download = "act.pdf";
           link.target = "_blank";
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
+        } else {
+          // For desktop, open in new window
+          //@ts-ignore
+          const downloadWindow = window.open(resp.data.url, "_blank");
+          if (!downloadWindow) {
+            // If window failed to open (likely due to popup blocker), fallback to download link
+            const link = document.createElement("a");
+            //@ts-ignore
+            link.href = resp.data.url;
+            link.download = "act.pdf";
+            link.target = "_blank";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
         }
       }
     });
