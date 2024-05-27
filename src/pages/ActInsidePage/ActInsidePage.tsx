@@ -89,32 +89,46 @@ const ActInsidePage: FC = () => {
   // };
 
   const getDownloadPdf = () => {
-    // actApi.getDownloadPdf(`${id}/`).then((resp) => {
-    //   if (resp.success) {
-    //     // Create a blob from the response data
-    //     //@ts-ignore
-    //     fetch(resp.data.url)
-    //       .then((response) => response.blob())
-    //       .then((blob) => {
-    //         const downloadUrl = URL.createObjectURL(blob);
-    //         const filename = "act.pdf";
-    //         // Create a temporary anchor element to trigger the download
-    //         const link = document.createElement("a");
-    //         link.href = downloadUrl;
-    //         link.download = filename;
-    //         link.style.display = "none";
-    //         // Append the link to the body
-    //         document.body.appendChild(link);
-    //         // Simulate a click on the anchor element to trigger the download
-    //         link.click();
-    //         // Remove the link from the document
-    //         document.body.removeChild(link);
-    //         // Revoke the object URL after the download
-    //         URL.revokeObjectURL(downloadUrl);
-    //       })
-    //       .catch((error) => console.error("Error downloading the PDF:", error));
-    //   }
-    // });
+    actApi.getDownloadPdf(`${id}/`).then((resp) => {
+      if (resp.success) {
+        //@ts-ignore
+        const downloadUrl = resp.data.url;
+        const filename = "act.pdf";
+
+        // Create a temporary anchor element to trigger the download
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = filename;
+
+        // Check if the device is mobile
+        const isMobile =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+          );
+
+        if (isMobile) {
+          // For mobile devices, force download by simulating a click on the anchor element
+          link.target = "_self"; // Ensure it opens in the same tab
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          // For desktop devices, attempt to open in a new window first
+          const downloadWindow = window.open(downloadUrl, "_blank");
+          if (
+            !downloadWindow ||
+            downloadWindow.closed ||
+            typeof downloadWindow.closed == "undefined"
+          ) {
+            // If the popup was blocked, force download by simulating a click on the anchor element
+            link.target = "_blank"; // Ensure it opens in a new tab
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+        }
+      }
+    });
   };
 
   return (
