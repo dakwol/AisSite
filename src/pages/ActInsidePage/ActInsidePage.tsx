@@ -93,31 +93,35 @@ const ActInsidePage: FC = () => {
       if (resp.success) {
         //@ts-ignore
         const downloadUrl = resp.data.url;
+        const filename = "act.pdf";
+
+        // Create a temporary anchor element to trigger the download
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = filename;
+
+        // Check if the device is mobile
         const isMobile =
           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
             navigator.userAgent
           );
 
         if (isMobile) {
-          // For mobile devices, create an invisible iframe to trigger the download
-          const iframe = document.createElement("iframe");
-          iframe.style.display = "none";
-          iframe.src = downloadUrl;
-          document.body.appendChild(iframe);
-          setTimeout(() => document.body.removeChild(iframe), 1000); // Clean up the iframe after download
+          // For mobile devices, force download by simulating a click on the anchor element
+          link.target = "_self"; // Ensure it opens in the same tab
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         } else {
-          // For desktop, try to open in a new window
+          // For desktop devices, attempt to open in a new window first
           const downloadWindow = window.open(downloadUrl, "_blank");
           if (
             !downloadWindow ||
             downloadWindow.closed ||
             typeof downloadWindow.closed == "undefined"
           ) {
-            // If the popup was blocked, create a temporary download link
-            const link = document.createElement("a");
-            link.href = downloadUrl;
-            link.download = "act.pdf"; // Set the download attribute for the link
-            link.target = "_blank";
+            // If the popup was blocked, force download by simulating a click on the anchor element
+            link.target = "_blank"; // Ensure it opens in a new tab
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
