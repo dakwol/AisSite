@@ -12,6 +12,7 @@ import icons from "../../assets/icons/icons";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "../../components/HtmlToPdf/HtmlToPdf";
 import Skeleton from "react-loading-skeleton";
+import apiConfig from "../../api/apiConfig";
 
 interface DamageType {
   id: number;
@@ -99,7 +100,7 @@ const ActInsidePage: FC = () => {
       .then((resp) => {
         if (resp.success) {
           //@ts-ignore
-          const fileUrl = resp.data.url;
+          const fileUrl = `${apiConfig.baseUrlMediaTwo}${resp.data.url}`;
 
           // Загружаем файл как Blob
           fetch(fileUrl)
