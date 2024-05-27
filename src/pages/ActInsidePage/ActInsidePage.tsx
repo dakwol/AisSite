@@ -97,14 +97,12 @@ const ActInsidePage: FC = () => {
             navigator.userAgent
           )
         ) {
-          const link = document.createElement("a");
+          // Create an invisible iframe and change its src to trigger download
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
           //@ts-ignore
-          link.href = resp.data.url;
-          link.download = "act.pdf";
-          link.target = "_blank";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          iframe.src = resp.data.url;
+          document.body.appendChild(iframe);
         } else {
           // For desktop, open in new window
           //@ts-ignore
