@@ -99,8 +99,10 @@ const ActInsidePage: FC = () => {
       .getDownloadPdf(`${id}/`)
       .then((resp) => {
         if (resp.success) {
-          //@ts-ignore
-          const fileUrl = `${apiConfig.baseUrlMediaTwo}${resp.data.url}`;
+          const fileUrl = `${apiConfig.baseUrlMedia.slice(0, -7)}${
+            //@ts-ignore
+            resp.data.url
+          }`;
 
           // Загружаем файл как Blob
           fetch(fileUrl)
