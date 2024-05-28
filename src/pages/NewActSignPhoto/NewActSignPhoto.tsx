@@ -56,7 +56,6 @@ const NewActSigningPhotoPage: FC = () => {
                   setDataIdDocs(id || "");
                   setDataIdDocsFix(id || "");
                   setDataNumber(resp.data.number);
-                  setIsLoading(false);
                 }
               });
           }
@@ -86,6 +85,7 @@ const NewActSigningPhotoPage: FC = () => {
           actsApi.uploadPdf(dataIdDocsFix, resp.data[0]).then((item) => {
             if (item.success && item.data) {
               setDataIdDocs("");
+              setIsLoading(false);
               navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${isDataNumber}`, {
                 //@ts-ignore
                 id: isDataNumber,
@@ -162,7 +162,7 @@ const NewActSigningPhotoPage: FC = () => {
             }}
           />
           <Buttons
-            ico={isLoading ? icons.ripples : icons.checkBlack}
+            ico={isLoading ? icons.load : icons.checkBlack}
             text={isLoading ? "Формирование акта" : "Подписать"}
             className="sliderButton"
             onClick={() => {

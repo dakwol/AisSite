@@ -103,7 +103,6 @@ const NewActDamage: FC = () => {
         setDataIdDocs(resp.data.id);
         setDataIdDocsFix(resp.data.id);
         setActNumber(resp.data.number);
-        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error creating act", error);
@@ -125,10 +124,12 @@ const NewActDamage: FC = () => {
             if (item.success && item.data) {
               setDataIdDocs("");
               if (dataPress.victim && isSms) {
+                setIsLoading(false);
                 navigate(`${RouteNames.NEWACTSIGNINGPAGE}/${item.data.id}`, {
                   state: { id: item.data.id },
                 });
               } else if (isPhoto) {
+                setIsLoading(false);
                 navigate(
                   `${RouteNames.NEWACTSIGNINPHOTOGPAGE}/${item.data.id}`,
                   {
@@ -136,6 +137,7 @@ const NewActDamage: FC = () => {
                   }
                 );
               } else {
+                setIsLoading(false);
                 navigate(`${RouteNames.NEWACTCOMPLETEPAGE}/${actNumber}`, {
                   state: { id: actNumber },
                 });
@@ -244,7 +246,7 @@ const NewActDamage: FC = () => {
             />
           ) : (
             <Buttons
-              ico={isLoading ? icons.ripples : icons.checkBlack}
+              ico={isLoading ? icons.load : icons.checkBlack}
               text={isLoading ? "Формирование акта" : "Подписать"}
               className="sliderButton"
               onClick={() => {
