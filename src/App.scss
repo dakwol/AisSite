@@ -21,8 +21,7 @@
         }
         
         html {
-            // font-size: 1.2px;
-            font-size: 16px;
+            font-size: 1.2px;
             padding: 0;
             margin: 0;
             width: 100%;
@@ -32,20 +31,20 @@
             display: flex; /* Современные стандарты */
             -webkit-text-size-adjust: none;
             touch-action: manipulation;
-            
             @include hd {
                 width: calc((100 * 1920 / 100));
             }
             @include laptop {
+                font-size: clamp(0px, calc(100 * 100vw / 1440 / 100), 1.2px);
                 width: calc((100 * 1440 / 100));
             }
             @include tablet {
+                font-size: clamp(0px, calc(100 * 100vw / 400 / 100), 7px);
                 width: calc((100 * 1024 / 100));
             }
             @include mobile {
                 width: calc((100 * 375 / 100));
             }
-           
         }
         /* Стилизация полосы прокрутки (браузеры, поддерживающие WebKit) */
         
@@ -72,7 +71,7 @@
         body {
             scrollbar-width: thin;
             scrollbar-color: $gray-200 #f0f0f0;
-            touch-action: pan-x pan-y;
+            touch-action: none;
         }
         
         body::-webkit-scrollbar {
