@@ -38,6 +38,7 @@ const NewActSigningPhotoPage: FC = () => {
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
 
   console.log("arrayImage", arrayImage);
 
@@ -135,9 +136,13 @@ const NewActSigningPhotoPage: FC = () => {
                     //@ts-ignore
                     setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
                   }}
+                  isLoading={(e: any) => setIsLoad(e)}
                 />
 
-                {arrayImage?.length > 0 &&
+                {isLoad ? (
+                  <p>загрузка</p>
+                ) : (
+                  arrayImage?.length > 0 &&
                   arrayImage?.map((item: any) => {
                     return (
                       <img
@@ -147,7 +152,8 @@ const NewActSigningPhotoPage: FC = () => {
                         alt="Damage Image"
                       />
                     );
-                  })}
+                  })
+                )}
               </div>
             </div>
           </div>
