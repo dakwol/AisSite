@@ -32,11 +32,11 @@
             -webkit-text-size-adjust: none;
             touch-action: manipulation;
             @include hd {
-                width: calc((100 * 1920 / 100));
+                // width: calc((100 * 1920 / 100));
             }
             @include laptop {
                 font-size: clamp(0px, calc(100 * 100vw / 1440 / 100), 1.2px);
-                width: calc((100 * 1440 / 100));
+                // width: calc((100 * 1440 / 100));
             }
             @include tablet {
                 font-size: clamp(0px, calc(100 * 100vw / 400 / 100), 7px);
