@@ -30,7 +30,8 @@
             display: -webkit-box; /* Старые версии iOS */
             display: -ms-flexbox; /* IE 10 */
             display: flex; /* Современные стандарты */
-            -webkit-text-size-adjust: 100%;
+            -webkit-text-size-adjust: none;
+            touch-action: manipulation;
             @include hd {
                 width: calc((100 * 1920 / 100));
             }
@@ -69,6 +70,7 @@
         body {
             scrollbar-width: thin;
             scrollbar-color: $gray-200 #f0f0f0;
+            touch-action: none;
         }
         
         body::-webkit-scrollbar {
