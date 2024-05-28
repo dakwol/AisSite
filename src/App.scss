@@ -40,10 +40,10 @@
             }
             @include tablet {
                 font-size: clamp(0px, calc(100 * 100vw / 400 / 100), 7px);
-                width: calc((100 * 1024 / 100));
+                // width: calc((100 * 1024 / 100));
             }
             @include mobile {
-                width: calc((100 * 375 / 100));
+                // width: calc((100 * 375 / 100));
             }
         }
         /* Стилизация полосы прокрутки (браузеры, поддерживающие WebKit) */
