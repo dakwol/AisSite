@@ -21,8 +21,8 @@
         }
         
         html {
-            //font-size: 1.2px;
-            font-size: clamp(1px, calc(100 * 100vw / 1920 / 100), 1.33px);
+            font-size: 1.2px;
+            // font-size: clamp(1px, calc(100 * 100vw / 1920 / 100), 1.33px);
             padding: 0;
             margin: 0;
             width: 100%;
