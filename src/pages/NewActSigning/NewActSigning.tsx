@@ -34,10 +34,12 @@ const NewActSigningPage: FC = () => {
   const [blobDocument, setBlob] = useState<Blob>();
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("dataUser", dataUser);
 
   const handleSigningActs = () => {
+    setIsLoading(true);
     actsApi
       //@ts-ignore
       .actsSigning(`${id}/`, { code: isSms }, `?code=${isSms}`)
@@ -46,6 +48,7 @@ const NewActSigningPage: FC = () => {
           setDataIdDocs(id || "");
           setDataIdDocsFix(id || "");
           setDataNumber(resp.data.number);
+          setIsLoading(false);
         }
       });
   };
@@ -151,8 +154,8 @@ const NewActSigningPage: FC = () => {
             }}
           />
           <Buttons
-            ico={icons.checkBlack}
-            text={"Подписать"}
+            ico={isLoading ? icons.ripples : icons.checkBlack}
+            text={isLoading ? "Формирование акта" : "Подписать"}
             className="sliderButton"
             onClick={() => {
               handleSigningActs();

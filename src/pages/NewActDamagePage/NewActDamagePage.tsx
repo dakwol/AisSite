@@ -51,6 +51,7 @@ const NewActDamage: FC = () => {
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const pdfLinkRef = useRef<any>(null);
 
   useEffect(() => {
@@ -95,17 +96,19 @@ const NewActDamage: FC = () => {
     const actsApi = new ActsApiRequest();
     setIsSms(isSms);
     setIsPhoto(isPhoto);
-
+    setIsLoading(true);
     try {
       const resp = await actsApi.create({ body: dataPress });
       if (resp.success && resp.data) {
         setDataIdDocs(resp.data.id);
         setDataIdDocsFix(resp.data.id);
         setActNumber(resp.data.number);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error creating act", error);
       setIsError(true);
+      setIsLoading(false);
     }
   };
 
@@ -241,8 +244,8 @@ const NewActDamage: FC = () => {
             />
           ) : (
             <Buttons
-              ico={icons.checkBlack}
-              text={"Подписать"}
+              ico={isLoading ? icons.ripples : icons.checkBlack}
+              text={isLoading ? "Формирование акта" : "Подписать"}
               className="sliderButton"
               onClick={() => {
                 createAct(false, false);

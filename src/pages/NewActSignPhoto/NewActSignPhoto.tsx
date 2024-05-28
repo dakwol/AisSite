@@ -37,11 +37,13 @@ const NewActSigningPhotoPage: FC = () => {
   const [blobDocument, setBlob] = useState<Blob>();
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("arrayImage", arrayImage);
 
   const handleSigningActs = () => {
     if (arrayImage !== 0) {
+      setIsLoading(true);
       actsApi
         .sendSign(`${id}/` as string, { is_code: false, is_photo: true })
         .then((resp) => {
@@ -54,6 +56,7 @@ const NewActSigningPhotoPage: FC = () => {
                   setDataIdDocs(id || "");
                   setDataIdDocsFix(id || "");
                   setDataNumber(resp.data.number);
+                  setIsLoading(false);
                 }
               });
           }
@@ -159,8 +162,8 @@ const NewActSigningPhotoPage: FC = () => {
             }}
           />
           <Buttons
-            ico={icons.checkBlack}
-            text={"Подписать"}
+            ico={isLoading ? icons.ripples : icons.checkBlack}
+            text={isLoading ? "Формирование акта" : "Подписать"}
             className="sliderButton"
             onClick={() => {
               handleSigningActs();
