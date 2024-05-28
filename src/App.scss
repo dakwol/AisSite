@@ -32,6 +32,7 @@
             display: flex; /* Современные стандарты */
             -webkit-text-size-adjust: none;
             touch-action: manipulation;
+            
             @include hd {
                 width: calc((100 * 1920 / 100));
             }
@@ -45,9 +46,9 @@
                 width: calc((100 * 375 / 100));
             }
             @media screen and (-webkit-min-device-pixel-ratio:0) {
-                input, select, textarea {
+                
                   font-size: 16px !important; /* Обещание Safari: без масштабирования! */
-                }
+               
               }
         }
         /* Стилизация полосы прокрутки (браузеры, поддерживающие WebKit) */
@@ -75,7 +76,7 @@
         body {
             scrollbar-width: thin;
             scrollbar-color: $gray-200 #f0f0f0;
-            touch-action: none;
+            touch-action: pan-x pan-y;
         }
         
         body::-webkit-scrollbar {

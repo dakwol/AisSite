@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.48dd2cbe.css",
+    "main.css": "/static/css/main.80b82bef.css",
     "main.js": "/static/js/main.4b521cbc.js",
     "static/media/bikCover.png": "/static/media/bikCover.31412c71300fdbf7de2c.png",
     "static/media/portrait.png": "/static/media/portrait.330e05efabec65e49e36.png",
@@ -36,8 +36,8 @@
     "static/media/document-file-copy.svg": "/static/media/document-file-copy.f7ba9859bc3671c7053af039dd36e51a.svg",
     "static/media/calendarPlus.svg": "/static/media/calendarPlus.d4294432e36b8f453fb1b2f629d02106.svg",
     "static/media/helpCircle.svg": "/static/media/helpCircle.3304e61b04ffc2756c742ab0d3f7f771.svg",
-    "static/media/map.svg": "/static/media/map.72854e4f0010c71a61551f4dfb1f6946.svg",
     "index.html": "/index.html",
+    "static/media/map.svg": "/static/media/map.72854e4f0010c71a61551f4dfb1f6946.svg",
     "static/media/lightning.svg": "/static/media/lightning.5c6eb402371f383a39fb5d257be9fcfa.svg",
     "static/media/Filter.svg": "/static/media/Filter.1526d04d1110722f275c34ccfb3b953c.svg",
     "static/media/edit.svg": "/static/media/edit.b389de8bf9f258e96630342472f7c357.svg",
@@ -65,11 +65,11 @@
     "static/media/arrowRightOrange.svg": "/static/media/arrowRightOrange.375b9425e5aa85f6d53f87b480981f4c.svg",
     "static/media/arrow-left.svg": "/static/media/arrow-left.9f26721d2847c61c74d9cccbb4c91e52.svg",
     "static/media/checkBlack.svg": "/static/media/checkBlack.5cd14f58c2f1308c4557293da76113d3.svg",
-    "main.48dd2cbe.css.map": "/static/css/main.48dd2cbe.css.map",
+    "main.80b82bef.css.map": "/static/css/main.80b82bef.css.map",
     "main.4b521cbc.js.map": "/static/js/main.4b521cbc.js.map"
   },
   "entrypoints": [
-    "static/css/main.48dd2cbe.css",
+    "static/css/main.80b82bef.css",
     "static/js/main.4b521cbc.js"
   ]
 }
