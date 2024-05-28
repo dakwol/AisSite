@@ -9,14 +9,15 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
   const uploadApi = new UploadImageApiRequest();
 
   const onDrop = useCallback(
-    (acceptedFiles: any) => {
+    //@ts-ignore
+    (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const formData = new FormData();
 
-        acceptedFiles.forEach((file: any) => {
+        //@ts-ignore
+        acceptedFiles.forEach((file) => {
           loadImage(
             file,
-            //@ts-ignore
             (canvas) => {
               //@ts-ignore
               canvas.toBlob((blob) => {
@@ -25,7 +26,7 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
                   uploadApi.uploadImage(formData).then((resp) => {
                     if (resp.success) {
                       setFiles(resp.data);
-                      onClose(); // Закрытие всплывающего окна после загрузки файлов
+                      onClose(); // Close modal after files are uploaded
                     }
                   });
                 }
@@ -41,14 +42,12 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    //@ts-ignore
     accept:
       type === "image"
-        ? {
-            "image/png": [".jpg", ".png"],
-          }
-        : {
-            "text/html": [".txt", ".docs", ".pdf", ".xlsx"],
-          },
+        ? "image/jpeg, image/png"
+        : "text/html, .txt, .doc, .pdf, .xlsx",
+    multiple: true,
   });
 
   return (
@@ -67,7 +66,7 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
             <p className="textUpload">
               <b>Нажмите, чтобы загрузить</b>
               или перетащите файл
-              {type === "image" ? ` PNG или JPG` : ` PDF, DOCS, XLSX или TXT`}
+              {type === "image" ? ` PNG или JPG` : ` PDF, DOC, XLSX или TXT`}
             </p>
           </div> */}
         </div>
