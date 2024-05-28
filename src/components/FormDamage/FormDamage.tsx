@@ -24,6 +24,7 @@ const FormDamage: FC<IProps> = ({
   };
 
   const [arrayImage, setArrayImage] = useState([]);
+  const [isLoad, setIsLoad] = useState(false);
 
   useEffect(() => {
     if (arrayImage.length > 0) {
@@ -66,9 +67,13 @@ const FormDamage: FC<IProps> = ({
             //@ts-ignore
             setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
           }}
+          isLoading={(e: any) => setIsLoad(e)}
         />
 
-        {arrayImage?.length > 0 &&
+        {isLoad ? (
+          <p>Загрузка</p>
+        ) : (
+          arrayImage?.length > 0 &&
           arrayImage?.map((item: any) => {
             return (
               <img
@@ -78,7 +83,8 @@ const FormDamage: FC<IProps> = ({
                 alt="Damage Image"
               />
             );
-          })}
+          })
+        )}
       </div>
     </div>
   );

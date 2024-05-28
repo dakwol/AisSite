@@ -4,13 +4,14 @@ import "./styles.scss";
 import icons from "../../../assets/icons/icons";
 import UploadImageApiRequest from "../../../api/UploadImage/UploadImage";
 
-const FilePickerModal = ({ onClose, setFiles, type }: any) => {
+const FilePickerModal = ({ onClose, setFiles, type, isLoading }: any) => {
   const uploadApi = new UploadImageApiRequest();
   const onDrop = useCallback((acceptedFiles: any) => {
     // Обработка выбранных файлов
 
     // onClose()
     if (acceptedFiles.length > 0) {
+      isLoading(true);
       const formData = new FormData();
 
       acceptedFiles.forEach((file: any) => {
@@ -20,6 +21,7 @@ const FilePickerModal = ({ onClose, setFiles, type }: any) => {
       uploadApi.uploadImage(formData).then((resp) => {
         if (resp.success) {
           setFiles(resp.data);
+          isLoading(false);
           onClose(); // Закрытие всплывающего окна после загрузки файлов
         }
       });
