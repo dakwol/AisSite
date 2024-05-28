@@ -44,6 +44,11 @@
             @include mobile {
                 width: calc((100 * 375 / 100));
             }
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+                input, select, textarea {
+                  font-size: 16px !important; /* Обещание Safari: без масштабирования! */
+                }
+              }
         }
         /* Стилизация полосы прокрутки (браузеры, поддерживающие WebKit) */
         
