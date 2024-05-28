@@ -220,46 +220,45 @@ const NewActDamage: FC = () => {
                 );
               })}
           </div>
-
-          <div className="containerButtonSlider">
+        </div>
+        <div className="containerButtonSlider">
+          <Buttons
+            ico={icons.arrowLeft}
+            text={""}
+            className="sliderButton"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          {dataPress.victim ? (
             <Buttons
-              ico={icons.arrowLeft}
-              text={""}
+              ico={icons.arrowRightOrange}
+              text={"Подписание"}
               className="sliderButton"
               onClick={() => {
-                navigate(-1);
+                createAct(true, false);
               }}
             />
-            {dataPress.victim ? (
-              <Buttons
-                ico={icons.arrowRightOrange}
-                text={"Подписание"}
-                className="sliderButton"
-                onClick={() => {
-                  createAct(true, false);
-                }}
-              />
-            ) : (
-              <Buttons
-                ico={icons.checkBlack}
-                text={"Подписать"}
-                className="sliderButton"
-                onClick={() => {
-                  createAct(false, false);
-                }}
-              />
-            )}
-            {dataPress.victim && (
-              <Buttons
-                ico={icons.arrowRightOrange}
-                text={"Подписание без СМС"}
-                className="sliderButtonAll"
-                onClick={() => {
-                  createAct(false, true);
-                }}
-              />
-            )}
-          </div>
+          ) : (
+            <Buttons
+              ico={icons.checkBlack}
+              text={"Подписать"}
+              className="sliderButton"
+              onClick={() => {
+                createAct(false, false);
+              }}
+            />
+          )}
+          {dataPress.victim && (
+            <Buttons
+              ico={icons.arrowRightOrange}
+              text={"Подписание без СМС"}
+              className="sliderButtonAll"
+              onClick={() => {
+                createAct(false, true);
+              }}
+            />
+          )}
         </div>
       </section>
     </>

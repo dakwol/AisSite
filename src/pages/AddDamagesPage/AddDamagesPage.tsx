@@ -173,25 +173,24 @@ const AddDamagesPage: FC = () => {
             />
           ))}
           {/* <Buttons text={"Добавить блок"} onClick={() => addDamageBlock()} /> */}
-
-          <div className="containerButtonSlider">
-            <Buttons
-              ico={icons.arrowLeft}
-              text={""}
-              className="sliderButton"
-              onClick={() => {
-                navigate(-1);
-              }}
-            />
-            <Buttons
-              ico={icons.checkBlack}
-              text={"Сохранить"}
-              className="sliderButton"
-              onClick={() => {
-                onSaveDamages();
-              }}
-            />
-          </div>
+        </div>
+        <div className="containerButtonSlider">
+          <Buttons
+            ico={icons.arrowLeft}
+            text={""}
+            className="sliderButton"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <Buttons
+            ico={icons.checkBlack}
+            text={"Сохранить"}
+            className="sliderButton"
+            onClick={() => {
+              onSaveDamages();
+            }}
+          />
         </div>
       </section>
     </Fragment>

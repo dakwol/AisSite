@@ -23,8 +23,7 @@
 }
 
 .containerButton{
-    position: fixed;
-    bottom: 16rem;
+    margin-bottom: 30rem;
     width: calc(100% - 32rem);
     display: flex;
     flex-direction: column;
@@ -35,4 +34,11 @@
         @include fnt(16, 24, $weight:400, $color: $gray-500,$font: $fontText);
         padding: 8rem;
     }
+}
+
+.flexCotnainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }

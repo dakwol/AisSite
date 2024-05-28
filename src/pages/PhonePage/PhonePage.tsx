@@ -48,30 +48,33 @@ const PhonePage: FC<IPhonePage> = ({ title }) => {
     <Fragment>
       <section className="section">
         <div className="containerPage">
-          <div className="logoContainer">
-            <h1 className="titlePage">
-              {type === "employee"
-                ? "Вход для сотрудников"
-                : "Введите номер телефона, указанный в акте"}
-            </h1>
-          </div>
+          <div className="flexCotnainer">
+            <div>
+              <div className="logoContainer">
+                <h1 className="titlePage">
+                  {type === "employee"
+                    ? "Вход для сотрудников"
+                    : "Введите номер телефона, указанный в акте"}
+                </h1>
+              </div>
 
-          <div className="containerLogin">
-            <FormInput
-              style={""}
-              value={dataPress.phone}
-              type="phone"
-              onChange={(e) => handleChange("phone", e)}
-              subInput={"Номер телефона"}
-              required={false}
-              error={""}
-              keyData={""}
-            />
-
-            <div className="containerButton">
-              <Buttons text={"Подтвердить по СМС"} onClick={handleSmsPage} />
+              <div className="containerLogin">
+                <FormInput
+                  style={""}
+                  value={dataPress.phone}
+                  type="phone"
+                  onChange={(e) => handleChange("phone", e)}
+                  subInput={"Номер телефона"}
+                  required={false}
+                  error={""}
+                  keyData={""}
+                />
+              </div>
             </div>
           </div>
+        </div>
+        <div className="containerButton">
+          <Buttons text={"Подтвердить по СМС"} onClick={handleSmsPage} />
         </div>
       </section>
     </Fragment>

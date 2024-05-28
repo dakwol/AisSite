@@ -185,24 +185,24 @@ const NewActAddress: FC = () => {
               );
             })}
           </div>
-          <div className="containerButtonSlider">
-            <Buttons
-              ico={icons.arrowLeft}
-              text={""}
-              className="sliderButton"
-              onClick={() => {
-                navigate(-1);
-              }}
-            />
-            <Buttons
-              ico={icons.arrowRightOrange}
-              text={"Тип постройки"}
-              className="sliderButton"
-              onClick={() => {
-                movingOn();
-              }}
-            />
-          </div>
+        </div>
+        <div className="containerButtonSlider">
+          <Buttons
+            ico={icons.arrowLeft}
+            text={""}
+            className="sliderButton"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <Buttons
+            ico={icons.arrowRightOrange}
+            text={"Тип постройки"}
+            className="sliderButton"
+            onClick={() => {
+              movingOn();
+            }}
+          />
         </div>
       </section>
     </>

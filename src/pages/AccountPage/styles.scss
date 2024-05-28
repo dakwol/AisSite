@@ -59,7 +59,8 @@
 }
 
 .searchActsContainer{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 80rem;
     gap: 8rem;
     margin: 12rem 0;
 }

@@ -21,12 +21,15 @@
         }
         
         html {
-            font-size: 1.2px;
-            // font-size: clamp(1px, calc(100 * 100vw / 1920 / 100), 1.33px);
+            // font-size: 1.2px;
+            font-size: clamp(1px, calc(100 * 100vw / 1920 / 100), 1.33px);
             padding: 0;
             margin: 0;
             width: 100%;
             height: 100%;
+            display: -webkit-box; /* Старые версии iOS */
+            display: -ms-flexbox; /* IE 10 */
+            display: flex; /* Современные стандарты */
             @include hd {
                 width: calc((100 * 1920 / 100));
             }
@@ -219,20 +222,16 @@
 
         .App{
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
         
         .section {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
         
             padding: 24rem 16rem 16rem;
             background-color: $white;
-
-            
-            @include minlaptop{
-                max-width: 500rem;
-            }
+            width: 100%;
         }
         
         .section__header {
@@ -269,8 +268,7 @@
         
         .containerPage {
             width: 100%;
-            height: 100%;
-
+            flex: 1 0 auto;
         }
 
         .gridFull{

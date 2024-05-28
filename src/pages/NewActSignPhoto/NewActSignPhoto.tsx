@@ -148,25 +148,24 @@ const NewActSigningPhotoPage: FC = () => {
               </div>
             </div>
           </div>
-
-          <div className="containerButtonSlider">
-            <Buttons
-              ico={icons.arrowLeft}
-              text={""}
-              className="sliderButton"
-              onClick={() => {
-                navigate(-1);
-              }}
-            />
-            <Buttons
-              ico={icons.checkBlack}
-              text={"Подписать"}
-              className="sliderButton"
-              onClick={() => {
-                handleSigningActs();
-              }}
-            />
-          </div>
+        </div>
+        <div className="containerButtonSlider">
+          <Buttons
+            ico={icons.arrowLeft}
+            text={""}
+            className="sliderButton"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <Buttons
+            ico={icons.checkBlack}
+            text={"Подписать"}
+            className="sliderButton"
+            onClick={() => {
+              handleSigningActs();
+            }}
+          />
         </div>
       </section>
     </>

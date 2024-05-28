@@ -32,12 +32,11 @@ const NewActCompletePage: FC = () => {
             </a>
           </h3>
         </div>
-
-        <Buttons
-          text={"Вернуться на главную"}
-          onClick={() => navigate(RouteNames.ACCOUNTPAGE)}
-        />
       </div>
+      <Buttons
+        text={"Вернуться на главную"}
+        onClick={() => navigate(RouteNames.ACCOUNTPAGE)}
+      />
     </section>
   );
 };

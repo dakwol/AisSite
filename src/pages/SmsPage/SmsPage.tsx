@@ -116,25 +116,24 @@ const SmsPage: FC = () => {
                 {`Запросить повторно через  ${isTimer}`}
               </p>
             )}
-
-            <div className="containerButton">
-              <Buttons
-                text={"Отправить"}
-                onClick={() => {
-                  authUser();
-                }}
-                disabled={isLoading}
-                ico={isLoading ? icons.ripples : ""}
-              />
-              <Buttons
-                text={"Назад"}
-                onClick={() => {
-                  navigate(-1);
-                }}
-                disabled={isLoading}
-              />
-            </div>
           </div>
+        </div>
+        <div className="containerButton">
+          <Buttons
+            text={"Отправить"}
+            onClick={() => {
+              authUser();
+            }}
+            disabled={isLoading}
+            ico={isLoading ? icons.ripples : ""}
+          />
+          <Buttons
+            text={"Назад"}
+            onClick={() => {
+              navigate(-1);
+            }}
+            disabled={isLoading}
+          />
         </div>
       </section>
     </Fragment>

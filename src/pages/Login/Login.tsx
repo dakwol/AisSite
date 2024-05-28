@@ -26,29 +26,28 @@ const Login: FC = () => {
             <h4 className="titleText">
               Вы пострадавший/представитель пострадавшего?
             </h4>
-
-            <div className="containerButton">
-              <Buttons
-                text={"Проверка акта"}
-                onClick={() =>
-                  navigation(`${RouteNames.PHONEPAGE}/${"victim"}`, {
-                    //@ts-ignore
-                    type: "victim",
-                  })
-                }
-              />
-              <Buttons
-                text={"Вход для сотрудников"}
-                onClick={() =>
-                  navigation(`${RouteNames.PHONEPAGE}/${"employee"}`, {
-                    //@ts-ignore
-                    type: "employee",
-                  })
-                }
-                className="whiteButton"
-              />
-            </div>
           </div>
+        </div>
+        <div className="containerButton">
+          <Buttons
+            text={"Проверка акта"}
+            onClick={() =>
+              navigation(`${RouteNames.PHONEPAGE}/${"victim"}`, {
+                //@ts-ignore
+                type: "victim",
+              })
+            }
+          />
+          <Buttons
+            text={"Вход для сотрудников"}
+            onClick={() =>
+              navigation(`${RouteNames.PHONEPAGE}/${"employee"}`, {
+                //@ts-ignore
+                type: "employee",
+              })
+            }
+            className="whiteButton"
+          />
         </div>
       </section>
     </Fragment>

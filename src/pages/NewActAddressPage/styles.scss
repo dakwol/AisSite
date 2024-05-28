@@ -4,7 +4,9 @@
     display: flex;
     flex-direction: column;
     gap: 32rem;
-    margin-bottom: 150rem;
+    flex-grow: 1;
+    flex: 1 0 auto;
+    
 
     .titleSlide{
         @include fnt(24, 32, $weight:600, $font: $fontText, $color: $gray-900);
@@ -25,9 +27,8 @@
     display: grid;
     grid-template-columns: 48rem 1fr;
     gap: 8rem;
-    position: fixed;
-    bottom: 16rem;
-    width: 90%;
+    width:100%;
+    flex: 0 0 auto;
 
     .sliderButton{
         display: flex;

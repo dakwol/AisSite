@@ -200,17 +200,16 @@ const ActInsidePage: FC = () => {
               </div>
             ))}
         </div>
-
-        <div className="containerButton">
-          <Buttons
-            ico={icons.arrowLeft}
-            text={"Назад"}
-            className="sliderButton"
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-        </div>
+      </div>
+      <div className="containerButton">
+        <Buttons
+          ico={icons.arrowLeft}
+          text={"Назад"}
+          className="sliderButton"
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
       </div>
     </section>
   );
