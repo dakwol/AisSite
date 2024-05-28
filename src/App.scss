@@ -30,7 +30,7 @@
             display: -ms-flexbox; /* IE 10 */
             display: flex; /* Современные стандарты */
             -webkit-text-size-adjust: none;
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
             @include hd {
                 // width: calc((100 * 1920 / 100));
             }
@@ -71,7 +71,7 @@
         body {
             scrollbar-width: thin;
             scrollbar-color: $gray-200 #f0f0f0;
-            touch-action: none;
+            touch-action: pan-x pan-y;
         }
         
         body::-webkit-scrollbar {
