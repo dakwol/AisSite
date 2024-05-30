@@ -7,7 +7,7 @@ interface IProps {
   index: number;
   inputDamage: any;
   dataPress: any;
-  handleChange: (index: number, key: string, value: string | boolean) => void;
+  handleChange: (key: string, value: string | boolean) => void;
   handleType?: (type: number | string) => void;
 }
 
@@ -18,9 +18,8 @@ const FormDamage: FC<IProps> = ({
   handleChange,
   handleType,
 }) => {
-  const handleTypeDamage = (index: number, key: string, value: string) => {
-    handleType && value && handleType(value);
-    handleChange(index, key, value);
+  const handleTypeDamage = (key: string, value: string) => {
+    handleChange(key, value);
   };
 
   const [arrayImage, setArrayImage] = useState([]);
@@ -37,7 +36,19 @@ const FormDamage: FC<IProps> = ({
 
   return (
     <div className="formContainer">
-      {inputDamage.map((item: any) => {
+      {inputDamage.length > 0 &&
+        inputDamage.map((item: any) => {
+          if (item.key === "damage_type") {
+            return item.options.map((data: any) => {
+              return (
+                <div onClick={() => handleTypeDamage(data.id, data.value)}>
+                  <p>{data.display_name}</p>
+                </div>
+              );
+            });
+          }
+        })}
+      {/* {inputDamage.map((item: any) => {
         if (item.key === "damage_type" && index !== 0) {
           return null;
         } else {
@@ -59,8 +70,8 @@ const FormDamage: FC<IProps> = ({
             />
           );
         }
-      })}
-      <div className="containerImagePicker">
+      })} */}
+      {/* <div className="containerImagePicker">
         <FilePickerModal
           type="image"
           setFiles={(e: any) => {
@@ -85,7 +96,7 @@ const FormDamage: FC<IProps> = ({
             );
           })
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

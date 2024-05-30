@@ -1,18 +1,24 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, {
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Buttons from "../../components/Buttons/Buttons";
 import icons from "../../assets/icons/icons";
 import { useNavigate } from "react-router-dom";
-import FormInput from "../../components/FormInput/FormInput";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
 import { useDispatch } from "react-redux";
 import { DataPressActionCreators } from "../../store/reducers/dataPressItem/action-creator";
-import ImagePicker from "../../components/UI/ImagePicker/ImagePicker";
-import FilePickerModal from "../../components/UI/FilePickerModal/FilePickerModal";
 import ActsApiRequest from "../../api/Acts/Acts";
 import apiConfig from "../../api/apiConfig";
 import "./styles.scss";
-import FormDamage from "../../components/FormDamage/FormDamage";
 import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
+import { Toast } from "primereact/toast";
+import { FileUpload } from "primereact/fileupload";
+import UploadImageApiRequest from "../../api/UploadImage/UploadImage";
 
 const AddDamagesPage: FC = () => {
   const navigate = useNavigate();
@@ -21,43 +27,13 @@ const AddDamagesPage: FC = () => {
     (state: any) => state.dataPressReducer.dataPress
   );
   const actsApi = new ActsApiRequest();
-
+  const toast = useRef(null);
   const [isDamageType, setIsDamageType] = useState<any[]>([]);
-  const [isNames, setIsNames] = useState<any[]>([]);
   const [isDamageArray, setIsDamageArray] = useState<any[]>([]);
-
-  const [damageArrayCount, setDamageArrayCount] = useState(1);
-  const [isTypeDamage, setIsTypeDamage] = useState<string | number>("");
   const [isError, setIsError] = useState(false);
+  const [files, setFiles] = useState<any[]>([]);
 
-  const inputDamage = [
-    {
-      id: 1,
-      label: "Тип повреждения",
-      key: "damage_type",
-      type: "field",
-      options: isDamageType || [],
-    },
-    // {
-    //   id: 2,
-    //   label: "Наименование",
-    //   key: "name",
-    //   type: "field",
-    //   options: isNames || [],
-    // },
-    {
-      id: 3,
-      label: "Количество",
-      key: "count",
-      type: "number",
-    },
-    {
-      id: 4,
-      label: "Примечание",
-      key: "note",
-      type: "string",
-    },
-  ];
+  const uploadApi = new UploadImageApiRequest();
 
   useEffect(() => {
     actsApi.getDamageTypes().then((resp) => {
@@ -73,48 +49,19 @@ const AddDamagesPage: FC = () => {
         setIsDamageType(damages);
       }
     });
-    // actsApi.getNames().then((resp) => {
-    //   if (resp.success) {
-    //     const names =
-    //       resp.data && resp.data.results
-    //         ? resp.data.results.map((item: any) => ({
-    //             id: item.id,
-    //             value: item.id,
-    //             display_name: item.name,
-    //           }))
-    //         : [];
-    //     setIsNames(names);
-    //   }
-    // });
   }, []);
 
-  const handleChange = (
-    index: number,
-    fieldName: string,
-    fieldValue: string | boolean
-  ) => {
-    if (index === isDamageArray.length && isTypeDamage !== "") {
-      // Если индекс равен номеру объекта в массиве, добавляем новый объект
-      setIsDamageArray((prevArray) => [
-        ...prevArray,
-        {
-          [fieldName]: fieldValue,
-          damage_type: isTypeDamage,
-        },
-      ]);
-    } else {
-      // Если индекс не равен номеру объекта в массиве, обновляем существующий объект
-      setIsDamageArray((prevArray) =>
-        prevArray.map((item, idx) =>
-          idx === index
-            ? {
-                ...item,
-                [fieldName]: fieldValue,
-                damage_type: isTypeDamage,
-              }
-            : item
-        )
-      );
+  const onUpload = (event: any) => {
+    const response = event.xhr.response;
+    const data = JSON.parse(response);
+    if (data.success) {
+      setFiles(data.files);
+      //@ts-ignore
+      toast.current.show({
+        severity: "info",
+        summary: "Success",
+        detail: "File Uploaded",
+      });
     }
   };
 
@@ -123,29 +70,11 @@ const AddDamagesPage: FC = () => {
       ? [...dataPress.damages, ...isDamageArray]
       : [...isDamageArray];
 
-    // const isValid = updatedDamages.every((damage) => {
-    //   console.log("damage2", damage);
-
-    //   return damage.count && damage.damage_type && damage.name;
-    // });
-
-    // console.log("isValid", isValid);
-
-    // // Если не все поля заполнены, выдаем ошибку
-    // if (!isValid) {
-    //   setIsError(true);
-    //   return;
-    // }
-
     dispatch(
       //@ts-ignore
       DataPressActionCreators.setDataPress("damages", updatedDamages)
     );
     navigate(-1);
-  };
-
-  const addDamageBlock = () => {
-    setDamageArrayCount(damageArrayCount + 1);
   };
 
   return (
@@ -159,20 +88,26 @@ const AddDamagesPage: FC = () => {
       )}
       <section className="section">
         <div className="containerPageSlide">
-          <h1 className="titleSlide">Добавить повреждение</h1>
-          {[...Array(damageArrayCount)].map((_, index) => (
-            <FormDamage
-              key={index}
-              index={index}
-              inputDamage={inputDamage}
-              dataPress={dataPress}
-              handleChange={(index, key, value) =>
-                handleChange(index, key, value)
-              }
-              handleType={(e) => setIsTypeDamage(e)}
+          <h1 className="titleSlide">Повреждения</h1>
+
+          <Buttons
+            text={"Добавить повреждение"}
+            onClick={() => setIsDamageArray([...isDamageArray, {}])}
+          />
+
+          <div className="card">
+            <FileUpload
+              mode="basic"
+              name="files[]"
+              accept="image/*"
+              maxFileSize={10000000}
+              onUpload={onUpload}
+              url={`${apiConfig.baseUrlMedia}upload/`}
+              auto
+              chooseLabel="Загрузить фотографии"
+              className={"button__container"}
             />
-          ))}
-          {/* <Buttons text={"Добавить блок"} onClick={() => addDamageBlock()} /> */}
+          </div>
         </div>
         <div className="containerButtonSlider">
           <Buttons
