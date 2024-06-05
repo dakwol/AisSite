@@ -366,68 +366,52 @@ const MyDocument: FC<IProps> = ({ id }) => {
         })}
 
         {pdfData?.damage_images?.map((item: any, index: number) => {
-          const images = item || {};
-          const imageKeys = Object.keys(images);
-          const pagesCount = Math.ceil(imageKeys.length / 2);
-
-          return Array.from({ length: pagesCount }, (_, pageIndex) => {
-            const startIndex = pageIndex * 2;
-            const endIndex = Math.min(startIndex + 2, imageKeys.length); // Correct slicing for images
-
-            return (
-              <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
-                <View style={styles.section}>
-                  <Text
-                    style={{ fontSize: 12, marginBottom: 8 }}
-                  >{`Приложение №${index + 1} к акту ${pdfData.number} от ${
-                    pdfData.signed_at &&
-                    formatDateIntlTimeDate(pdfData.signed_at || "")
-                  }`}</Text>
-                  <View
+          return (
+            <Page size="A4" style={styles.page} key={`${index}`}>
+              <View style={styles.section}>
+                <Text style={{ fontSize: 12, marginBottom: 8 }}>{`Приложение №${
+                  index + 1
+                } к акту ${pdfData.number} от ${
+                  pdfData.signed_at &&
+                  formatDateIntlTimeDate(pdfData.signed_at || "")
+                }`}</Text>
+                <View
+                  style={{
+                    flexDirection: "row", // Changed to row to display images side by side
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Image
+                    key={`${index}`}
                     style={{
-                      flexDirection: "row", // Changed to row to display images side by side
-                      justifyContent: "space-between",
+                      width: "48%", // Adjusted to 48% to fit two images side by side
+                      height: 300, // Adjust the height as needed
+                      marginBottom: 8,
+                      objectFit: "cover",
                     }}
-                  >
-                    {imageKeys
-                      .slice(startIndex, endIndex)
-                      .map((key, imageIndex) => {
-                        const image = images[key];
-                        return (
-                          <Image
-                            key={`${index}-${pageIndex}-${imageIndex}`}
-                            style={{
-                              width: "48%", // Adjusted to 48% to fit two images side by side
-                              height: 300, // Adjust the height as needed
-                              marginBottom: 8,
-                              objectFit: "cover",
-                            }}
-                            src={`${apiConfig.baseUrlMedia}${image.file}`}
-                          />
-                        );
-                      })}
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{ fontSize: 12 }}>
-                      Акт создан в АИС «Контроль повреждений»
-                    </Text>
-                    <Text
-                      style={{ fontSize: 12 }}
-                      render={({ pageNumber, totalPages }) =>
-                        `Страница ${pageNumber} из ${totalPages}`
-                      }
-                    />
-                  </View>
+                    src={`${apiConfig.baseUrlMedia}${item.file}`}
+                  />
                 </View>
-              </Page>
-            );
-          });
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontSize: 12 }}>
+                    Акт создан в АИС «Контроль повреждений»
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12 }}
+                    render={({ pageNumber, totalPages }) =>
+                      `Страница ${pageNumber} из ${totalPages}`
+                    }
+                  />
+                </View>
+              </View>
+            </Page>
+          );
         })}
       </Document>
     )
