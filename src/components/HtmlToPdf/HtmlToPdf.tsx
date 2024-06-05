@@ -103,7 +103,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     style={{ fontSize: 12, fontWeight: 400 }}
                   >{`город ${pdfData.municipality}`}</Text>
                 </View>
-                <View>
+                <View style={{ width: 295 }}>
                   <Text
                     style={{
                       color: "#667085",
@@ -127,7 +127,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     marginTop: 22,
                   }}
                 >
-                  <View>
+                  <View style={{ width: 560 }}>
                     <Text
                       style={{
                         color: "#667085",
@@ -141,7 +141,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                       style={{ fontSize: 12, fontWeight: 400 }}
                     >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}`}</Text>
                   </View>
-                  <View>
+                  <View style={{ width: 295 }}>
                     <Text
                       style={{
                         color: "#667085",
@@ -176,7 +176,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
               <View style={{ marginTop: 24 }}>
                 <Text
                   style={{ fontSize: 16 }}
-                >{`Настоящий акт составлен о том, что по состоянию на  ${
+                >{`Настоящий акт составлен о том, что по состоянию на ${
                   pdfData.signed_at &&
                   formatDateIntlTimeDate(pdfData.signed_at || "")
                 }, выявлены следующие повреждения: `}</Text>
