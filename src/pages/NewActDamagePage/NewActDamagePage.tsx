@@ -225,30 +225,30 @@ const NewActDamage: FC = () => {
             isLoading={(e: any) => setIsLoad(e)}
           />
           <div className="containerImagePicker">
-            {isLoad ? (
-              <Skeleton width={"100%"} height={50}></Skeleton>
-            ) : (
-              arrayImage?.length > 0 &&
-              arrayImage?.map((item) => {
-                return (
-                  //@ts-ignore
-                  <div key={item.file.name} className="imageItemContainer">
-                    <img
-                      //@ts-ignore
-                      src={`${apiConfig.baseUrlMedia}${item.file}`}
-                      className="imageItem"
-                      alt="Damage Image"
-                    />
-                    <img
-                      src={icons.xClose}
-                      className="removeButton"
-                      //@ts-ignore
-                      onClick={() => handleRemoveImage(item.file)}
-                    ></img>
-                  </div>
-                );
-              })
-            )}
+            {isLoad
+              ? Array.from({ length: 8 }).map((_, index) => (
+                  <Skeleton key={index} width={"100%"} height={50}></Skeleton>
+                ))
+              : arrayImage?.length > 0 &&
+                arrayImage?.map((item) => {
+                  return (
+                    //@ts-ignore
+                    <div key={item.file.name} className="imageItemContainer">
+                      <img
+                        //@ts-ignore
+                        src={`${apiConfig.baseUrlMedia}${item.file}`}
+                        className="imageItem"
+                        alt="Damage Image"
+                      />
+                      <img
+                        src={icons.xClose}
+                        className="removeButton"
+                        //@ts-ignore
+                        onClick={() => handleRemoveImage(item.file)}
+                      ></img>
+                    </div>
+                  );
+                })}
           </div>
 
           <FormInput
@@ -316,7 +316,7 @@ const NewActDamage: FC = () => {
           )}
           {dataPress.victim && (
             <Buttons
-              ico={isLoading ? icons.load : icons.checkBlack}
+              ico={isLoading ? icons.load : icons.arrowRightOrange}
               text={"Подписание без СМС"}
               className="sliderButtonAll"
               onClick={() => {

@@ -142,21 +142,25 @@ const NewActSigningPhotoPage: FC = () => {
                 isLoading={(e: any) => setIsLoad(e)}
               />
               <div className="containerImagePicker">
-                {isLoad ? (
-                  <Skeleton width={"100%"} height={50}></Skeleton>
-                ) : (
-                  arrayImage?.length > 0 &&
-                  arrayImage?.map((item: any) => {
-                    return (
-                      <img
-                        src={`${apiConfig.baseUrlMedia}${item.file}`}
-                        className="imageItem"
-                        key={item.file}
-                        alt="Damage Image"
-                      />
-                    );
-                  })
-                )}
+                {isLoad
+                  ? Array.from({ length: 8 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        width={"100%"}
+                        height={50}
+                      ></Skeleton>
+                    ))
+                  : arrayImage?.length > 0 &&
+                    arrayImage?.map((item: any) => {
+                      return (
+                        <img
+                          src={`${apiConfig.baseUrlMedia}${item.file}`}
+                          className="imageItem"
+                          key={item.file}
+                          alt="Damage Image"
+                        />
+                      );
+                    })}
               </div>
             </div>
           </div>
