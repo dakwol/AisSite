@@ -366,15 +366,13 @@ const MyDocument: FC<IProps> = ({ id }) => {
         })}
 
         {pdfData?.damage_images?.map((item: any, index: number) => {
-          const images = item || [];
-          const pagesCount = Math.ceil(images.length / 2);
+          const images = item || {};
+          const imageKeys = Object.keys(images);
+          const pagesCount = Math.ceil(imageKeys.length / 2);
 
           return Array.from({ length: pagesCount }, (_, pageIndex) => {
             const startIndex = pageIndex * 2;
-            const endIndex = Math.min(
-              startIndex + 2,
-              pdfData?.damage_images.length
-            ); // Изменил endIndex на startIndex + 2
+            const endIndex = Math.min(startIndex + 2, imageKeys.length); // Correct slicing for images
 
             return (
               <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
@@ -387,36 +385,27 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   }`}</Text>
                   <View
                     style={{
-                      flexDirection: "column",
+                      flexDirection: "row", // Changed to row to display images side by side
                       justifyContent: "space-between",
                     }}
                   >
-                    {/* {images
+                    {imageKeys
                       .slice(startIndex, endIndex)
-                      .map((image: any, imageIndex: number) => {
+                      .map((key, imageIndex) => {
+                        const image = images[key];
                         return (
                           <Image
                             key={`${index}-${pageIndex}-${imageIndex}`}
                             style={{
-                              width: "100%", // Изменил ширину изображения на 48%, чтобы поместить по два изображения на одной строке
-                              height: 300, // Вы можете настроить высоту по своему усмотрению
+                              width: "48%", // Adjusted to 48% to fit two images side by side
+                              height: 300, // Adjust the height as needed
                               marginBottom: 8,
                               objectFit: "cover",
                             }}
                             src={`${apiConfig.baseUrlMedia}${image.file}`}
                           />
                         );
-                      })} */}
-                    <Image
-                      key={`${index}-${pageIndex}-${index}`}
-                      style={{
-                        width: "100%", // Изменил ширину изображения на 48%, чтобы поместить по два изображения на одной строке
-                        height: 300, // Вы можете настроить высоту по своему усмотрению
-                        marginBottom: 8,
-                        objectFit: "cover",
-                      }}
-                      src={`${apiConfig.baseUrlMedia}${images.file}`}
-                    />
+                      })}
                   </View>
                   <View
                     style={{
