@@ -71,32 +71,6 @@ const FormDamage: FC<IProps> = ({
           );
         }
       })} */}
-      {/* <div className="containerImagePicker">
-        <FilePickerModal
-          type="image"
-          setFiles={(e: any) => {
-            //@ts-ignore
-            setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
-          }}
-          isLoading={(e: any) => setIsLoad(e)}
-        />
-
-        {isLoad ? (
-          <p>Загрузка</p>
-        ) : (
-          arrayImage?.length > 0 &&
-          arrayImage?.map((item: any) => {
-            return (
-              <img
-                src={`${apiConfig.baseUrlMedia}${item.file}`}
-                className="imageItem"
-                key={item.file}
-                alt="Damage Image"
-              />
-            );
-          })
-        )}
-      </div> */}
     </div>
   );
 };

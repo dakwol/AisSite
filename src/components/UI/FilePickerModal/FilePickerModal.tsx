@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import "./styles.scss";
 import icons from "../../../assets/icons/icons";
 import UploadImageApiRequest from "../../../api/UploadImage/UploadImage";
+import Buttons from "../../Buttons/Buttons";
 
 const FilePickerModal = ({ onClose, setFiles, type, isLoading }: any) => {
   const uploadApi = new UploadImageApiRequest();
@@ -48,10 +49,14 @@ const FilePickerModal = ({ onClose, setFiles, type, isLoading }: any) => {
           className={`file-picker-dropzone ${isDragActive ? "active" : ""}`}
         >
           <input {...getInputProps()} />
-          <div className="buttonPicker">
-            <img src={icons.photo} alt="Иконка Фото" />
-            <p>Фото</p>
-          </div>
+
+          <Buttons
+            text={"Загрузить фотографии"}
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            className="buttonPicker"
+          ></Buttons>
           {/* <div className="textUploadContainer">
             <p className="textUpload">
               <b>Нажмите, чтобы загрузить</b>

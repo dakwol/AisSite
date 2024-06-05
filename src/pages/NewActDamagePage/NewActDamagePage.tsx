@@ -19,6 +19,9 @@ import {
   pdf,
 } from "@react-pdf/renderer";
 import UploadImageApiRequest from "../../api/UploadImage/UploadImage";
+import FilePickerModal from "../../components/UI/FilePickerModal/FilePickerModal";
+import apiConfig from "../../api/apiConfig";
+import FormInput from "../../components/FormInput/FormInput";
 
 interface DamageType {
   id: number;
@@ -52,7 +55,11 @@ const NewActDamage: FC = () => {
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState({});
   const pdfLinkRef = useRef<any>(null);
+
+  const [arrayImage, setArrayImage] = useState([]);
+  const [isLoad, setIsLoad] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,18 +156,11 @@ const NewActDamage: FC = () => {
     }
   }, [blobDocument]);
 
-  const handleDeleteDamage = (
-    damageType: DamageType,
-    damageItemToDelete: any
-  ) => {
+  const handleDeleteDamage = (damageItemToDelete: any) => {
     let deleted = false;
 
     const updatedDamages = dataPress.damages.filter((item: any) => {
-      if (
-        !deleted &&
-        item.damage_type === damageType.value &&
-        item.name === damageItemToDelete.name
-      ) {
+      if (!deleted && item.name === damageItemToDelete.name) {
         deleted = true;
         return false;
       }
@@ -169,6 +169,22 @@ const NewActDamage: FC = () => {
 
     dispatch(DataPressActionCreators.setDataPress("damages", updatedDamages));
   };
+
+  const handleRemoveImage = (fileToRemove: any) => {
+    setArrayImage((prevArray) =>
+      //@ts-ignore
+      prevArray.filter((item) => item.file !== fileToRemove)
+    );
+  };
+
+  useEffect(() => {
+    if (arrayImage) {
+      dispatch(
+        //@ts-ignore
+        DataPressActionCreators.setDataPress("damage_images", arrayImage)
+      );
+    }
+  }, [arrayImage]);
 
   return (
     <>
@@ -198,26 +214,65 @@ const NewActDamage: FC = () => {
             text={"Добавить повреждение"}
             onClick={() => navigate(RouteNames.ADDDAMAGEPAGE)}
           />
+          <FilePickerModal
+            type="image"
+            setFiles={(files: any) => {
+              setImageLoading({}); // Сбросим состояние загрузки перед добавлением новых файлов
+              //@ts-ignore
+              setArrayImage((prevArray) => [...prevArray, ...files]);
+            }}
+            isLoading={(e: any) => setIsLoad(e)}
+          />
+          <div className="containerImagePicker">
+            {arrayImage?.length > 0 &&
+              arrayImage?.map((item) => {
+                return (
+                  //@ts-ignore
+                  <div key={item.file.name} className="imageItemContainer">
+                    <img
+                      //@ts-ignore
+                      src={`${apiConfig.baseUrlMedia}${item.file}`}
+                      className="imageItem"
+                      alt="Damage Image"
+                    />
+                    <img
+                      src={icons.xClose}
+                      className="removeButton"
+                      //@ts-ignore
+                      onClick={() => handleRemoveImage(item.file)}
+                    ></img>
+                  </div>
+                );
+              })}
+          </div>
+
+          <FormInput
+            style={""}
+            value={dataPress.note}
+            onChange={(value) =>
+              dispatch(DataPressActionCreators.setDataPress("note", value))
+            }
+            subInput={"Примечание"}
+            required={false}
+            error={""}
+            keyData={""}
+            textArea
+          />
+
           <h2 className="titlePageMini">Типы повреждений</h2>
 
           <div className="damageContainer">
             {dataPress.damages &&
               dataPress.damages.map((item: any) => {
-                const damageType = damageTypes.find(
-                  (type: DamageType) => type.value === item.damage_type
-                );
-                if (!damageType) {
-                  return null;
-                }
                 return (
-                  <div key={item.id} className="damageItem">
+                  <div key={item.damage_type.id} className="damageItem">
                     <div className="containerDamageData">
-                      <h1 className="damageTitle">{damageType.display_name}</h1>
-                      <p>{item.count}</p>
+                      <h1 className="damageTitle">{item.damage_type.name}</h1>
+                      <p>{item.damage_type.count}</p>
                     </div>
                     <p
                       className="deleteButton"
-                      onClick={() => handleDeleteDamage(damageType, item)}
+                      onClick={() => handleDeleteDamage(item)}
                     >
                       Удалить
                     </p>
@@ -226,7 +281,7 @@ const NewActDamage: FC = () => {
               })}
           </div>
         </div>
-        <div className="containerButtonSlider">
+        <div className="containerButtonSlider fixed">
           <Buttons
             ico={icons.arrowLeft}
             text={""}

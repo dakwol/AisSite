@@ -7,8 +7,22 @@ import icons from "../../assets/icons/icons";
 import Buttons from "../../components/Buttons/Buttons";
 import { RouteNames } from "../../routes";
 import { useNavigate } from "react-router-dom";
-import { decryptData } from "../../components/UI/functions/functions";
 import ErrorMessage from "../../components/UI/ErrorMassage/ErrorMassage";
+
+interface Victim {
+  last_name: string;
+  first_name: string;
+  patronymic: string;
+  phone_number: string;
+  [key: string]: string; // Для поддержки дополнительных контактов
+}
+
+interface ContactInput {
+  id: number;
+  label: string;
+  key: string;
+  type: string;
+}
 
 const NewActVictim: FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +31,7 @@ const NewActVictim: FC = () => {
     (state: any) => state.dataPressReducer.dataPress
   );
   const [isError, setIsError] = useState(false);
-  const inputVictim = [
+  const inputVictim: ContactInput[] = [
     {
       id: 1,
       label: "Фамилия",
@@ -44,7 +58,11 @@ const NewActVictim: FC = () => {
     },
   ];
 
-  const handleChange = (fieldName: string, fieldValue: string | boolean) => {
+  const [additionalContacts, setAdditionalContacts] = useState<
+    ContactInput[][]
+  >([]);
+
+  const handleChange = (fieldName: string, fieldValue: string) => {
     dispatch(
       DataPressActionCreators.setDataPress("victim", {
         ...dataPress.victim,
@@ -52,19 +70,68 @@ const NewActVictim: FC = () => {
       })
     );
   };
+  const handleChangeAdditional = (
+    fieldName: string,
+    fieldValue: string,
+    index: number
+  ) => {
+    const additionalContacts = dataPress.victim?.additional_contacts || [];
+    const newAdditionalContacts = [...additionalContacts];
+    newAdditionalContacts[index] = {
+      ...newAdditionalContacts[index],
+      [fieldName]: fieldValue,
+    };
+
+    dispatch(
+      DataPressActionCreators.setDataPress("victim", {
+        ...dataPress.victim,
+        additional_contacts: newAdditionalContacts,
+      })
+    );
+  };
+
+  const addNewContact = () => {
+    const newContacts = inputVictim.map((item, index) => ({
+      ...item,
+      id: additionalContacts.length * inputVictim.length + index + 1,
+      key: item.key,
+      label: item.label,
+    }));
+
+    setAdditionalContacts([...additionalContacts, newContacts]);
+
+    // Ensure that a new object is added to the dataPress.victim.additional_contacts array
+    const newAdditionalContact = newContacts.reduce(
+      (acc, item) => ({ ...acc, [item.key]: "" }),
+      {}
+    );
+
+    dispatch(
+      DataPressActionCreators.setDataPress("victim", {
+        ...dataPress.victim,
+        additional_contacts: [
+          ...(dataPress.victim?.additional_contacts || []),
+          newAdditionalContact,
+        ],
+      })
+    );
+  };
 
   const movingOn = () => {
-    if (
-      dataPress.victim.first_name != "" &&
-      dataPress.victim.last_name != "" &&
-      dataPress.victim.patronymic != "" &&
-      dataPress.victim.phone_number != ""
-    ) {
+    const requiredFieldsFilled = inputVictim.every(
+      (item) => dataPress.victim[item.key] !== ""
+    );
+
+    if (requiredFieldsFilled) {
       navigate(RouteNames.NEWACTDAMAGEPAGE);
     } else {
       setIsError(true);
     }
   };
+
+  console.log("====================================");
+  console.log(dataPress);
+  console.log("====================================");
 
   return (
     <section className="section">
@@ -75,13 +142,14 @@ const NewActVictim: FC = () => {
           onClose={() => setIsError(false)}
         />
       )}
-      <div className="containerPageSlide">
+      <div className="containerPageSlide mb-12">
         <h1 className="titleSlide">Данные пострадавшего/представителя</h1>
 
         <div className="formContainer">
           {inputVictim.map((item) => {
             return (
               <FormInput
+                key={item.key}
                 style={""}
                 value={dataPress?.victim && dataPress?.victim[item.key]}
                 onChange={(value) => handleChange(item.key, value)}
@@ -98,9 +166,36 @@ const NewActVictim: FC = () => {
               />
             );
           })}
+
+          {additionalContacts.map((contactGroup, index) => (
+            <div key={index}>
+              <h2 className="titleSlide">{`Контакт ${index + 1}`}</h2>
+              {contactGroup.map((item) => (
+                <FormInput
+                  key={item.key}
+                  style={""}
+                  value={
+                    dataPress?.victim?.additional_contacts?.[index]?.[
+                      item.key
+                    ] || ""
+                  }
+                  onChange={(value) =>
+                    handleChangeAdditional(item.key, value, index)
+                  }
+                  subInput={item.label}
+                  required={false}
+                  type={item.type}
+                  error={""}
+                  keyData={""}
+                />
+              ))}
+            </div>
+          ))}
+
+          <Buttons text={"Дополнительный контакт"} onClick={addNewContact} />
         </div>
       </div>
-      <div className="containerButtonSlider">
+      <div className="containerButtonSlider fixed">
         <Buttons
           ico={icons.arrowLeft}
           text={""}
@@ -113,9 +208,7 @@ const NewActVictim: FC = () => {
           ico={icons.arrowRightOrange}
           text={"Далее"}
           className="sliderButton"
-          onClick={() => {
-            movingOn();
-          }}
+          onClick={movingOn}
         />
       </div>
     </section>

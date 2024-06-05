@@ -1,11 +1,16 @@
 @use "../../scss/" as *;
 
+.mb-12{
+    margin-bottom: 120rem !important;
+}
+
 .containerPageSlide{
     display: flex;
     flex-direction: column;
     gap: 32rem;
     flex-grow: 1;
     flex: 1 0 auto;
+
     
 
     .titleSlide{

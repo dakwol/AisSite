@@ -18,9 +18,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 8rem;
-  background-color: $gray-100;
-  width: 76rem;
-  height: 76rem;
+  width: 100%;
 
   img{
     width: 24rem;
@@ -37,7 +35,7 @@
 }
 
 .file-picker-modal {
-    width: fit-content;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

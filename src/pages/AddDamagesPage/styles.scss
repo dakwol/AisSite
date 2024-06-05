@@ -12,3 +12,26 @@
         border-radius: 8rem;
     }
 }
+
+.damageArrayContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 12rem;
+    margin-bottom: 80rem;
+}
+
+.damageItem{
+    background-color: $gray-100;
+    padding: 12rem 12rem;
+    border-radius: 12rem;
+    &.selected{
+        outline: 2rem solid $blue;
+    }
+}
+
+.fixed{
+    position: fixed;
+    bottom:20rem;
+    left: 0;
+    padding: 12rem;
+}
