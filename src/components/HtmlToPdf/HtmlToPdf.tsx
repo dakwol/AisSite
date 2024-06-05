@@ -334,7 +334,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                             style={{
                               width: "100%",
                               objectFit: "cover",
-                              height: "70%",
+                              height: "95%",
                               marginBottom: 8, // Adjust as needed
                             }}
                             src={`${apiConfig.baseUrlMedia}${image.file}`}
@@ -385,7 +385,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     key={`${index}`}
                     style={{
                       width: "100%", // Adjusted to 48% to fit two images side by side
-                      height: "70%",
+                      height: "95%",
                       marginBottom: 8,
                       objectFit: "cover",
                     }}
@@ -397,6 +397,8 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    position: "absolute",
+                    bottom: 0,
                   }}
                 >
                   <Text style={{ fontSize: 12 }}>
