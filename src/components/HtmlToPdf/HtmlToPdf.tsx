@@ -384,8 +384,8 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   <Image
                     key={`${index}`}
                     style={{
-                      width: "48%", // Adjusted to 48% to fit two images side by side
-                      height: 300, // Adjust the height as needed
+                      width: "100%", // Adjusted to 48% to fit two images side by side
+                      height: "100%", // Adjust the height as needed
                       marginBottom: 8,
                       objectFit: "cover",
                     }}
