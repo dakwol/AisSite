@@ -187,9 +187,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   return (
                     <Text style={{ fontSize: 12 }} key={index}>{`${
                       index + 1
-                    }. ${item?.damage_type}, фото (приложение №${
-                      index + 1
-                    })`}</Text>
+                    }. ${item?.damage_type}`}</Text>
                   );
                 })}
               </View>
@@ -323,7 +321,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     key={`${index}`}
                     style={{
                       width: "100%", // Ensure full width
-                      height: "90%", // Adjusted height to ensure proper spacing
+                      height: 600, // Adjusted height to ensure proper spacing
                       marginBottom: 8,
                       objectFit: "cover",
                     }}
@@ -373,7 +371,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     key={`${index}`}
                     style={{
                       width: "100%", // Adjusted to 48% to fit two images side by side
-                      height: "95%",
+                      height: 600, // Adjusted height to ensure proper spacing
                       marginBottom: 8,
                       objectFit: "cover",
                     }}
