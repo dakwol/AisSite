@@ -316,7 +316,7 @@ const NewActDamage: FC = () => {
           )}
           {dataPress.victim && (
             <Buttons
-              ico={icons.arrowRightOrange}
+              ico={isLoading ? icons.load : icons.checkBlack}
               text={"Подписание без СМС"}
               className="sliderButtonAll"
               onClick={() => {
