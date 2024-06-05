@@ -303,50 +303,38 @@ const MyDocument: FC<IProps> = ({ id }) => {
         </Page>
 
         {pdfData?.act_images?.map((item: any, index: number) => {
-          const pagesCount = Math.ceil(pdfData?.act_images.length / 2); // Calculate the number of pages needed
-
-          // Iterate over the pages
-          return Array.from({ length: pagesCount }, (_, pageIndex) => {
-            const startIndex = pageIndex * 2;
-            const endIndex = Math.min(
-              startIndex + 1,
-              pdfData?.act_images.length
-            );
-
-            // Render the Page component with two images
-            return (
-              <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
-                <View style={styles.section}>
-                  <View>
-                    <Text
-                      style={{ fontSize: 12, marginBottom: 8 }}
-                    >{`Подписание к акту ${pdfData.number} от ${
-                      pdfData.signed_at &&
-                      formatDateIntlTimeDate(pdfData.signed_at || "")
-                    }`}</Text>
-                    {/* Render two images per page */}
-                    {pdfData?.act_images
-                      .slice(startIndex, endIndex)
-                      .map((image: any, imageIndex: number) => {
-                        return (
-                          <Image
-                            key={`${index}-${pageIndex}-${imageIndex}`}
-                            style={{
-                              width: "100%",
-                              objectFit: "cover",
-                              height: "95%",
-                              marginBottom: 8, // Adjust as needed
-                            }}
-                            src={`${apiConfig.baseUrlMedia}${image.file}`}
-                          />
-                        );
-                      })}
-                  </View>
+          return (
+            <Page size="A4" style={styles.page} key={`${index}`}>
+              <View style={styles.section}>
+                <Text style={{ fontSize: 12, marginBottom: 8 }}>{`Приложение №${
+                  index + 1
+                } к акту ${pdfData.number} от ${
+                  pdfData.signed_at &&
+                  formatDateIntlTimeDate(pdfData.signed_at || "")
+                }`}</Text>
+                <View
+                  style={{
+                    flexDirection: "column", // Changed to column to ensure all elements are in one column
+                    justifyContent: "space-between",
+                    height: "85%", // Adjusted height to ensure proper spacing
+                  }}
+                >
+                  <Image
+                    key={`${index}`}
+                    style={{
+                      width: "100%", // Ensure full width
+                      height: "90%", // Adjusted height to ensure proper spacing
+                      marginBottom: 8,
+                      objectFit: "cover",
+                    }}
+                    src={`${apiConfig.baseUrlMedia}${item.file}`}
+                  />
                   <View
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      marginTop: 8, // Added margin top for spacing
                     }}
                   >
                     <Text style={{ fontSize: 12 }}>
@@ -360,9 +348,9 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     />
                   </View>
                 </View>
-              </Page>
-            );
-          });
+              </View>
+            </Page>
+          );
         })}
 
         {pdfData?.damage_images?.map((item: any, index: number) => {
@@ -397,8 +385,6 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "absolute",
-                    bottom: 0,
                   }}
                 >
                   <Text style={{ fontSize: 12 }}>
