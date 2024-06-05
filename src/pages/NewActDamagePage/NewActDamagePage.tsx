@@ -22,6 +22,7 @@ import UploadImageApiRequest from "../../api/UploadImage/UploadImage";
 import FilePickerModal from "../../components/UI/FilePickerModal/FilePickerModal";
 import apiConfig from "../../api/apiConfig";
 import FormInput from "../../components/FormInput/FormInput";
+import Skeleton from "react-loading-skeleton";
 
 interface DamageType {
   id: number;
@@ -224,7 +225,10 @@ const NewActDamage: FC = () => {
             isLoading={(e: any) => setIsLoad(e)}
           />
           <div className="containerImagePicker">
-            {arrayImage?.length > 0 &&
+            {isLoad ? (
+              <Skeleton width={"100%"} height={50}></Skeleton>
+            ) : (
+              arrayImage?.length > 0 &&
               arrayImage?.map((item) => {
                 return (
                   //@ts-ignore
@@ -243,7 +247,8 @@ const NewActDamage: FC = () => {
                     ></img>
                   </div>
                 );
-              })}
+              })
+            )}
           </div>
 
           <FormInput

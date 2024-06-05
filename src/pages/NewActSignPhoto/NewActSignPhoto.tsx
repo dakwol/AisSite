@@ -17,6 +17,7 @@ import apiConfig from "../../api/apiConfig";
 import { BlobProvider } from "@react-pdf/renderer";
 import MyDocument from "../../components/HtmlToPdf/HtmlToPdf";
 import UploadImageApiRequest from "../../api/UploadImage/UploadImage";
+import Skeleton from "react-loading-skeleton";
 
 const NewActSigningPhotoPage: FC = () => {
   const params = useParams();
@@ -132,18 +133,17 @@ const NewActSigningPhotoPage: FC = () => {
                 Подпишите фотографии акта или фотографией
                 пострадавшего/представителя
               </h4>
+              <FilePickerModal
+                type="image"
+                setFiles={(e: any) => {
+                  //@ts-ignore
+                  setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
+                }}
+                isLoading={(e: any) => setIsLoad(e)}
+              />
               <div className="containerImagePicker">
-                <FilePickerModal
-                  type="image"
-                  setFiles={(e: any) => {
-                    //@ts-ignore
-                    setArrayImage((prevArray: any[]) => [...prevArray, ...e]);
-                  }}
-                  isLoading={(e: any) => setIsLoad(e)}
-                />
-
                 {isLoad ? (
-                  <p>загрузка</p>
+                  <Skeleton width={"100%"} height={50}></Skeleton>
                 ) : (
                   arrayImage?.length > 0 &&
                   arrayImage?.map((item: any) => {
