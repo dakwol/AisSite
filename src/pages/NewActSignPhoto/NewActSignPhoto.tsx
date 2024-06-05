@@ -128,7 +128,10 @@ const NewActSigningPhotoPage: FC = () => {
               </div>
             </div>
             <div className="signingForm">
-              <h4>Подпишите фотографии акта осмотра</h4>
+              <h4>
+                Подпишите фотографии акта или фотографией
+                пострадавшего/представителя
+              </h4>
               <div className="containerImagePicker">
                 <FilePickerModal
                   type="image"

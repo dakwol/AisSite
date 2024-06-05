@@ -187,7 +187,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   return (
                     <Text style={{ fontSize: 12 }} key={index}>{`${
                       index + 1
-                    }. ${item?.damage_type}, ${item?.count}шт (${
+                    }. ${item?.damage_type},(${
                       item?.note
                     }), фото (приложение №${index + 1})`}</Text>
                   );
@@ -214,7 +214,59 @@ const MyDocument: FC<IProps> = ({ id }) => {
                 </Text>
               </View>
               {pdfData?.victim && (
-                <View style={{ marginBottom: 24 }}>
+                <>
+                  <View style={{ marginBottom: 24 }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "light",
+                        marginBottom: 8,
+                      }}
+                    >
+                      Подпись лица, присутствующего при осмотре жилого помещения
+                      (собственник/представитель)
+                    </Text>
+                    <Text
+                      style={{ fontSize: 16, marginBottom: 4 }}
+                    >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}, +7${pdfData?.victim?.phone_number}`}</Text>
+                    {pdfData.act_images !== 0 ? (
+                      <Text
+                        style={{ fontSize: 12, color: "#667085" }}
+                      >{`Подписано актом через систему АИС «Контроль повреждений» ${
+                        pdfData.signed_at &&
+                        formatDateIntlTimeDate(pdfData.signed_at || "")
+                      } Подписание`}</Text>
+                    ) : (
+                      <Text
+                        style={{ fontSize: 12, color: "#667085" }}
+                      >{`Подписано СМС-сообщением через систему АИС «Контроль повреждений» ${
+                        pdfData.signed_at &&
+                        formatDateIntlTimeDate(pdfData.signed_at || "")
+                      }`}</Text>
+                    )}
+                  </View>
+                  <View style={{ marginBottom: 24 }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "light",
+                        marginBottom: 8,
+                      }}
+                    >
+                      Дополнительный контакт
+                    </Text>
+                    {pdfData?.victim.additional_contacts.map((item: any) => {
+                      return (
+                        <Text
+                          style={{ fontSize: 16, marginBottom: 4 }}
+                        >{`${item.last_name} ${item.first_name} ${item.patronymic}, +7${item.phone_number}`}</Text>
+                      );
+                    })}
+                  </View>
+                </>
+              )}
+              {pdfData?.note && (
+                <View>
                   <Text
                     style={{
                       fontSize: 12,
@@ -222,27 +274,12 @@ const MyDocument: FC<IProps> = ({ id }) => {
                       marginBottom: 8,
                     }}
                   >
-                    Подпись лица, присутствующего при осмотре жилого помещения
-                    (собственник/представитель)
+                    Примечание
                   </Text>
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 4 }}
-                  >{`${pdfData?.victim?.last_name} ${pdfData?.victim?.first_name} ${pdfData?.victim?.patronymic}, +7${pdfData?.victim?.phone_number}`}</Text>
-                  {pdfData.act_images !== 0 ? (
-                    <Text
-                      style={{ fontSize: 12, color: "#667085" }}
-                    >{`Подписано актом через систему АИС «Контроль повреждений» ${
-                      pdfData.signed_at &&
-                      formatDateIntlTimeDate(pdfData.signed_at || "")
-                    } Подписание`}</Text>
-                  ) : (
-                    <Text
-                      style={{ fontSize: 12, color: "#667085" }}
-                    >{`Подписано СМС-сообщением через систему АИС «Контроль повреждений» ${
-                      pdfData.signed_at &&
-                      formatDateIntlTimeDate(pdfData.signed_at || "")
-                    }`}</Text>
-                  )}
+
+                  <Text style={{ fontSize: 16, marginBottom: 4 }}>
+                    {pdfData.note}
+                  </Text>
                 </View>
               )}
             </View>
