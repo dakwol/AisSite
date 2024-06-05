@@ -329,24 +329,24 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     }}
                     src={`${apiConfig.baseUrlMedia}${item.file}`}
                   />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginTop: 8, // Added margin top for spacing
-                    }}
-                  >
-                    <Text style={{ fontSize: 12 }}>
-                      Акт создан в АИС «Контроль повреждений»
-                    </Text>
-                    <Text
-                      style={{ fontSize: 12 }}
-                      render={({ pageNumber, totalPages }) =>
-                        `Страница ${pageNumber} из ${totalPages}`
-                      }
-                    />
-                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: 8, // Added margin top for spacing
+                  }}
+                >
+                  <Text style={{ fontSize: 12 }}>
+                    Акт создан в АИС «Контроль повреждений»
+                  </Text>
+                  <Text
+                    style={{ fontSize: 12 }}
+                    render={({ pageNumber, totalPages }) =>
+                      `Страница ${pageNumber} из ${totalPages}`
+                    }
+                  />
                 </View>
               </View>
             </Page>
