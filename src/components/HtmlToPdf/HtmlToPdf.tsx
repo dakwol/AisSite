@@ -187,9 +187,9 @@ const MyDocument: FC<IProps> = ({ id }) => {
                   return (
                     <Text style={{ fontSize: 12 }} key={index}>{`${
                       index + 1
-                    }. ${item?.damage_type},(${
-                      item?.note
-                    }), фото (приложение №${index + 1})`}</Text>
+                    }. ${item?.damage_type}, фото (приложение №${
+                      index + 1
+                    })`}</Text>
                   );
                 })}
               </View>
@@ -271,7 +271,6 @@ const MyDocument: FC<IProps> = ({ id }) => {
                     style={{
                       fontSize: 12,
                       fontWeight: "light",
-                      marginBottom: 8,
                     }}
                   >
                     Примечание
@@ -366,13 +365,16 @@ const MyDocument: FC<IProps> = ({ id }) => {
           });
         })}
 
-        {pdfData?.damages?.map((item: any, index: number) => {
-          const images = item?.damage_images || [];
+        {pdfData?.damage_images?.map((item: any, index: number) => {
+          const images = item || [];
           const pagesCount = Math.ceil(images.length / 2);
 
           return Array.from({ length: pagesCount }, (_, pageIndex) => {
             const startIndex = pageIndex * 2;
-            const endIndex = Math.min(startIndex + 2, images.length); // Изменил endIndex на startIndex + 2
+            const endIndex = Math.min(
+              startIndex + 2,
+              pdfData?.damage_images.length
+            ); // Изменил endIndex на startIndex + 2
 
             return (
               <Page size="A4" style={styles.page} key={`${index}-${pageIndex}`}>
@@ -389,7 +391,7 @@ const MyDocument: FC<IProps> = ({ id }) => {
                       justifyContent: "space-between",
                     }}
                   >
-                    {images
+                    {/* {images
                       .slice(startIndex, endIndex)
                       .map((image: any, imageIndex: number) => {
                         return (
@@ -404,7 +406,17 @@ const MyDocument: FC<IProps> = ({ id }) => {
                             src={`${apiConfig.baseUrlMedia}${image.file}`}
                           />
                         );
-                      })}
+                      })} */}
+                    <Image
+                      key={`${index}-${pageIndex}-${index}`}
+                      style={{
+                        width: "100%", // Изменил ширину изображения на 48%, чтобы поместить по два изображения на одной строке
+                        height: 300, // Вы можете настроить высоту по своему усмотрению
+                        marginBottom: 8,
+                        objectFit: "cover",
+                      }}
+                      src={`${apiConfig.baseUrlMedia}${images.file}`}
+                    />
                   </View>
                   <View
                     style={{
