@@ -55,6 +55,7 @@ const NewActDamage: FC = () => {
   const [dataIdDocs, setDataIdDocs] = useState("");
   const [dataIdDocsFix, setDataIdDocsFix] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isErrorDamages, setIsErrorDamages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState({});
   const pdfLinkRef = useRef<any>(null);
@@ -101,21 +102,30 @@ const NewActDamage: FC = () => {
     }
   }, []);
   const createAct = async (isSms: boolean, isPhoto: boolean) => {
-    const actsApi = new ActsApiRequest();
-    setIsSms(isSms);
-    setIsPhoto(isPhoto);
-    setIsLoading(true);
-    try {
-      const resp = await actsApi.create({ body: dataPress });
-      if (resp.success && resp.data) {
-        setDataIdDocs(resp.data.id);
-        setDataIdDocsFix(resp.data.id);
-        setActNumber(resp.data.number);
+    if (
+      dataPress.damages &&
+      dataPress.damages.length !== 0 &&
+      dataPress?.damage_images &&
+      dataPress?.damage_images?.length > 0
+    ) {
+      const actsApi = new ActsApiRequest();
+      setIsSms(isSms);
+      setIsPhoto(isPhoto);
+      setIsLoading(true);
+      try {
+        const resp = await actsApi.create({ body: dataPress });
+        if (resp.success && resp.data) {
+          setDataIdDocs(resp.data.id);
+          setDataIdDocsFix(resp.data.id);
+          setActNumber(resp.data.number);
+        }
+      } catch (error) {
+        console.error("Error creating act", error);
+        setIsError(true);
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Error creating act", error);
-      setIsError(true);
-      setIsLoading(false);
+    } else {
+      setIsErrorDamages(true);
     }
   };
 
@@ -176,10 +186,14 @@ const NewActDamage: FC = () => {
       //@ts-ignore
       prevArray.filter((item) => item.file !== fileToRemove)
     );
+    dispatch(
+      //@ts-ignore
+      DataPressActionCreators.setDataPress("damage_images", arrayImage)
+    );
   };
 
   useEffect(() => {
-    if (arrayImage) {
+    if (arrayImage && arrayImage.length !== 0) {
       dispatch(
         //@ts-ignore
         DataPressActionCreators.setDataPress("damage_images", arrayImage)
@@ -209,6 +223,13 @@ const NewActDamage: FC = () => {
             onClose={() => setIsError(false)}
           />
         )}
+        {isErrorDamages && (
+          <ErrorMessage
+            type={"error"}
+            message={"Добавте повреждение и фотографии"}
+            onClose={() => setIsErrorDamages(false)}
+          />
+        )}
         <div className="containerPageSlide">
           <h1 className="titleSlide">Повреждения</h1>
           <Buttons
@@ -229,8 +250,8 @@ const NewActDamage: FC = () => {
               ? Array.from({ length: 8 }).map((_, index) => (
                   <Skeleton key={index} width={"100%"} height={50}></Skeleton>
                 ))
-              : arrayImage?.length > 0 &&
-                arrayImage?.map((item) => {
+              : dataPress?.damage_images?.length > 0 &&
+                dataPress?.damage_images?.map((item: any) => {
                   return (
                     //@ts-ignore
                     <div key={item.file.name} className="imageItemContainer">
